@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-public class ScoutingHub extends JFrame {
+public class MatchHub extends JFrame {
 
 	/**
 	 * 
@@ -44,7 +44,7 @@ public class ScoutingHub extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ScoutingHub frame = new ScoutingHub();
+					MatchHub frame = new MatchHub();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,9 +56,9 @@ public class ScoutingHub extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ScoutingHub() {
+	public MatchHub() {
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(ScoutingHub.class.getResource("/scoutingapp/resources/MagnifyingGlass.png")));
+				.getImage(MatchHub.class.getResource("/scoutingapp/resources/MagnifyingGlass.png")));
 		setTitle("Scouting");
 		setSize(new Dimension(1024, 600));
 		setResizable(false);
