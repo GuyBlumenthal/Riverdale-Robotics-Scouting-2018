@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
@@ -114,7 +115,25 @@ public class MatchDetail extends JFrame {
 		contentPane.add(scrollPaneSwitch);
 		
 		tblSwitch = new JTable(data, columns);
+		tblSwitch.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, "0:00"},
+				{null, null},
+				{null, null},
+			},
+			new String[] {
+				"Auto", "Time"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Boolean.class, Object.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPaneSwitch.setViewportView(tblSwitch);
-		tblSwitch.getColumnModel().getColumn(0).setPreferredWidth(49);
+		
+		
 	}
 }
