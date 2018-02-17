@@ -146,5 +146,4 @@ public class MatchHub extends JFrame {
 		table.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
 		
 	}
-	
 }
