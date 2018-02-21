@@ -20,7 +20,8 @@ public class TeamHub extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 4828606662028786474L;
-	private JTable table;
+	private JTable tblMatches;
+	private JTable tblOverview;
 
 	/**
 	 * Launch the application.
@@ -69,18 +70,60 @@ public class TeamHub extends JFrame {
 		getContentPane().add(btnAdd);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(47, 73, 903, 281);
+		scrollPane.setBounds(47, 73, 903, 218);
 		getContentPane().add(scrollPane);
 
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		tblMatches = new JTable();
+		tblMatches.setEnabled(false);
+		tblMatches.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null},
 			},
 			new String[] {
 				"Match Number", "Performance", "Comments"
 			}
-		));
-		scrollPane.setViewportView(table);
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		
+		tblMatches.getTableHeader().setReorderingAllowed(false);
+		scrollPane.setViewportView(tblMatches);
+		
+		JLabel lblOverview = new JLabel("Overview");
+		lblOverview.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOverview.setFont(new Font("Courier New", Font.PLAIN, 15));
+		lblOverview.setBounds(10, 313, 140, 31);
+		getContentPane().add(lblOverview);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(47, 353, 903, 78);
+		getContentPane().add(scrollPane_1);
+		
+		tblOverview = new JTable();
+		tblOverview.setEnabled(false);
+		tblOverview.setModel(new DefaultTableModel(
+			new String[][] {
+				{"Cube on Switch", null, null, null, null, null},
+				{"Cube on Scale", null, null, null, null, null},
+				{"Baseline", null, null, null, null, null},
+			},
+			new String[] {
+				"Autonomous Abilities", "Consistency", "Teleoperated Abilities", "Consistency", "Average", "Average Time"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane_1.setViewportView(tblOverview);
+		tblOverview.getTableHeader().setReorderingAllowed(false);
 	}
 }
