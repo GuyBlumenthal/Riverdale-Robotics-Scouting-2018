@@ -135,6 +135,10 @@ public class TeamHub extends JFrame {
 			}
 		});
 		scrollPane_1.setViewportView(tblOverview);
+		
+		JButton btnTeamDetail = new JButton("Team Detail");
+		btnTeamDetail.setBounds(392, 39, 89, 23);
+		getContentPane().add(btnTeamDetail);
 		tblOverview.getTableHeader().setReorderingAllowed(false);
 		
 	}

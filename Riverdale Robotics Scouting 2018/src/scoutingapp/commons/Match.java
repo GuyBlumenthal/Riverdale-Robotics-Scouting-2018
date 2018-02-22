@@ -15,9 +15,22 @@ public class Match {
 
 	double[] redPowerUps;
 	double[] bluePowerUps;
+	
+	Team[] blueTeam;
+	Team[] redTeam;
+	
+	public Team[] getBlueTeam() {
+		return blueTeam;
+	}
+	
+	public Team[] getRedTeam() {
+		return redTeam;
+	}
 
-	public Match(int matchID) {
+	public Match(int matchID, Team[] blueTeam, Team[] redTeam) {
 
+		this.blueTeam = blueTeam;
+		this.redTeam = redTeam;
 		this.matchID = matchID;
 		
 		int[] redSwitchPlacements = new int[6];

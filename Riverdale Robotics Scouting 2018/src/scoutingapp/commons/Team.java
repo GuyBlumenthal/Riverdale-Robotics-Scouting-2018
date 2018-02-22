@@ -12,8 +12,12 @@ public class Team implements Serializable {
 
 	int teamNumber, numCubesOnSwitchInAuto, numCubesOnSwitchInTeleop, numCubesOnScaleInAuto, numCubesOnScaleInTeleop;
 	String teamName;
+<<<<<<< HEAD
 	boolean crossedBaseLine, didClimb;
 	
+=======
+
+>>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 	HashMap<Integer, Match> matches;
 
 	public Team (int teamNumber, String teamName) {
@@ -23,6 +27,7 @@ public class Team implements Serializable {
 		
 	}
 	
+<<<<<<< HEAD
 	public Team (int teamNumber) {
 		
 		this.teamNumber = teamNumber;
@@ -70,4 +75,18 @@ public class Team implements Serializable {
 		}
 		return 0;
 	}
+=======
+	public HashMap<Integer, Match> matches() {
+		return matches;
+	}
+	
+	public String getName() {
+		return teamName;
+	}
+	
+	public int getNumber() {
+		return teamNumber;
+	}
+	
+>>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 }
