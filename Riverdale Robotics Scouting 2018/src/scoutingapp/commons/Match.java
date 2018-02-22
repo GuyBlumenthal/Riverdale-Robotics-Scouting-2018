@@ -1,12 +1,10 @@
 package scoutingapp.commons;
 
-import java.util.ArrayList;
-
 public class Match {
 	
 	int redScore, blueScore, matchID;
 
-	ArrayList<Team> teams;
+	Team[] teams;
 
 	int[] redSwitchPlacements;
 	int[] blueSwitchPlacements;

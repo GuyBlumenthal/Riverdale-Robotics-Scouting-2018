@@ -15,6 +15,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
+import scoutingapp.commons.Team;
+
 public class TeamHub extends JFrame {
 	/**
 	 * 
@@ -22,7 +24,7 @@ public class TeamHub extends JFrame {
 	private static final long serialVersionUID = 4828606662028786474L;
 	private JTable tblMatches;
 	private JTable tblOverview;
-
+	private Team team;
 	/**
 	 * Launch the application.
 	 */
@@ -35,7 +37,7 @@ public class TeamHub extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TeamHub frame = new TeamHub();
+					TeamHub frame = new TeamHub(5834);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +46,10 @@ public class TeamHub extends JFrame {
 		});
 	}
 
-	public TeamHub() {
+	public TeamHub(int teamNumber) {
+		this.team = new Team(teamNumber);
+			
+		
 		setSize(new Dimension(1024, 600));
 
 		JMenuBar menuBar = new JMenuBar();
@@ -55,7 +60,7 @@ public class TeamHub extends JFrame {
 		menuBar.add(mnFile);
 		getContentPane().setLayout(null);
 
-		JLabel lblTeamNumber = new JLabel("Team Number");
+		JLabel lblTeamNumber = new JLabel(Integer.toString(teamNumber));
 		lblTeamNumber.setFont(new Font("Courier New", Font.PLAIN, 15));
 		lblTeamNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTeamNumber.setBounds(10, 11, 155, 51);
@@ -70,19 +75,20 @@ public class TeamHub extends JFrame {
 		getContentPane().add(btnAdd);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(47, 73, 903, 218);
+		scrollPane.setBounds(47, 73, 903, 176);
 		getContentPane().add(scrollPane);
 
 		tblMatches = new JTable();
 		tblMatches.setEnabled(false);
 		tblMatches.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-			},
 			new String[] {
 				"Match Number", "Performance", "Comments"
-			}
+			}, team.getMatchesPlayed()
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
 				false, false, false
 			};
@@ -101,7 +107,7 @@ public class TeamHub extends JFrame {
 		getContentPane().add(lblOverview);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(47, 353, 903, 78);
+		scrollPane_1.setBounds(47, 353, 903, 91);
 		getContentPane().add(scrollPane_1);
 		
 		tblOverview = new JTable();
@@ -111,11 +117,16 @@ public class TeamHub extends JFrame {
 				{"Cube on Switch", null, null, null, null, null},
 				{"Cube on Scale", null, null, null, null, null},
 				{"Baseline", null, null, null, null, null},
+				{"Climb", null, null, null, null, null},
 			},
 			new String[] {
 				"Autonomous Abilities", "Consistency", "Teleoperated Abilities", "Consistency", "Average", "Average Time"
 			}
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false, false, false
 			};
@@ -125,5 +136,6 @@ public class TeamHub extends JFrame {
 		});
 		scrollPane_1.setViewportView(tblOverview);
 		tblOverview.getTableHeader().setReorderingAllowed(false);
+		
 	}
 }
