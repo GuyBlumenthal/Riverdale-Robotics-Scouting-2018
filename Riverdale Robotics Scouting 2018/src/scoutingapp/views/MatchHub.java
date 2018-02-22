@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +18,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import scoutingapp.commons.Team;
 
 public class MatchHub extends JFrame {
 
@@ -31,6 +34,8 @@ public class MatchHub extends JFrame {
 	public final static Color BACKGROUND_COLOR = new Color(224, 255, 255);
 	public final static Color RED_ALLIANCE_COLOR = new Color(255, 109, 81);
 	public final static Color BLUE_ALLIANCE_COLOR = new Color(135, 206, 250);
+	
+	HashMap<Team, TeamDetail> teams = new HashMap<Team, TeamDetail>();
 
 	/**
 	 * Launch the application.

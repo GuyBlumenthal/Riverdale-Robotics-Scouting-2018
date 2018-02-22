@@ -13,13 +13,25 @@ public class Team implements Serializable {
 	int teamNumber;
 	String teamName;
 
-	HashMap<Match, Integer> matches;
+	HashMap<Integer, Match> matches;
 
 	public Team (int teamNumber, String teamName) {
 		
 		this.teamNumber = teamNumber;
 		this.teamName = teamName;
 		
+	}
+	
+	public HashMap<Integer, Match> matches() {
+		return matches;
+	}
+	
+	public String getName() {
+		return teamName;
+	}
+	
+	public int getNumber() {
+		return teamNumber;
 	}
 	
 }
