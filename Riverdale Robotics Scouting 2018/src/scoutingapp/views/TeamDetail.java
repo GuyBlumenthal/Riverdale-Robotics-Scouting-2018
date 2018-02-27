@@ -26,6 +26,7 @@ public class TeamDetail extends JFrame {
 	private JTable tblOverview;
 	private Team team;
 
+	private static Team test = new Team(5834, false);
 	/**
 	 * Launch the application.
 	 */
@@ -38,7 +39,7 @@ public class TeamDetail extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TeamDetail frame = new TeamDetail(5834);
+					TeamDetail frame = new TeamDetail(test);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,9 +48,9 @@ public class TeamDetail extends JFrame {
 		});
 	}
 
-	public TeamDetail(int teamNumber) {
+	public TeamDetail(Team team) {
+		this.team = team;
 		setResizable(false);
-		this.team = new Team(teamNumber);
 
 		setSize(new Dimension(1024, 600));
 
@@ -61,7 +62,7 @@ public class TeamDetail extends JFrame {
 		menuBar.add(mnFile);
 		getContentPane().setLayout(null);
 
-		JLabel lblTeamNumber = new JLabel(Integer.toString(teamNumber));
+		JLabel lblTeamNumber = new JLabel(Integer.toString(team.getTeamNumber()));
 		lblTeamNumber.setFont(new Font("Courier New", Font.PLAIN, 15));
 		lblTeamNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTeamNumber.setBounds(10, 11, 155, 51);
@@ -109,20 +110,25 @@ public class TeamDetail extends JFrame {
 
 		tblOverview = new JTable();
 		tblOverview.setEnabled(false);
-		tblOverview.setModel(new DefaultTableModel(new Object[][] { { "Cube on Switch",
-				team.calcAverage(team.numCubesOnSwitchAuto), team.calcConsistency(team.numCubesOnSwitchAuto),
-				team.calcAverage(team.numCubesOnSwitchTeleop), team.calcConsistency(team.numCubesOnSwitchTeleop) },
+		tblOverview.setModel(new DefaultTableModel(new Object[][] { 
+			
+				{ "Cube on Switch",
+					team.calcAverage(team.numCubesOnSwitchAuto), 	team.calcConsistency(team.numCubesOnSwitchAuto),	10/*TODO: Add switch auto average time*/,
+					team.calcNumCubesOnSwitchAverage(), 			team.calcNumCubesOnSwitchConsistency(),				10/*TODO: Add switch teleop average time*/, },
 
-				{ "Cube on Scale", team.calcAverage(team.numCubesOnScaleAuto),
-						team.calcConsistency(team.numCubesOnScaleAuto), team.calcAverage(team.numCubesOnSwitchTeleop),
-						team.calcConsistency(team.numCubesOnSwitchTeleop) },
+				{ "Cube on Scale", 
+					team.calcAverage(team.numCubesOnScaleAuto),		team.calcConsistency(team.numCubesOnScaleAuto),		10/*TODO: Add scale auto average time*/, 
+					team.calcAverage(team.numCubesOnScaleTeleop),	team.calcConsistency(team.numCubesOnScaleTeleop),	10/*TODO: Add scale auto average time*/,  },
 
-				{ "Baseline", team.calcAverage(team.crossedBaseLine), team.calcConsistency(team.crossedBaseLine), null,
-						null },
+				{ "Baseline", 
+					team.calcAverage(team.crossedBaseLine), team.calcConsistency(team.crossedBaseLine), null, null, null, null },
 
-				{ "Climb", team.calcAverage(team.climb), team.calcConsistency(team.climb), null, null }, },
-				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Teleop Average",
-						"Teleop Consistency" }));
+				{ "Climb", 
+					team.calcAverage(team.climb), team.calcConsistency(team.climb), null, null, null, null}
+		},
+		new String[] { 	"Robot Abilities", 	"Auto Average", 		"Auto Consistency", 	"Auto Average Time", 
+						"Teleop Average", 	"Teleop Consistency", 	"Teleop Average Time"}));
+		
 		scrollPane_1.setViewportView(tblOverview);
 
 		JButton btnTeamDetail = new JButton("Team Detail");

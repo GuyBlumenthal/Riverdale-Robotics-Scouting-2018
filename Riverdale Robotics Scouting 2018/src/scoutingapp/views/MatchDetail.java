@@ -19,12 +19,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ExistingException;
+import scoutingapp.commons.Match;
 import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.Team;
 
 public class MatchDetail extends JFrame {
 
-	private RegionalCollection regionalCollection = MatchHub.regionalCollection;
 	private JPanel contentPane;
 	private JTextField txtTeamNumber;
 	private JLabel lblMatchNumber;
@@ -211,7 +211,7 @@ public class MatchDetail extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				Team team = new Team(Integer.parseInt(txtTeamNumber.getText()), chkAlliance.isSelected());
 				try {
-					regionalCollection.createTeam(team.getTeamNumber());
+					MatchHub.regionalCollection.createTeam(team);
 					team.climb.add(chkClimb.isSelected() ? 1 : 0);
 					team.crossedBaseLine.add(chkBasline.isSelected() ? 1 : 0);
 

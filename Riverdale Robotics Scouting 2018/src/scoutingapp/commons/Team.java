@@ -76,6 +76,39 @@ public class Team implements Serializable {
 
 		return numAboveAverage / data.size() * 100;
 	}
+	
+	public double calcNumCubesOnSwitchAverage(){
+		double sum = 0;
+
+		for (int i = 0; i < numCubesOnAllianceSwitch.size(); i++) {
+			sum += numCubesOnAllianceSwitch.get(i);
+		}
+		
+		for (int i = 0; i < numCubesOnOpponentsSwitch.size(); i++) {
+			sum += numCubesOnOpponentsSwitch.get(i);
+		}
+
+		return sum / ((numCubesOnAllianceSwitch.size() + numCubesOnOpponentsSwitch.size()) * 1.0);
+	}
+	
+	public double calcNumCubesOnSwitchConsistency(){
+		double average = calcNumCubesOnSwitchAverage();
+		int numAboveAverage = 0;
+		
+		for (int i = 0; i < numCubesOnAllianceSwitch.size(); i++) {
+			if (numCubesOnAllianceSwitch.get(i) >= average) {
+				numAboveAverage++;
+			}
+		}
+		
+		for (int i = 0; i < numCubesOnOpponentsSwitch.size(); i++) {
+			if (numCubesOnOpponentsSwitch.get(i) >= average) {
+				numAboveAverage++;
+			}
+		}
+		
+		return numAboveAverage / (numCubesOnAllianceSwitch.size() + numCubesOnOpponentsSwitch.size()) * 100;
+	}
 
 	public HashMap<Integer, Integer> getMatches() {
 		return matches;

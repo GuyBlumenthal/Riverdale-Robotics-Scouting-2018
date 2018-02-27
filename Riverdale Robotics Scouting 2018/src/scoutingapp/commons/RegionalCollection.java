@@ -14,24 +14,24 @@ public class RegionalCollection {
 
 	}
 
-	public void createTeam(int teamNumber, String teamName) throws ExistingException {
+	public void createTeam(int teamNumber, String teamName, boolean allianceColour) throws ExistingException {
 
 		if (teams.containsKey(teamNumber)) {
 			throw new ExistingException();
 		} else {
-			Team team = new Team(teamNumber, teamName);
+			Team team = new Team(teamNumber, teamName, allianceColour);
 
 			teams.put(teamNumber, team);
 		}
 
 	}
 
-	public void createTeam(int teamNumber) throws ExistingException {
+	public void createTeam(int teamNumber, boolean allianceColour) throws ExistingException {
 
 		if (teams.containsKey(teamNumber)) {
 			throw new ExistingException();
 		} else {
-			Team team = new Team(teamNumber);
+			Team team = new Team(teamNumber, allianceColour);
 
 			teams.put(teamNumber, team);
 		}
