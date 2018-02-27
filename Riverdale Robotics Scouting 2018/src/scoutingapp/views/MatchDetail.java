@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import scoutingapp.commons.ExistingTeamException;
+import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.Team;
 
@@ -57,97 +57,85 @@ public class MatchDetail extends JFrame {
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblMatchDetail = new JLabel("Match Detail");
 		lblMatchDetail.setFont(new Font("Trebuchet MS", Font.PLAIN, 16));
 		lblMatchDetail.setBounds(168, 11, 97, 24);
 		contentPane.add(lblMatchDetail);
-		
+
 		JLabel lblTeam = new JLabel("Team Number: ");
 		lblTeam.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblTeam.setBounds(34, 44, 95, 24);
 		contentPane.add(lblTeam);
-		
+
 		txtTeamNumber = new JTextField();
 		txtTeamNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtTeamNumber.setBounds(130, 46, 62, 20);
 		contentPane.add(txtTeamNumber);
 		txtTeamNumber.setColumns(10);
-		
+
 		lblMatchNumber = new JLabel("Match Number: ");
 		lblMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblMatchNumber.setBounds(231, 44, 95, 24);
 		contentPane.add(lblMatchNumber);
-		
+
 		txtMatchNumber = new JTextField();
 		txtMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtMatchNumber.setColumns(10);
 		txtMatchNumber.setBounds(328, 46, 62, 20);
 		contentPane.add(txtMatchNumber);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 79, 438, 2);
 		contentPane.add(separator);
-		
+
 		JCheckBox chkBasline = new JCheckBox("(Auto) Crossed Baseline");
 		chkBasline.setBounds(20, 86, 154, 23);
 		contentPane.add(chkBasline);
-		
+
 		JCheckBox chkClimb = new JCheckBox("(Teleop) Climb");
 		chkClimb.setBounds(269, 88, 110, 23);
 		contentPane.add(chkClimb);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(10, 116, 438, 2);
 		contentPane.add(separator_1);
-		
-        //headers for the table
-        String[] columns = new String[] {
-            "Auto", "Time"
-        };
-        //actual data for the table in a 2d array
-        Object[][] data = new Object[][] {
-            {false, "0:00" }
-        };
-		
+
+		// headers for the table
+		String[] columns = new String[] { "Auto", "Time" };
+		// actual data for the table in a 2d array
+		Object[][] data = new Object[][] { { false, "0:00" } };
+
 		JLabel lblSwitch = new JLabel("Switch");
 		lblSwitch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblSwitch.setBounds(10, 116, 47, 24);
 		contentPane.add(lblSwitch);
-		
+
 		JScrollPane scrollPaneSwitch = new JScrollPane();
 		scrollPaneSwitch.setBounds(10, 140, 199, 147);
 		contentPane.add(scrollPaneSwitch);
-		
+
 		tblSwitch = new JTable(data, columns);
 		tblSwitch.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, "0:00"},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"In Auto", "Defense", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, Boolean.class, String.class
-			};
+				new Object[][] { { null, null, "0:00" }, { null, null, null }, { null, null, null }, },
+				new String[] { "In Auto", "Defense", "Time" }) {
+			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, String.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
 		scrollPaneSwitch.setViewportView(tblSwitch);
-		
+
 		JButton btnSaveData = new JButton("Save Data");
 		btnSaveData.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Team team = new Team(Integer.parseInt(txtTeamNumber.getText()));
 				try {
-					regionalCollection.createTeam(team.getNumber());
-					//team.climb.add();
-				} catch (ExistingTeamException e) {
+					regionalCollection.createTeam(team.getTeamNumber());
+					// team.climb.add();
+				} catch (ExistingException e) {
 					// TODO Auto-generated catch block
 					System.out.println("Team already exists");
 				}
@@ -155,16 +143,16 @@ public class MatchDetail extends JFrame {
 		});
 		btnSaveData.setBounds(10, 298, 89, 23);
 		contentPane.add(btnSaveData);
-		
+
 		JLabel label = new JLabel("Switch");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label.setBounds(231, 116, 47, 24);
 		contentPane.add(label);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(231, 140, 147, 147);
 		contentPane.add(scrollPane);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(485, 140, 147, 147);
 		contentPane.add(scrollPane_1);

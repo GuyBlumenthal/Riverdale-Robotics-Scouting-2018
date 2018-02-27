@@ -102,6 +102,10 @@ public class Match {
 		}
 
 	}
+	
+	public int getMatchID () {
+		return this.matchID;
+	}
 
 	public Team[] getBlueTeams() {
 

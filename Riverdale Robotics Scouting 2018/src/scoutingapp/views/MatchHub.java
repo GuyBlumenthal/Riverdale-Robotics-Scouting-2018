@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.Team;
@@ -27,19 +28,18 @@ public class MatchHub extends JFrame {
 	/**
 	 * 
 	 */
-	
+
 	static public RegionalCollection regionalCollection = new RegionalCollection();
 
 	private static final long serialVersionUID = 6184145860176117808L;
 	private JPanel contentPane;
 	private JButton btnAddMatch, buttonRemoveMatch;
-	private JTable table;
+	private JTable tblMatches;
 
 	public final static Color BACKGROUND_COLOR = new Color(224, 255, 255);
 	public final static Color RED_ALLIANCE_COLOR = new Color(255, 109, 81);
 	public final static Color BLUE_ALLIANCE_COLOR = new Color(135, 206, 250);
-	
-	HashMap<Team, TeamDetail> teams = new HashMap<Team, TeamDetail>();
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -66,6 +66,78 @@ public class MatchHub extends JFrame {
 	 * Create the frame.
 	 */
 	public MatchHub() {
+
+		try {
+			regionalCollection.createTeam(new Team(1001, "The Testers"));
+			regionalCollection.createTeam(new Team(1002, "The Ranoutofideas"));
+			regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires"));
+			regionalCollection.createTeam(new Team(1004, "Bang blasters"));
+			regionalCollection.createTeam(new Team(1005, "Spencini81"));
+			regionalCollection.createTeam(new Team(1006, "Spoincer"));
+		} catch (Exception e) {
+
+		}
+
+		try {
+
+			int[] blueTeams = { 1001, 1002, 1003 };
+			int[] redTeams = { 1004, 1005, 1006 };
+
+			regionalCollection.createMatch(1, blueTeams, redTeams);
+
+		} catch (
+
+		Exception e) {
+
+		}
+
+		initInterface();
+
+		createMatchTable();
+
+		scrollPane.setViewportView(tblMatches);
+
+		updateMatchTable();
+
+	}
+
+	public void updateMatchTable() {
+
+		Object[][] arrayValues = new Object[regionalCollection.getMatchIDList().length][8];
+
+		int[] matchIDList = regionalCollection.getMatchIDList();
+
+		for (int i = 0; i < arrayValues.length; i++) {
+
+			arrayValues[i][0] = regionalCollection.getMatch(matchIDList[i]).getMatchID();
+
+			for (int j = 0; j < 3; j++) {
+				arrayValues[i][j + 1] = regionalCollection.getMatch(matchIDList[i]).getBlueTeams()[j].getTeamNumber();
+			}
+
+			for (int j = 0; j < 3; j++) {
+				arrayValues[i][j + 4] = regionalCollection.getMatch(matchIDList[i]).getRedTeams()[j].getTeamNumber();
+			}
+
+		}
+
+		DefaultTableModel tableModel = new DefaultTableModel(arrayValues,
+				new String[] { "Match Number", "Blue 1", "Blue 2", "Blue 3", "Red 1", "Red 2", "Red 3", "Winner" }) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6261637160294735163L;
+			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false };
+
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		};
+		tblMatches.setModel(tableModel);
+	}
+
+	void initInterface() {
+
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MatchHub.class.getResource("/scoutingapp/resources/MagnifyingGlass.png")));
 		setTitle("Scouting");
@@ -95,21 +167,14 @@ public class MatchHub extends JFrame {
 		btnopenmatch.setBounds(239, 13, 80, 45);
 		contentPane.add(btnopenmatch);
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(57, 71, 673, 388);
 		contentPane.add(scrollPane);
-
-		createMatchTable();
-
-		scrollPane.setViewportView(table);
-
-		System.out.println(scrollPane.getY() * 2 + scrollPane.getHeight());
-
 	}
 
 	void createMatchTable() {
 
-		table = new JTable() {
+		tblMatches = new JTable() {
 			/**
 			 * 
 			 */
@@ -128,7 +193,7 @@ public class MatchHub extends JFrame {
 				return comp;
 			}
 		};
-		table.setModel(new DefaultTableModel(
+		tblMatches.setModel(new DefaultTableModel(
 				new Object[][] {
 						{ new Integer(0), new Integer(0), new Integer(0), new Integer(1), new Integer(0),
 								new Integer(0), new Integer(0), new Integer(0) },
@@ -137,6 +202,7 @@ public class MatchHub extends JFrame {
 						{ new Integer(0), new Integer(40), new Integer(0), new Integer(0), new Integer(0),
 								new Integer(0), new Integer(0), new Integer(0) }, },
 				new String[] { "Match Number", "Blue 1", "Blue 2", "Blue 3", "Red 1", "Red 2", "Red 3", "Winner" }) {
+
 			/**
 			 * 
 			 */
@@ -148,20 +214,21 @@ public class MatchHub extends JFrame {
 			}
 		});
 
-		table.getTableHeader().setReorderingAllowed(false);
+		tblMatches.getTableHeader().setReorderingAllowed(false);
 
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(3).setResizable(false);
-		table.getColumnModel().getColumn(4).setResizable(false);
-		table.getColumnModel().getColumn(5).setResizable(false);
-		table.getColumnModel().getColumn(6).setResizable(false);
-		table.getColumnModel().getColumn(7).setResizable(false);
+		tblMatches.getColumnModel().getColumn(0).setResizable(false);
+		tblMatches.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tblMatches.getColumnModel().getColumn(1).setResizable(false);
+		tblMatches.getColumnModel().getColumn(2).setResizable(false);
+		tblMatches.getColumnModel().getColumn(3).setResizable(false);
+		tblMatches.getColumnModel().getColumn(4).setResizable(false);
+		tblMatches.getColumnModel().getColumn(5).setResizable(false);
+		tblMatches.getColumnModel().getColumn(6).setResizable(false);
+		tblMatches.getColumnModel().getColumn(7).setResizable(false);
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.RIGHT);
 
 	}
+
 }
