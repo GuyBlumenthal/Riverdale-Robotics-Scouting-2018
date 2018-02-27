@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.Team;
 
 public class MatchHub extends JFrame {
@@ -26,6 +27,9 @@ public class MatchHub extends JFrame {
 	/**
 	 * 
 	 */
+	
+	static public RegionalCollection regionalCollection = new RegionalCollection();
+
 	private static final long serialVersionUID = 6184145860176117808L;
 	private JPanel contentPane;
 	private JButton btnAddMatch, buttonRemoveMatch;

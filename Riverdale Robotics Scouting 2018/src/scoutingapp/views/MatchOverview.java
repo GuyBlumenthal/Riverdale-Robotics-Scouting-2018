@@ -22,7 +22,6 @@ public class MatchOverview extends JFrame {
 	
 	private Match match;
 
-	static public RegionalCollection regionalCollection = new RegionalCollection();
 	/**
 	 * Launch the application.
 	 */

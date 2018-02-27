@@ -18,10 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import scoutingapp.commons.ExistingTeamException;
+import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.Team;
 
 public class MatchDetail extends JFrame {
 
+	private RegionalCollection regionalCollection = MatchHub.regionalCollection;
 	private JPanel contentPane;
 	private JTextField txtTeamNumber;
 	private JLabel lblMatchNumber;
@@ -48,9 +51,8 @@ public class MatchDetail extends JFrame {
 	 * Create the frame.
 	 */
 	public MatchDetail() {
-		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 474, 337);
+		setBounds(100, 100, 675, 381);
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
@@ -114,22 +116,22 @@ public class MatchDetail extends JFrame {
 		contentPane.add(lblSwitch);
 		
 		JScrollPane scrollPaneSwitch = new JScrollPane();
-		scrollPaneSwitch.setBounds(10, 140, 147, 147);
+		scrollPaneSwitch.setBounds(10, 140, 199, 147);
 		contentPane.add(scrollPaneSwitch);
 		
 		tblSwitch = new JTable(data, columns);
 		tblSwitch.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, "0:00"},
-				{null, null},
-				{null, null},
+				{null, null, "0:00"},
+				{null, null, null},
+				{null, null, null},
 			},
 			new String[] {
-				"Auto", "Time"
+				"In Auto", "Defense", "Time"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				Boolean.class, Object.class
+				Boolean.class, Boolean.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -142,11 +144,29 @@ public class MatchDetail extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Team team = new Team(Integer.parseInt(txtTeamNumber.getText()));
+				try {
+					regionalCollection.createTeam(team.getNumber());
+					//team.climb.add();
+				} catch (ExistingTeamException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Team already exists");
+				}
 			}
 		});
-		btnSaveData.setBounds(327, 242, 89, 23);
+		btnSaveData.setBounds(10, 298, 89, 23);
 		contentPane.add(btnSaveData);
+		
+		JLabel label = new JLabel("Switch");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		label.setBounds(231, 116, 47, 24);
+		contentPane.add(label);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(231, 140, 147, 147);
+		contentPane.add(scrollPane);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(485, 140, 147, 147);
+		contentPane.add(scrollPane_1);
 	}
-	
-	
 }

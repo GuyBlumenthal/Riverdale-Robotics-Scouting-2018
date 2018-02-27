@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import scoutingapp.views.MatchOverview;
+import scoutingapp.views.MatchHub;
 
 public class Team implements Serializable {
 
@@ -25,7 +25,7 @@ public class Team implements Serializable {
 	public ArrayList<Integer> crossedBaseLine; // 0 means no climb, 1 means
 												// climbed
 
-	private RegionalCollection regionalCollection = MatchOverview.regionalCollection;
+	private RegionalCollection regionalCollection = MatchHub.regionalCollection;
 	
 	public Team(int teamNumber, String teamName) {
 
