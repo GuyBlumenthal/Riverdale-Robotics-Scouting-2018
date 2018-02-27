@@ -63,15 +63,15 @@ public class MatchOverview extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblRedTeam1 = new JLabel(match.getRedTeam()[0].getName() + " : ");
+		JLabel lblRedTeam1 = new JLabel(match.getRedTeam()[0].getTeamName() + " : ");
 		lblRedTeam1.setBounds(10, 168, 137, 14);
 		panel_1.add(lblRedTeam1);
 		
-		JLabel lblRedTeam2 = new JLabel(match.getRedTeam()[1].getName() + " : ");
+		JLabel lblRedTeam2 = new JLabel(match.getRedTeam()[1].getTeamName() + " : ");
 		lblRedTeam2.setBounds(10, 223, 137, 14);
 		panel_1.add(lblRedTeam2);
 		
-		JLabel lblRedTeam3 = new JLabel(match.getRedTeam()[2].getName() + " : ");
+		JLabel lblRedTeam3 = new JLabel(match.getRedTeam()[2].getTeamName() + " : ");
 		lblRedTeam3.setBounds(10, 269, 137, 14);
 		panel_1.add(lblRedTeam3);
 		
@@ -105,15 +105,15 @@ public class MatchOverview extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblBlueTeam1 = new JLabel(match.getBlueTeam()[0].getName() + " : ");
+		JLabel lblBlueTeam1 = new JLabel(match.getBlueTeam()[0].getTeamName() + " : ");
 		lblBlueTeam1.setBounds(10, 167, 143, 14);
 		panel.add(lblBlueTeam1);
 		
-		JLabel lblBlueTeam2 = new JLabel(match.getBlueTeam()[1].getName() + " : ");
+		JLabel lblBlueTeam2 = new JLabel(match.getBlueTeam()[1].getTeamName() + " : ");
 		lblBlueTeam2.setBounds(10, 221, 155, 14);
 		panel.add(lblBlueTeam2);
 		
-		JLabel lblBlueTeam3 = new JLabel(match.getBlueTeam()[2].getName() + " : ");
+		JLabel lblBlueTeam3 = new JLabel(match.getBlueTeam()[2].getTeamName() + " : ");
 		lblBlueTeam3.setBounds(10, 270, 155, 14);
 		panel.add(lblBlueTeam3);
 		
