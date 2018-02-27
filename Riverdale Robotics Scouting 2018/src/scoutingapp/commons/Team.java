@@ -13,72 +13,67 @@ public class Team implements Serializable {
 
 	private int teamNumber;
 	private String teamName;
-	
-	private HashMap<Integer, Match> matches;
+
+	private HashMap<Integer, Integer> matches;
 	public ArrayList<Integer> numCubesOnSwitchTeleop;
 	public ArrayList<Integer> numCubesOnScaleTeleop;
 	public ArrayList<Integer> numCubesOnSwitchAuto;
 	public ArrayList<Integer> numCubesOnScaleAuto;
-	public ArrayList<Integer> climb; //0 means no climb, 1 means climbed
-	public ArrayList<Integer> crossedBaseLine; //0 means no climb, 1 means climbed
-	
+	public ArrayList<Integer> climb; // 0 means no climb, 1 means climbed
+	public ArrayList<Integer> crossedBaseLine; // 0 means no climb, 1 means
+												// climbed
 
-	public Team (int teamNumber, String teamName) {
-		
+	public Team(int teamNumber, String teamName) {
+
 		this.teamNumber = teamNumber;
 		this.teamName = teamName;
-		
+
 	}
-	
-	public Team (int teamNumber) {
-		
+
+	public Team(int teamNumber) {
+
 		this.teamNumber = teamNumber;
 		this.teamName = Integer.toString(teamNumber);
-		
+
 	}
-	
-	public int getMatchesPlayed(){
-		return 9;//matches.size();
+
+	public int getMatchesPlayed() {
+		return 9;// TODO: matches.size();
 	}
-	
-	public double calcAverage(ArrayList<Integer> data){
+
+	public double calcAverage(ArrayList<Integer> data) {
 		double sum = 0;
-		
-		for(int i = 0; i < data.size(); i++){
+
+		for (int i = 0; i < data.size(); i++) {
 			sum += data.get(i);
 		}
-		
-		return sum/(data.size() * 1.0);
+
+		return sum / (data.size() * 1.0);
 	}
-	
-	public double calcConsistency(ArrayList<Integer> data){
+
+	public double calcConsistency(ArrayList<Integer> data) {
 		double average = calcAverage(data);
 		int numAboveAverage = 0;
-		
-		for(int i = 0; i < data.size(); i++){
-			if(data.get(i) >= average){
+
+		for (int i = 0; i < data.size(); i++) {
+			if (data.get(i) >= average) {
 				numAboveAverage++;
 			}
 		}
-		
-		return numAboveAverage/data.size() * 100;
+
+		return numAboveAverage / data.size() * 100;
 	}
 
-	public HashMap<Integer, Match> matches() {
-		return matches;
-	}
-	
 	public String getName() {
 		return teamName;
 	}
-	
+
 	public int getNumber() {
 		return teamNumber;
 	}
 
-	public HashMap<Integer, Match> getMatches() {
-		return matches;
-	}	
-	
-	
+	public Match getMatch(int matchID) {
+		return regionalCollection.getMatch(matchID);
+	}
+
 }
