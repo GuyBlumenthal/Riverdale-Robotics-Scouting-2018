@@ -47,6 +47,7 @@ public class TeamHub extends JFrame {
 	}
 
 	public TeamHub(int teamNumber) {
+		setResizable(false);
 		this.team = new Team(teamNumber);
 			
 		
@@ -113,27 +114,21 @@ public class TeamHub extends JFrame {
 		tblOverview = new JTable();
 		tblOverview.setEnabled(false);
 		tblOverview.setModel(new DefaultTableModel(
-			new String[][] {
-				{"Cube on Switch", null, null, null, null, null},
-				{"Cube on Scale", null, null, null, null, null},
-				{"Baseline", null, null, null, null, null},
-				{"Climb", null, null, null, null, null},
+			new Object[][] {
+				{"Cube on Switch", team.calcAverage(team.numCubesOnSwitchAuto), team.calcConsistency(team.numCubesOnSwitchAuto), 
+								   team.calcAverage(team.numCubesOnSwitchTeleop), team.calcConsistency(team.numCubesOnSwitchTeleop)},
+				
+				{"Cube on Scale", team.calcAverage(team.numCubesOnScaleAuto), team.calcConsistency(team.numCubesOnScaleAuto), 
+								  team.calcAverage(team.numCubesOnSwitchTeleop), team.calcConsistency(team.numCubesOnSwitchTeleop)},
+				
+				{"Baseline", team.calcAverage(team.crossedBaseLine), team.calcConsistency(team.crossedBaseLine), null, null},
+				
+				{"Climb", team.calcAverage(team.climb), team.calcConsistency(team.climb), null, null},
 			},
 			new String[] {
-				"Autonomous Abilities", "Consistency", "Teleoperated Abilities", "Consistency", "Average", "Average Time"
+				"Robot Abilities", "Auto Average", "Auto Consistency", "Teleop Average", "Teleop Consistency"
 			}
-		) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		));
 		scrollPane_1.setViewportView(tblOverview);
 		
 		JButton btnTeamDetail = new JButton("Team Detail");

@@ -1,6 +1,7 @@
 package scoutingapp.commons;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Team implements Serializable {
@@ -10,12 +11,17 @@ public class Team implements Serializable {
 	 */
 	private static final long serialVersionUID = -8517481588123163761L;
 
-	int teamNumber, numCubesOnSwitchInAuto, numCubesOnSwitchInTeleop, numCubesOnScaleInAuto, numCubesOnScaleInTeleop;
-	String teamName;
-
-	boolean crossedBaseLine, didClimb;
+	private int teamNumber;
+	private String teamName;
 	
-	HashMap<Integer, Match> matches;
+	private HashMap<Integer, Match> matches;
+	public ArrayList<Integer> numCubesOnSwitchTeleop;
+	public ArrayList<Integer> numCubesOnScaleTeleop;
+	public ArrayList<Integer> numCubesOnSwitchAuto;
+	public ArrayList<Integer> numCubesOnScaleAuto;
+	public ArrayList<Integer> climb; //0 means no climb, 1 means climbed
+	public ArrayList<Integer> crossedBaseLine; //0 means no climb, 1 means climbed
+	
 
 	public Team (int teamNumber, String teamName) {
 		
@@ -35,41 +41,27 @@ public class Team implements Serializable {
 		return 9;//matches.size();
 	}
 	
-	public double calcAverage(int element, int pos){
-		/*	1: cubes on switch
-		 * 	2: cubes on scale
-		 * 	3: baseline
-		 * 	4: climb
-		 */
+	public double calcAverage(ArrayList<Integer> data){
 		double sum = 0;
-		int num = matches.size();
 		
-		switch(element){
-		case 4:
-			for(int i = 0 ; i < matches.size(); i++){
-				sum = (matches.get(i).climbs[pos]) ? sum + 1: sum;
-			}
+		for(int i = 0; i < data.size(); i++){
+			sum += data.get(i);
 		}
 		
-		if(sum != 0 && num != 0){
-			return Math.round(sum/(num * 1.0));
-		}
-		return 0;
+		return sum/(data.size() * 1.0);
 	}
 	
-	public double calcConsistency(int element, int pos){
-		switch(element){
-		case 4:
-			int num = 0;
-			for(int i = 0 ; i < matches.size(); i++){
-				if(matches.get(i).climbs[pos]){
-					num++;
-				}
+	public double calcConsistency(ArrayList<Integer> data){
+		double average = calcAverage(data);
+		int numAboveAverage = 0;
+		
+		for(int i = 0; i < data.size(); i++){
+			if(data.get(i) >= average){
+				numAboveAverage++;
 			}
-			
-			return (num/matches.size()) * 100;
 		}
-		return 0;
+		
+		return numAboveAverage/data.size() * 100;
 	}
 
 	public HashMap<Integer, Match> matches() {
@@ -83,5 +75,10 @@ public class Team implements Serializable {
 	public int getNumber() {
 		return teamNumber;
 	}
+
+	public HashMap<Integer, Match> getMatches() {
+		return matches;
+	}	
+	
 	
 }
