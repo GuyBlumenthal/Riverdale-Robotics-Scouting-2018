@@ -105,15 +105,15 @@ public class MatchOverview extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblBlueTeam1 = new JLabel(match.getBlueTeam()[0].getTeamName() + " : ");
+		JLabel lblBlueTeam1 = new JLabel(match.getBlueTeams()[0].getTeamName() + " : ");
 		lblBlueTeam1.setBounds(10, 167, 143, 14);
 		panel.add(lblBlueTeam1);
 		
-		JLabel lblBlueTeam2 = new JLabel(match.getBlueTeam()[1].getTeamName() + " : ");
+		JLabel lblBlueTeam2 = new JLabel(match.getBlueTeams()[1].getTeamName() + " : ");
 		lblBlueTeam2.setBounds(10, 221, 155, 14);
 		panel.add(lblBlueTeam2);
 		
-		JLabel lblBlueTeam3 = new JLabel(match.getBlueTeam()[2].getTeamName() + " : ");
+		JLabel lblBlueTeam3 = new JLabel(match.getBlueTeams()[2].getTeamName() + " : ");
 		lblBlueTeam3.setBounds(10, 270, 155, 14);
 		panel.add(lblBlueTeam3);
 		

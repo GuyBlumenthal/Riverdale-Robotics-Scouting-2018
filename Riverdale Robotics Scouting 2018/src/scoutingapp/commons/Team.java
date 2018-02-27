@@ -34,9 +34,13 @@ public class Team implements Serializable {
 	public ArrayList<Integer> climb; // 0 means no climb, 1 means climbed
 	public ArrayList<Integer> crossedBaseLine; // 0 means no climb, 1 means climbed
 
+<<<<<<< HEAD
 	private RegionalCollection regionalCollection = MatchHub.regionalCollection;
 	
 	public Team(int teamNumber, String teamName, boolean allianceColour) {
+=======
+	public Team(int teamNumber, String teamName) {
+>>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 
 		this.teamNumber = teamNumber;
 		this.teamName = teamName;
@@ -82,7 +86,7 @@ public class Team implements Serializable {
 	public HashMap<Integer, Integer> getMatches() {
 		return matches;
 	}
-	
+
 	public String getTeamName() {
 		return teamName;
 	}
@@ -96,7 +100,7 @@ public class Team implements Serializable {
 	}
 
 	public Match getMatch(int matchID) {
-		return regionalCollection.getMatch(matchID);
+		return MatchHub.regionalCollection.getMatch(matchID);
 	}
 
 }

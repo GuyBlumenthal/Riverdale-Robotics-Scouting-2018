@@ -1,5 +1,7 @@
 package scoutingapp.commons;
 
+import scoutingapp.views.MatchHub;
+
 public class Match {
 
 	int redScore, blueScore, matchID;
@@ -101,12 +103,26 @@ public class Match {
 
 	}
 
-	public Team[] getBlueTeam() {
-		return blueTeams;
+	public Team[] getBlueTeams() {
+
+		Team[] teams = new Team[this.blueTeams.length];
+
+		for (int i = 0; i < teams.length; i++) {
+			teams[i] = MatchHub.regionalCollection.getTeam(this.blueTeams[i]);
+		}
+
+		return teams;
 	}
 
-	public Team[] getRedTeam() {
-		return redTeams;
+	public Team[] getRedTeams() {
+
+		Team[] teams = new Team[this.redTeams.length];
+
+		for (int i = 0; i < teams.length; i++) {
+			teams[i] = MatchHub.regionalCollection.getTeam(this.redTeams[i]);
+		}
+
+		return teams;
 	}
 
 }
