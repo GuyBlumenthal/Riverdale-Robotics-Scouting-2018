@@ -25,8 +25,6 @@ public class Team implements Serializable {
 	public ArrayList<Integer> crossedBaseLine; // 0 means no climb, 1 means
 												// climbed
 
-	private RegionalCollection regionalCollection = MatchHub.regionalCollection;
-	
 	public Team(int teamNumber, String teamName) {
 
 		this.teamNumber = teamNumber;
@@ -71,7 +69,7 @@ public class Team implements Serializable {
 	public HashMap<Integer, Integer> getMatches() {
 		return matches;
 	}
-	
+
 	public String getTeamName() {
 		return teamName;
 	}
@@ -81,7 +79,7 @@ public class Team implements Serializable {
 	}
 
 	public Match getMatch(int matchID) {
-		return regionalCollection.getMatch(matchID);
+		return MatchHub.regionalCollection.getMatch(matchID);
 	}
 
 }
