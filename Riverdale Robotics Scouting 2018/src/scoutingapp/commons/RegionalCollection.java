@@ -11,21 +11,30 @@ public class RegionalCollection {
 
 	}
 
-	public void createTeam(int teamNumber, String teamName) {
+	public void createTeam(int teamNumber, String teamName) throws ExistingTeamException {
 
-		Team team = new Team(teamNumber, teamName);
+		if (Teams.containsKey(teamNumber)) {
+			throw new ExistingTeamException();
+		} else {
+			Team team = new Team(teamNumber, teamName);
 
-		Teams.put(teamNumber, team);
-
-	}
-
-	public void createTeam(int teamNumber) throw  {
-
-		Team team = new Team(teamNumber);
-
-		Teams.put(teamNumber, team);
+			Teams.put(teamNumber, team);
+		}
 
 	}
-	
-	public void createMatch
+
+	public void createTeam(int teamNumber) throws ExistingTeamException {
+
+		if (Teams.containsKey(teamNumber)) {
+			throw new ExistingTeamException();
+		} else {
+			Team team = new Team(teamNumber);
+
+			Teams.put(teamNumber, team);
+		}
+	}
+
+	public void createMatch (int matchID) {
+		
+	}
 }

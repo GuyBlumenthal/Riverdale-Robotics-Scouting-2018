@@ -64,6 +64,10 @@ public class Team implements Serializable {
 		return numAboveAverage / data.size() * 100;
 	}
 
+	public HashMap<Integer, Integer> getMatches() {
+		return matches;
+	}
+	
 	public String getName() {
 		return teamName;
 	}
