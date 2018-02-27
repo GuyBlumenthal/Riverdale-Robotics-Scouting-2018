@@ -72,11 +72,11 @@ public class Team implements Serializable {
 		return matches;
 	}
 	
-	public String getName() {
+	public String getTeamName() {
 		return teamName;
 	}
 
-	public int getNumber() {
+	public int getTeamNumber() {
 		return teamNumber;
 	}
 

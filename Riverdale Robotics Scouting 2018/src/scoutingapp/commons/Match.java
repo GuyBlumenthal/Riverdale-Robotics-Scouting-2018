@@ -16,13 +16,59 @@ public class Match {
 	double[] redPowerUps;
 	double[] bluePowerUps;
 
-	Team[] blueTeam;
-	Team[] redTeam;
+	int[] blueTeams;
+	int[] redTeams;
 
-	public Match(int matchID, Team[] blueTeam, Team[] redTeam) {
+	public Match(int matchID, int[] blueTeams, int[] redTeams) {
 
-		this.blueTeam = blueTeam;
-		this.redTeam = redTeam;
+		this.blueTeams = blueTeams;
+		this.redTeams = redTeams;
+		this.matchID = matchID;
+
+		int[] redSwitchPlacements = new int[6];
+		int[] blueSwitchPlacements = new int[6];
+
+		int[] vaultPlacements = new int[6];
+
+		boolean[] climbs = new boolean[6];
+
+		for (int i = 0; i < 6; i++) {
+
+			redSwitchPlacements[i] = -1;
+			blueSwitchPlacements[i] = -1;
+
+			vaultPlacements[i] = -1;
+
+			climbs[i] = false;
+
+		}
+
+		double[] redPowerUps = new double[3];
+		double[] bluePowerUps = new double[3];
+
+		for (int i = 0; i < 3; i++) {
+
+			redPowerUps[i] = -1;
+			bluePowerUps[i] = -1;
+
+		}
+
+	}
+
+	public Match(int matchID, Team[] blueTeams, Team[] redTeams) {
+
+		this.blueTeams = new int[blueTeams.length];
+
+		for (int i = 0; i < blueTeams.length; i++) {
+			this.blueTeams[i] = blueTeams[i].getTeamNumber();
+		}
+
+		this.redTeams = new int[redTeams.length];
+
+		for (int i = 0; i < redTeams.length; i++) {
+			this.redTeams[i] = redTeams[i].getTeamNumber();
+		}
+
 		this.matchID = matchID;
 
 		int[] redSwitchPlacements = new int[6];
@@ -56,11 +102,11 @@ public class Match {
 	}
 
 	public Team[] getBlueTeam() {
-		return blueTeam;
+		return blueTeams;
 	}
 
 	public Team[] getRedTeam() {
-		return redTeam;
+		return redTeams;
 	}
 
 }

@@ -1,6 +1,6 @@
 package scoutingapp.commons;
 
-public class ExistingTeamException extends Exception {
+public class ExistingException extends Exception {
 
 	/**
 	 * 
