@@ -35,7 +35,7 @@ public class MatchHub extends JFrame {
 	public final static Color RED_ALLIANCE_COLOR = new Color(255, 109, 81);
 	public final static Color BLUE_ALLIANCE_COLOR = new Color(135, 206, 250);
 	
-	HashMap<Team, TeamHub> teams = new HashMap<Team, TeamHub>();
+	HashMap<Team, TeamDetail> teams = new HashMap<Team, TeamDetail>();
 
 	/**
 	 * Launch the application.

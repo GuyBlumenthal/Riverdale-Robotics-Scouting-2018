@@ -1,21 +1,20 @@
 package scoutingapp.views;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import scoutingapp.commons.Match;
+import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.Team;
-
-import javax.swing.UIManager;
-import java.awt.Color;
-import javax.swing.JButton;
 
 public class MatchOverview extends JFrame {
 
@@ -23,6 +22,7 @@ public class MatchOverview extends JFrame {
 	
 	private Match match;
 
+	static public RegionalCollection regionalCollection = new RegionalCollection();
 	/**
 	 * Launch the application.
 	 */

@@ -1,22 +1,24 @@
 package scoutingapp.views;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JCheckBox;
-import javax.swing.JTable;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import javax.swing.table.DefaultTableModel;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
+import scoutingapp.commons.Team;
 
 public class MatchDetail extends JFrame {
 
@@ -46,6 +48,7 @@ public class MatchDetail extends JFrame {
 	 * Create the frame.
 	 */
 	public MatchDetail() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 474, 337);
 		contentPane = new JPanel();
@@ -134,6 +137,16 @@ public class MatchDetail extends JFrame {
 		});
 		scrollPaneSwitch.setViewportView(tblSwitch);
 		
-		
+		JButton btnSaveData = new JButton("Save Data");
+		btnSaveData.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Team team = new Team(Integer.parseInt(txtTeamNumber.getText()));
+			}
+		});
+		btnSaveData.setBounds(327, 242, 89, 23);
+		contentPane.add(btnSaveData);
 	}
+	
+	
 }
