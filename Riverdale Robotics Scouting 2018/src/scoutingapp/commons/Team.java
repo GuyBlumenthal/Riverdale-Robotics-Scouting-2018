@@ -15,26 +15,37 @@ public class Team implements Serializable {
 
 	private int teamNumber;
 	private String teamName;
-
+	private boolean allianceColour; // true = red, false = blue
+	/**
+	 * matches map: given the nth match, a corresponding qualification match number can be found  
+	 */
 	private HashMap<Integer, Integer> matches;
-	public ArrayList<Integer> numCubesOnSwitchTeleop;
+	//teleop
+	public ArrayList<Integer> numCubesOnAllianceSwitch;
+	public ArrayList<Integer> numCubesOnOpponentsSwitch;
 	public ArrayList<Integer> numCubesOnScaleTeleop;
+	public ArrayList<Integer> timeCubesOnSwitchTeleop;
+	public ArrayList<Integer> timeCubesOnScaleTeleop;
+	//auto
 	public ArrayList<Integer> numCubesOnSwitchAuto;
 	public ArrayList<Integer> numCubesOnScaleAuto;
+	public ArrayList<Integer> timeCubesOnSwitchAuto;
+	public ArrayList<Integer> timeCubesOnScaleAuto;
 	public ArrayList<Integer> climb; // 0 means no climb, 1 means climbed
-	public ArrayList<Integer> crossedBaseLine; // 0 means no climb, 1 means
-												// climbed
+	public ArrayList<Integer> crossedBaseLine; // 0 means no climb, 1 means climbed
 
-	public Team(int teamNumber, String teamName) {
-
+	private RegionalCollection regionalCollection = MatchHub.regionalCollection;
+	
+	public Team(int teamNumber, String teamName, boolean allianceColour) {
 		this.teamNumber = teamNumber;
 		this.teamName = teamName;
-
+		this.allianceColour = allianceColour;
 	}
 
-	public Team(int teamNumber) {
+	public Team(int teamNumber, boolean allianceColour) {
 
 		this.teamNumber = teamNumber;
+		this.allianceColour = allianceColour;
 		this.teamName = Integer.toString(teamNumber);
 
 	}
@@ -76,6 +87,10 @@ public class Team implements Serializable {
 
 	public int getTeamNumber() {
 		return teamNumber;
+	}
+	
+	public String getAllianceColour() {
+		return this.allianceColour ? "red" : "blue";
 	}
 
 	public Match getMatch(int matchID) {
