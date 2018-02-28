@@ -21,8 +21,8 @@ public class Team implements Serializable {
 	private HashMap<Integer, TeamPerformance> teamPerformances;
 
 	/**
-	 * matches map: given the nth match, a corresponding qualification match number
-	 * can be found
+	 * matches map: given the nth match, a corresponding qualification match
+	 * number can be found
 	 */
 	private HashMap<Integer, Integer> matches;
 
@@ -61,6 +61,39 @@ public class Team implements Serializable {
 		}
 
 		return sum / ((data.size() > 0 ? data.size() : 1) * 1.0);
+	}
+
+	public double calcNumCubesOnSwitchAverage() {
+		double sum = 0;
+
+		for (int i = 0; i < numCubesOnAllianceSwitch.size(); i++) {
+			sum += numCubesOnAllianceSwitch.get(i);
+		}
+
+		for (int i = 0; i < numCubesOnOpponentsSwitch.size(); i++) {
+			sum += numCubesOnOpponentsSwitch.get(i);
+		}
+
+		return sum / ((numCubesOnAllianceSwitch.size() + numCubesOnOpponentsSwitch.size()) * 1.0);
+	}
+
+	public double calcNumCubesOnSwitchConsistency() {
+		double average = calcNumCubesOnSwitchAverage();
+		int numAboveAverage = 0;
+
+		for (int i = 0; i < numCubesOnAllianceSwitch.size(); i++) {
+			if (numCubesOnAllianceSwitch.get(i) >= average) {
+				numAboveAverage++;
+			}
+		}
+
+		for (int i = 0; i < numCubesOnOpponentsSwitch.size(); i++) {
+			if (numCubesOnOpponentsSwitch.get(i) >= average) {
+				numAboveAverage++;
+			}
+		}
+
+		return numAboveAverage / (numCubesOnAllianceSwitch.size() + numCubesOnOpponentsSwitch.size()) * 100;
 	}
 
 	public double calcConsistency(ArrayList<Integer> data) {
