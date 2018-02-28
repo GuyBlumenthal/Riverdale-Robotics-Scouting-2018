@@ -66,8 +66,8 @@ public class Team implements Serializable {
 	public double calcNumCubesOnSwitchAverage() {
 		double sum = 0;
 
-		for (int i = 0; i < numCubesOnAllianceSwitch.size(); i++) {
-			sum += numCubesOnAllianceSwitch.get(i);
+		for (int i = 0; i < teamPerformances.size(); i++) {
+			sum += teamPerformances.get(i);
 		}
 
 		for (int i = 0; i < numCubesOnOpponentsSwitch.size(); i++) {

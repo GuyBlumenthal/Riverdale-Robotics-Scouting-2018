@@ -9,12 +9,13 @@ import scoutingapp.views.TeamPerformanceWindow;
 public class TeamPerformance {
 
 	// teleop
-	public ArrayList<String> cubesOnAllianceSwitchTeleop;
-	public ArrayList<String> cubesOnOpponentSwitchTeleop;
-	public ArrayList<String> cubesOnScaleTeleop;
+	public ArrayList<Integer> cubesOnAllianceSwitchTeleop;
+	public ArrayList<Integer> cubesOnOpponentSwitchTeleop;
+	public ArrayList<Integer> cubesOnScaleTeleop;
+	
 	// auto
-	public ArrayList<String> cubesOnSwitchAuto;
-	public ArrayList<String> cubesOnScaleAuto;
+	public ArrayList<Integer> cubesOnSwitchAuto;
+	public ArrayList<Integer> cubesOnScaleAuto;
 	public boolean climb; // 0 means no climb, 1 means climbed
 	public boolean crossedBaseLine; // 0 means no climb, 1 means climbed
 
@@ -28,12 +29,12 @@ public class TeamPerformance {
 
 	private void initDetail() {
 
-		cubesOnAllianceSwitchTeleop = new ArrayList<String>();
-		cubesOnOpponentSwitchTeleop = new ArrayList<String>();
-		cubesOnScaleTeleop = new ArrayList<String>();
+		cubesOnAllianceSwitchTeleop = new ArrayList<Integer>();
+		cubesOnOpponentSwitchTeleop = new ArrayList<Integer>();
+		cubesOnScaleTeleop = new ArrayList<Integer>();
 
-		cubesOnSwitchAuto = new ArrayList<String>();
-		cubesOnScaleAuto = new ArrayList<String>();
+		cubesOnSwitchAuto = new ArrayList<Integer>();
+		cubesOnScaleAuto = new ArrayList<Integer>();
 
 		climb = false;
 		crossedBaseLine = false;
