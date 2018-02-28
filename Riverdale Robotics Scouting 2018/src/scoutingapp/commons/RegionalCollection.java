@@ -45,6 +45,7 @@ public class RegionalCollection {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					System.out.println("test");
 					TeamPerformanceWindow frame = new TeamPerformanceWindow(matchID, teamNumber);
 					frame.setVisible(true);
 				} catch (Exception e) {

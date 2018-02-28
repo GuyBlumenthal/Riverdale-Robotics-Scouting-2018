@@ -61,6 +61,9 @@ public class MatchOverview extends JFrame {
 	 * Create the frame.
 	 */
 	public MatchOverview(int match) {
+		
+		this.match = match;
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 400);
@@ -206,7 +209,7 @@ public class MatchOverview extends JFrame {
 				teamNumber = MatchHub.regionalCollection.getMatch(match).getRedTeams()[team].getTeamNumber();
 
 			} else {
-
+				
 				teamNumber = MatchHub.regionalCollection.getMatch(match).getBlueTeams()[team].getTeamNumber();
 
 			}
