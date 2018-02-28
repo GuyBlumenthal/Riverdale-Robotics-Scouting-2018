@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-import scoutingapp.commons.Team;
+import scoutingapp.commons.team.Team;
 
 public class TeamDetail extends JFrame {
 	/**
@@ -26,7 +26,7 @@ public class TeamDetail extends JFrame {
 	private JTable tblOverview;
 	private Team team;
 
-	private static Team test = new Team(5834, false);
+	private static Team test = new Team(5834);
 	/**
 	 * Launch the application.
 	 */
@@ -110,19 +110,17 @@ public class TeamDetail extends JFrame {
 
 		tblOverview = new JTable();
 		tblOverview.setEnabled(false);
+
 		tblOverview.setModel(new DefaultTableModel(new Object[][] { 
 			
 				{ "Cube on Switch",
 					team.calcAverage(team.numCubesOnSwitchAuto), 	team.calcConsistency(team.numCubesOnSwitchAuto),	10/*TODO: Add switch auto average time*/,
 					team.calcNumCubesOnSwitchAverage(), 			team.calcNumCubesOnSwitchConsistency(),				10/*TODO: Add switch teleop average time*/, },
-
 				{ "Cube on Scale", 
 					team.calcAverage(team.numCubesOnScaleAuto),		team.calcConsistency(team.numCubesOnScaleAuto),		10/*TODO: Add scale auto average time*/, 
 					team.calcAverage(team.numCubesOnScaleTeleop),	team.calcConsistency(team.numCubesOnScaleTeleop),	10/*TODO: Add scale auto average time*/,  },
-
 				{ "Baseline", 
 					team.calcAverage(team.crossedBaseLine), team.calcConsistency(team.crossedBaseLine), null, null, null, null },
-
 				{ "Climb", 
 					team.calcAverage(team.climb), team.calcConsistency(team.climb), null, null, null, null}
 		},

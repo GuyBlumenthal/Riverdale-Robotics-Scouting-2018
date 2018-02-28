@@ -1,19 +1,11 @@
 package scoutingapp.commons;
 
+import scoutingapp.commons.team.Team;
 import scoutingapp.views.MatchHub;
 
 public class Match {
 
 	int redScore, blueScore, matchID;
-
-	Team[] teams;
-
-	int[] redSwitchPlacements;
-	int[] blueSwitchPlacements;
-
-	int[] vaultPlacements;
-
-	boolean[] climbs;
 
 	double[] redPowerUps;
 	double[] bluePowerUps;
@@ -26,24 +18,6 @@ public class Match {
 		this.blueTeams = blueTeams;
 		this.redTeams = redTeams;
 		this.matchID = matchID;
-
-		int[] redSwitchPlacements = new int[6];
-		int[] blueSwitchPlacements = new int[6];
-
-		int[] vaultPlacements = new int[6];
-
-		boolean[] climbs = new boolean[6];
-
-		for (int i = 0; i < 6; i++) {
-
-			redSwitchPlacements[i] = -1;
-			blueSwitchPlacements[i] = -1;
-
-			vaultPlacements[i] = -1;
-
-			climbs[i] = false;
-
-		}
 
 		double[] redPowerUps = new double[3];
 		double[] bluePowerUps = new double[3];
@@ -73,24 +47,6 @@ public class Match {
 
 		this.matchID = matchID;
 
-		int[] redSwitchPlacements = new int[6];
-		int[] blueSwitchPlacements = new int[6];
-
-		int[] vaultPlacements = new int[6];
-
-		boolean[] climbs = new boolean[6];
-
-		for (int i = 0; i < 6; i++) {
-
-			redSwitchPlacements[i] = -1;
-			blueSwitchPlacements[i] = -1;
-
-			vaultPlacements[i] = -1;
-
-			climbs[i] = false;
-
-		}
-
 		double[] redPowerUps = new double[3];
 		double[] bluePowerUps = new double[3];
 
@@ -102,8 +58,8 @@ public class Match {
 		}
 
 	}
-	
-	public int getMatchID () {
+
+	public int getMatchID() {
 		return this.matchID;
 	}
 

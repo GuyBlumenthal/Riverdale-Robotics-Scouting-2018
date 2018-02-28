@@ -2,6 +2,8 @@ package scoutingapp.commons;
 
 import java.util.HashMap;
 
+import scoutingapp.commons.team.Team;
+
 public class RegionalCollection {
 
 	HashMap<Integer, Team> teams;
@@ -14,24 +16,24 @@ public class RegionalCollection {
 
 	}
 
-	public void createTeam(int teamNumber, String teamName, boolean allianceColour) throws ExistingException {
+	public void createTeam(int teamNumber, String teamName) throws ExistingException {
 
 		if (teams.containsKey(teamNumber)) {
 			throw new ExistingException();
 		} else {
-			Team team = new Team(teamNumber, teamName, allianceColour);
+			Team team = new Team(teamNumber, teamName);
 
 			teams.put(teamNumber, team);
 		}
 
 	}
 
-	public void createTeam(int teamNumber, boolean allianceColour) throws ExistingException {
+	public void createTeam(int teamNumber) throws ExistingException {
 
 		if (teams.containsKey(teamNumber)) {
 			throw new ExistingException();
 		} else {
-			Team team = new Team(teamNumber, allianceColour);
+			Team team = new Team(teamNumber);
 
 			teams.put(teamNumber, team);
 		}

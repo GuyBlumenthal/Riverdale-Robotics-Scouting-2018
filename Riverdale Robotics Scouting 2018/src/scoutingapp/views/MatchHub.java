@@ -21,7 +21,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import scoutingapp.commons.RegionalCollection;
-import scoutingapp.commons.Team;
+import scoutingapp.commons.team.Team;
 
 public class MatchHub extends JFrame {
 
@@ -68,12 +68,12 @@ public class MatchHub extends JFrame {
 	public MatchHub() {
 
 		try {
-			regionalCollection.createTeam(new Team(1001, "The Testers", true));
-			regionalCollection.createTeam(new Team(1002, "The Ranoutofideas", false));
-			regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires", true));
-			regionalCollection.createTeam(new Team(1004, "Bang blasters", true));
-			regionalCollection.createTeam(new Team(1005, "Spencini81", false));
-			regionalCollection.createTeam(new Team(1006, "Spoincer", false));
+			regionalCollection.createTeam(new Team(1001, "The Testers"));
+			regionalCollection.createTeam(new Team(1002, "The Ranoutofideas"));
+			regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires"));
+			regionalCollection.createTeam(new Team(1004, "Bang blasters"));
+			regionalCollection.createTeam(new Team(1005, "Spencini81"));
+			regionalCollection.createTeam(new Team(1006, "Spoincer"));
 		} catch (Exception e) {
 
 		}
