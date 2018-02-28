@@ -37,9 +37,9 @@ public class TeamPerformanceWindow extends JFrame {
 	private JTextField txtForce;
 	private JTextField txtBoost;
 	public JCheckBox chkBaseline;
-	public JCheckBox chkClimb;
 
 	private int teamNumber, matchID;
+	public JTextField txtClimb;
 
 	/**
 	 * Launch the application.
@@ -133,11 +133,16 @@ public class TeamPerformanceWindow extends JFrame {
 		chkBaseline.setEnabled(false);
 		contentPane.add(chkBaseline);
 
-		chkClimb = new JCheckBox("(Teleop) Climb");
-		chkClimb.setBounds(380, 84, 110, 23);
-		chkClimb.setSelected(teamPerformance.climb);
-		chkClimb.setEnabled(false);
-		contentPane.add(chkClimb);
+		txtClimb = new JTextField();
+		txtClimb.setBounds(435, 85, 68, 20);
+		txtClimb.setText(teamPerformance.climb);
+		txtClimb.setEnabled(false);
+		contentPane.add(txtClimb);
+		txtClimb.setColumns(10);
+		
+		JLabel lblStartClimbTime = new JLabel("Start Climb Time");
+		lblStartClimbTime.setBounds(343, 88, 82, 14);
+		contentPane.add(lblStartClimbTime);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(109, 114, 394, 2);
@@ -252,10 +257,6 @@ public class TeamPerformanceWindow extends JFrame {
 		chkBaseline.setBounds(138, 84, 154, 23);
 		contentPane.add(chkBaseline);
 
-		chkClimb = new JCheckBox("(Teleop) Climb");
-		chkClimb.setBounds(380, 84, 110, 23);
-		contentPane.add(chkClimb);
-
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(109, 114, 394, 2);
 		contentPane.add(separator_1);
@@ -348,5 +349,14 @@ public class TeamPerformanceWindow extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(231, 140, 147, 147);
 		contentPane.add(scrollPane);
+		
+		txtClimb = new JTextField();
+		txtClimb.setBounds(435, 85, 68, 20);
+		contentPane.add(txtClimb);
+		txtClimb.setColumns(10);
+		
+		JLabel lblStartClimbTime = new JLabel("Start Climb Time");
+		lblStartClimbTime.setBounds(343, 88, 82, 14);
+		contentPane.add(lblStartClimbTime);
 	}
 }
