@@ -147,7 +147,7 @@ public class TeamPerformanceWindow extends JFrame {
 		tblSwitch = new JTable(data, columns);
 		tblSwitch.setModel(new DefaultTableModel(
 				new Object[][] { { null, null, "0:00" }, { null, null, null }, { null, null, null }, },
-				new String[] { "In Auto", "Defense", "Time" }) {
+				new String[] { "Auto", "Offense", "Time" }) {
 			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, String.class };
 
 			public Class getColumnClass(int columnIndex) {
