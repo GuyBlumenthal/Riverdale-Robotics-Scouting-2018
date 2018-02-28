@@ -20,13 +20,12 @@ import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.team.Team;
+import javax.swing.SwingConstants;
 
 public class MatchDetail extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtTeamNumber;
 	private JLabel lblMatchNumber;
-	private JTextField txtMatchNumber;
 	private JTable tblSwitch;
 	private JTable tblScale;
 	private JTable tblVault;
@@ -66,26 +65,15 @@ public class MatchDetail extends JFrame {
 		contentPane.add(lblMatchDetail);
 
 		JLabel lblTeam = new JLabel("Team Number: ");
+		lblTeam.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTeam.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTeam.setBounds(34, 44, 95, 24);
+		lblTeam.setBounds(34, 44, 158, 24);
 		contentPane.add(lblTeam);
-
-		txtTeamNumber = new JTextField();
-		txtTeamNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtTeamNumber.setBounds(130, 46, 62, 20);
-		contentPane.add(txtTeamNumber);
-		txtTeamNumber.setColumns(10);
 
 		lblMatchNumber = new JLabel("Match Number: ");
 		lblMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblMatchNumber.setBounds(231, 44, 95, 24);
 		contentPane.add(lblMatchNumber);
-
-		txtMatchNumber = new JTextField();
-		txtMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtMatchNumber.setColumns(10);
-		txtMatchNumber.setBounds(328, 46, 62, 20);
-		contentPane.add(txtMatchNumber);
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 79, 438, 2);
@@ -119,10 +107,18 @@ public class MatchDetail extends JFrame {
 
 		tblSwitch = new JTable(data, columns);
 		tblSwitch.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, "0:00" }, { null, null, null }, { null, null, null }, },
-				new String[] { "In Auto", "Defense", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, String.class };
-
+			new Object[][] {
+				{null, null, "0:00"},
+				{null, null, "0:01"},
+				{null, null, "0:02"},
+			},
+			new String[] {
+				"In Auto", "Defense", "Time"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Boolean.class, Boolean.class, String.class
+			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}

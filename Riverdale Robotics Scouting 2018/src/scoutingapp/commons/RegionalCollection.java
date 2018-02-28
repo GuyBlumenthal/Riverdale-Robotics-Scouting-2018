@@ -3,6 +3,7 @@ package scoutingapp.commons;
 import java.util.HashMap;
 
 import scoutingapp.commons.team.Team;
+import scoutingapp.views.TeamPerformanceWindow;
 
 public class RegionalCollection {
 
@@ -48,6 +49,18 @@ public class RegionalCollection {
 		}
 	}
 
+	public void addTeamPerformance(int teamNumber, int matchID, TeamPerformanceWindow window) {
+
+		teams.get(teamNumber).addTeamPerformance(matchID, window);
+
+	}
+
+	public boolean teamExists(int teamNumber) {
+
+		return teams.containsKey(teamNumber);
+
+	}
+
 	public void createMatch(int matchID, int[] blueTeams, int[] redTeams) throws ExistingException {
 
 		if (matches.containsKey(matchID)) {
@@ -68,6 +81,12 @@ public class RegionalCollection {
 
 			matches.put(matchID, match);
 		}
+	}
+
+	public boolean matchExists(int matchID) {
+
+		return matches.containsKey(matchID);
+
 	}
 
 	public Team getTeam(int teamNumber) {

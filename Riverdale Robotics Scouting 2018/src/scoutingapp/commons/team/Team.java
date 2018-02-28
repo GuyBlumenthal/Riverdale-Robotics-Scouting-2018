@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import scoutingapp.commons.Match;
 import scoutingapp.views.MatchHub;
+import scoutingapp.views.TeamPerformanceWindow;
 
 public class Team implements Serializable {
 
@@ -17,7 +18,7 @@ public class Team implements Serializable {
 	private int teamNumber;
 	private String teamName;
 
-	public HashMap<Integer, TeamPerformance> teamPerformances;
+	private HashMap<Integer, TeamPerformance> teamPerformances;
 
 	/**
 	 * matches map: given the nth match, a corresponding qualification match number
@@ -44,6 +45,12 @@ public class Team implements Serializable {
 
 	public int getMatchesPlayed() {
 		return teamPerformances.size();
+	}
+
+	public void addTeamPerformance(int matchID, TeamPerformanceWindow window) {
+
+		teamPerformances.put(matchID, new TeamPerformance(window));
+
 	}
 
 	public double calcAverage(ArrayList<Integer> data) {
