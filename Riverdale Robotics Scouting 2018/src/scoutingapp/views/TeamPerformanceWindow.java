@@ -61,13 +61,13 @@ public class TeamPerformanceWindow extends JFrame {
 
 		try {
 
-			if (!MatchHub.regionalCollection.teamExists(teamNumber)) {
-				MatchHub.regionalCollection.createTeam(teamNumber);
+			if (!TeamHub.regionalCollection.teamExists(teamNumber)) {
+				TeamHub.regionalCollection.createTeam(teamNumber);
 			}
 
-			MatchHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
+			TeamHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
 
-			MatchHub.regionalCollection.showTeamPerformance(matchID, teamNumber);
+			TeamHub.regionalCollection.showTeamPerformance(matchID, teamNumber);
 
 		} catch (NumberFormatException e) {
 
