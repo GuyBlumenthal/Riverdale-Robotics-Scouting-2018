@@ -5,7 +5,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-import java.util.HashMap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,20 +19,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 
-import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.team.Team;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MatchHub extends JFrame {
 
 	/**
 	 * 
 	 */
-
-	static public RegionalCollection regionalCollection = new RegionalCollection();
 
 	private static final long serialVersionUID = 6184145860176117808L;
 	private JPanel contentPane;
@@ -70,12 +65,12 @@ public class MatchHub extends JFrame {
 	public MatchHub() {
 
 		try {
-			regionalCollection.createTeam(new Team(1001, "The Testers"));
-			regionalCollection.createTeam(new Team(1002, "The Ranoutofideas"));
-			regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires"));
-			regionalCollection.createTeam(new Team(1004, "Bang blasters"));
-			regionalCollection.createTeam(new Team(1005, "Spencini81"));
-			regionalCollection.createTeam(new Team(1006, "Spoincer"));
+			TeamHub.regionalCollection.createTeam(new Team(1001, "The Testers"));
+			TeamHub.regionalCollection.createTeam(new Team(1002, "The Ranoutofideas"));
+			TeamHub.regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires"));
+			TeamHub.regionalCollection.createTeam(new Team(1004, "Bang blasters"));
+			TeamHub.regionalCollection.createTeam(new Team(1005, "Spencini81"));
+			TeamHub.regionalCollection.createTeam(new Team(1006, "Spoincer"));
 		} catch (Exception e) {
 
 		}
@@ -85,7 +80,7 @@ public class MatchHub extends JFrame {
 			int[] blueTeams = { 1001, 1002, 1003 };
 			int[] redTeams = { 1004, 1005, 1006 };
 
-			regionalCollection.createMatch(1, blueTeams, redTeams);
+			TeamHub.regionalCollection.createMatch(1, blueTeams, redTeams);
 
 		} catch (
 
@@ -105,20 +100,22 @@ public class MatchHub extends JFrame {
 
 	public void updateMatchTable() {
 
-		Object[][] arrayValues = new Object[regionalCollection.getMatchIDList().length][8];
+		Object[][] arrayValues = new Object[TeamHub.regionalCollection.getMatchIDList().length][8];
 
-		int[] matchIDList = regionalCollection.getMatchIDList();
+		int[] matchIDList = TeamHub.regionalCollection.getMatchIDList();
 
 		for (int i = 0; i < arrayValues.length; i++) {
 
-			arrayValues[i][0] = regionalCollection.getMatch(matchIDList[i]).getMatchID();
+			arrayValues[i][0] = TeamHub.regionalCollection.getMatch(matchIDList[i]).getMatchID();
 
 			for (int j = 0; j < 3; j++) {
-				arrayValues[i][j + 1] = regionalCollection.getMatch(matchIDList[i]).getBlueTeams()[j].getTeamNumber();
+				arrayValues[i][j + 1] = TeamHub.regionalCollection.getMatch(matchIDList[i]).getBlueTeams()[j]
+						.getTeamNumber();
 			}
 
 			for (int j = 0; j < 3; j++) {
-				arrayValues[i][j + 4] = regionalCollection.getMatch(matchIDList[i]).getRedTeams()[j].getTeamNumber();
+				arrayValues[i][j + 4] = TeamHub.regionalCollection.getMatch(matchIDList[i]).getRedTeams()[j]
+						.getTeamNumber();
 			}
 
 		}
@@ -230,8 +227,8 @@ public class MatchHub extends JFrame {
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.RIGHT);
-		
-		/*functions*/
+
+		/* functions */
 		btnAddMatch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

@@ -63,13 +63,12 @@ public class TeamPerformanceWindow extends JFrame {
 
 		try {
 
-			if (!MatchHub.regionalCollection.teamExists(teamNumber)) {
-				MatchHub.regionalCollection.createTeam(teamNumber);
+			if (!TeamHub.regionalCollection.teamExists(teamNumber)) {
+				TeamHub.regionalCollection.createTeam(teamNumber);
 			}
+			TeamHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
 
-			MatchHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
-			
-			MatchHub.regionalCollection.showTeamPerformance(matchID, teamNumber);
+			TeamHub.regionalCollection.showTeamPerformance(matchID, teamNumber);
 
 		} catch (NumberFormatException e) {
 
@@ -90,7 +89,7 @@ public class TeamPerformanceWindow extends JFrame {
 		this.teamNumber = teamNumber;
 		this.matchID = matchID;
 
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 427);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -141,7 +140,7 @@ public class TeamPerformanceWindow extends JFrame {
 		txtClimb.setEnabled(false);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
-		
+
 		JLabel lblStartClimbTime = new JLabel("Start Climb Time");
 		lblStartClimbTime.setBounds(343, 88, 82, 14);
 		contentPane.add(lblStartClimbTime);
@@ -216,7 +215,7 @@ public class TeamPerformanceWindow extends JFrame {
 		this.teamNumber = teamNumber;
 		this.matchID = matchID;
 
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 360);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -351,12 +350,12 @@ public class TeamPerformanceWindow extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(231, 140, 147, 147);
 		contentPane.add(scrollPane);
-		
+
 		txtClimb = new JTextField();
 		txtClimb.setBounds(435, 85, 68, 20);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
-		
+
 		JLabel lblStartClimbTime = new JLabel("Start Climb Time");
 		lblStartClimbTime.setBounds(343, 88, 82, 14);
 		contentPane.add(lblStartClimbTime);

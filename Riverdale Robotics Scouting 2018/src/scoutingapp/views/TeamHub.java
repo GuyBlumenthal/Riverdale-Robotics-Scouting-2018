@@ -2,10 +2,15 @@ package scoutingapp.views;
 
 import java.awt.EventQueue;
 
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-public class TeamHub {
+import scoutingapp.commons.RegionalCollection;
 
+public class TeamHub extends JFrame {
+
+	static public RegionalCollection regionalCollection = new RegionalCollection();
+	
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -16,12 +21,16 @@ public class TeamHub {
 			public void run() {
 				try {
 					TeamHub frame = new TeamHub();
-					//frame.setVisible(true);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public TeamHub(){
+		
 	}
 
 }

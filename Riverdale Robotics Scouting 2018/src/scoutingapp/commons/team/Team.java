@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import scoutingapp.commons.Match;
-import scoutingapp.views.MatchHub;
+import scoutingapp.views.TeamHub;
 import scoutingapp.views.TeamPerformanceWindow;
 
 public class Team implements Serializable {
@@ -79,7 +79,7 @@ public class Team implements Serializable {
 	}
 
 	public Match getMatch(int matchID) {
-		return MatchHub.regionalCollection.getMatch(matchID);
+		return TeamHub.regionalCollection.getMatch(matchID);
 	}
 
 	/*
