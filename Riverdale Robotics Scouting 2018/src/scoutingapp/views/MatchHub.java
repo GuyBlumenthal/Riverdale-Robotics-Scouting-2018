@@ -22,6 +22,8 @@ import javax.swing.table.TableModel;
 
 import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.team.Team;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MatchHub extends JFrame {
 
@@ -228,6 +230,13 @@ public class MatchHub extends JFrame {
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.RIGHT);
+		
+		/*functions*/
+		btnAddMatch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
 
 	}
 

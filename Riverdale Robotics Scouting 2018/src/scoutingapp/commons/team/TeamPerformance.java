@@ -48,7 +48,7 @@ public class TeamPerformance {
 		cubesOnScaleAuto = new ArrayList<Integer>();
 		cubesInVaultAuto = new ArrayList<Integer>();
 
-		climb = false;
+		climb = -1;
 		crossedBaseLine = false;
 
 	}
