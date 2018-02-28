@@ -167,19 +167,20 @@ public class Team implements Serializable {
 	}
 
 	public int calcAverageTime(int scenario) {
-		/* TODO: FIXXXX */
 		int sum = 0;
-
-		if (scenario < 5) {
-			scenario = 5;
-		}
+		int total = 0;
+		
+		if (scenario < 5) 	{	scenario = 5;	}
 
 		for (TeamPerformance performances : teamPerformances.values()) {
 			ArrayList<Integer> data = getData(scenario, performances);
-
+			for(Integer i : teamPerformances.keySet()){
+				sum += data.get(i);
+			}
+			total += data.size();
 		}
 
-		return 0;
+		return sum / (total > 0 ? total : 1);
 	}
 
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {

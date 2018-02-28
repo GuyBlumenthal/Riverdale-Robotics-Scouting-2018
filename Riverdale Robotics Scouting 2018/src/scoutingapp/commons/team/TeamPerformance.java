@@ -7,7 +7,7 @@ import javax.swing.table.TableModel;
 import scoutingapp.views.TeamPerformanceWindow;
 
 public class TeamPerformance {
-
+	
 	// teleop
 	public ArrayList<Integer> cubesOnAllianceSwitchTeleop;
 	public ArrayList<Integer> cubesOnOpponentSwitchTeleop;
@@ -126,7 +126,7 @@ public class TeamPerformance {
 
 	}
 	
-	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times){
+	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times){	
 		ArrayList<Integer> data = times;
 		
 		for(int i = 0 ; i < times.size(); i++){
@@ -145,5 +145,8 @@ public class TeamPerformance {
 		
 		return data;
 	}
+	
 
 }
+
+
