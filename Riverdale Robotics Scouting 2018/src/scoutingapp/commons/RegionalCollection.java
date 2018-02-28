@@ -40,6 +40,19 @@ public class RegionalCollection {
 			teams.put(teamNumber, team);
 		}
 	}
+	
+	public void createTeamPerformanceWindow(int matchID, int teamNumber) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TeamPerformanceWindow frame = new TeamPerformanceWindow(matchID, teamNumber);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	public void createTeam(Team team) throws ExistingException {
 
