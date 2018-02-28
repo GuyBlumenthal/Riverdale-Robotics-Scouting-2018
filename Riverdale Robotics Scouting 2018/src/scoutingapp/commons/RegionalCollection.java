@@ -2,6 +2,8 @@ package scoutingapp.commons;
 
 import java.util.HashMap;
 
+import scoutingapp.commons.team.Team;
+
 public class RegionalCollection {
 
 	HashMap<Integer, Team> teams;

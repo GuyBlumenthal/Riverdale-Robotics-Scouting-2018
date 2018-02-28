@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import scoutingapp.commons.Match;
-import scoutingapp.commons.Team;
+import scoutingapp.commons.team.Team;
 
 public class MatchOverview extends JFrame {
 

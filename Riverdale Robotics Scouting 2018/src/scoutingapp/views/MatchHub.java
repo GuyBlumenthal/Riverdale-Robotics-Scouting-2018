@@ -21,7 +21,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import scoutingapp.commons.RegionalCollection;
-import scoutingapp.commons.Team;
+import scoutingapp.commons.team.Team;
 
 public class MatchHub extends JFrame {
 

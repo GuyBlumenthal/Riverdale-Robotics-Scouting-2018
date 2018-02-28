@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-import scoutingapp.commons.Team;
+import scoutingapp.commons.team.Team;
 
 public class TeamDetail extends JFrame {
 	/**
@@ -109,18 +109,26 @@ public class TeamDetail extends JFrame {
 
 		tblOverview = new JTable();
 		tblOverview.setEnabled(false);
-		tblOverview.setModel(new DefaultTableModel(new Object[][] { { "Cube on Switch",
-				team.calcAverage(team.numCubesOnSwitchAuto), team.calcConsistency(team.numCubesOnSwitchAuto),
-				team.calcAverage(team.numCubesOnSwitchTeleop), team.calcConsistency(team.numCubesOnSwitchTeleop) },
+		tblOverview.setModel(new DefaultTableModel(
+				new Object[][] {
+						{ "Cube on Switch", team.calcAverage(team.numCubesOnSwitchAuto),
+								team.calcConsistency(team.numCubesOnSwitchAuto),
+								(team.calcAverage(team.numCubesOnSwitchAuto)
+										+ team.calcAverage(team.numCubesOnOpponentsSwitch)) / 2,
+								(team.calcConsistency(team.numCubesOnAllianceSwitch)
+										+ team.calcConsistency(team.numCubesOnOpponentsSwitch)) / 2 },
 
-				{ "Cube on Scale", team.calcAverage(team.numCubesOnScaleAuto),
-						team.calcConsistency(team.numCubesOnScaleAuto), team.calcAverage(team.numCubesOnSwitchTeleop),
-						team.calcConsistency(team.numCubesOnSwitchTeleop) },
+						{ "Cube on Scale", team.calcAverage(team.numCubesOnScaleAuto),
+								team.calcConsistency(team.numCubesOnScaleAuto),
+								(team.calcAverage(team.numCubesOnAllianceSwitch)
+										+ team.calcAverage(team.numCubesOnOpponentsSwitch)) / 2,
+								(team.calcConsistency(team.numCubesOnAllianceSwitch)
+										+ team.calcConsistency(team.numCubesOnOpponentsSwitch)) / 2 },
 
-				{ "Baseline", team.calcAverage(team.crossedBaseLine), team.calcConsistency(team.crossedBaseLine), null,
-						null },
+						{ "Baseline", team.calcAverage(team.crossedBaseLine),
+								team.calcConsistency(team.crossedBaseLine), null, null },
 
-				{ "Climb", team.calcAverage(team.climb), team.calcConsistency(team.climb), null, null }, },
+						{ "Climb", team.calcAverage(team.climb), team.calcConsistency(team.climb), null, null }, },
 				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Teleop Average",
 						"Teleop Consistency" }));
 		scrollPane_1.setViewportView(tblOverview);

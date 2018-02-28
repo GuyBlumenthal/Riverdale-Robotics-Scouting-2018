@@ -20,9 +20,16 @@ import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.RegionalCollection;
-import scoutingapp.commons.Team;
+import scoutingapp.commons.team.Team;
 
-public class MatchDetail extends JFrame {
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+
+@SuppressWarnings("serial")
+public class TeamPerformanceDetail extends JFrame {
 
 	private RegionalCollection regionalCollection = MatchHub.regionalCollection;
 	private JPanel contentPane;
@@ -34,6 +41,8 @@ public class MatchDetail extends JFrame {
 	private JTable tblVault;
 	private JTextField txtForce;
 	private JTextField txtBoost;
+	private JCheckBox chkBasline;
+	private JCheckBox chkClimb;
 
 	/**
 	 * Launch the application.
@@ -42,7 +51,7 @@ public class MatchDetail extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MatchDetail frame = new MatchDetail();
+					TeamPerformanceDetail frame = new TeamPerformanceDetail();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,12 +60,49 @@ public class MatchDetail extends JFrame {
 		});
 	}
 
+	public void saveData() {
+
+		try {
+			Team team = new Team(Integer.parseInt(txtTeamNumber.getText()));
+			try {
+				team.climb.add(chkClimb.isSelected() ? 1 : 0);
+				team.crossedBaseLine.add(chkBasline.isSelected() ? 1 : 0);
+
+				for (int i = 0; i < tblSwitch.getRowCount() - 2; i++) {
+				}
+
+				regionalCollection.createTeam(team.getTeamNumber());
+
+			} catch (ExistingException e) {
+				System.out.println("Team already exists");
+			}
+		} catch (NumberFormatException e) {
+
+			JOptionPane.showMessageDialog(null, "Please fill in the match detail page properly.",
+					"Incomplete Match Detail", JOptionPane.OK_OPTION);
+
+		}
+
+	}
+
 	/**
 	 * Create the frame.
 	 */
-	public MatchDetail() {
+	public TeamPerformanceDetail() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 675, 406);
+		setBounds(100, 100, 675, 427);
+
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+
+		JMenuItem mntmTeams = new JMenuItem("Teams");
+		mnView.add(mntmTeams);
+
+		JMenuItem mntmMatches = new JMenuItem("Matches");
+		mnView.add(mntmMatches);
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
@@ -64,45 +110,45 @@ public class MatchDetail extends JFrame {
 
 		JLabel lblMatchDetail = new JLabel("Match Detail");
 		lblMatchDetail.setFont(new Font("Trebuchet MS", Font.PLAIN, 16));
-		lblMatchDetail.setBounds(168, 11, 97, 24);
+		lblMatchDetail.setBounds(222, 2, 97, 36);
 		contentPane.add(lblMatchDetail);
 
 		JLabel lblTeam = new JLabel("Team Number: ");
 		lblTeam.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTeam.setBounds(34, 44, 95, 24);
+		lblTeam.setBounds(134, 42, 95, 24);
 		contentPane.add(lblTeam);
 
 		txtTeamNumber = new JTextField();
 		txtTeamNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtTeamNumber.setBounds(130, 46, 62, 20);
+		txtTeamNumber.setBounds(230, 44, 62, 20);
 		contentPane.add(txtTeamNumber);
 		txtTeamNumber.setColumns(10);
 
 		lblMatchNumber = new JLabel("Match Number: ");
 		lblMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMatchNumber.setBounds(231, 44, 95, 24);
+		lblMatchNumber.setBounds(331, 42, 95, 24);
 		contentPane.add(lblMatchNumber);
 
 		txtMatchNumber = new JTextField();
 		txtMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtMatchNumber.setColumns(10);
-		txtMatchNumber.setBounds(328, 46, 62, 20);
+		txtMatchNumber.setBounds(428, 44, 62, 20);
 		contentPane.add(txtMatchNumber);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 79, 438, 2);
+		separator.setBounds(109, 77, 394, 2);
 		contentPane.add(separator);
 
-		JCheckBox chkBasline = new JCheckBox("(Auto) Crossed Baseline");
-		chkBasline.setBounds(20, 86, 154, 23);
+		chkBasline = new JCheckBox("(Auto) Crossed Baseline");
+		chkBasline.setBounds(138, 84, 154, 23);
 		contentPane.add(chkBasline);
 
-		JCheckBox chkClimb = new JCheckBox("(Teleop) Climb");
-		chkClimb.setBounds(231, 86, 110, 23);
+		chkClimb = new JCheckBox("(Teleop) Climb");
+		chkClimb.setBounds(380, 84, 110, 23);
 		contentPane.add(chkClimb);
 
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 116, 438, 2);
+		separator_1.setBounds(109, 114, 394, 2);
 		contentPane.add(separator_1);
 
 		// headers for the table
@@ -111,8 +157,9 @@ public class MatchDetail extends JFrame {
 		Object[][] data = new Object[][] { { false, "0:00" } };
 
 		JLabel lblSwitch = new JLabel("Switch");
+		lblSwitch.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSwitch.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSwitch.setBounds(10, 116, 47, 24);
+		lblSwitch.setBounds(86, 116, 47, 24);
 		contentPane.add(lblSwitch);
 
 		JScrollPane scrollPaneSwitch = new JScrollPane();
@@ -132,12 +179,13 @@ public class MatchDetail extends JFrame {
 		scrollPaneSwitch.setViewportView(tblSwitch);
 
 		JButton btnSaveData = new JButton("Save Data");
-		btnSaveData.setBounds(10, 333, 89, 23);
+		btnSaveData.setBounds(329, 9, 110, 23);
 		contentPane.add(btnSaveData);
 
 		JLabel label = new JLabel("Scale");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label.setBounds(231, 116, 47, 24);
+		label.setBounds(294, 116, 47, 24);
 		contentPane.add(label);
 
 		JScrollPane scrollPaneScale = new JScrollPane();
@@ -172,12 +220,13 @@ public class MatchDetail extends JFrame {
 		scrollPaneVault.setViewportView(tblVault);
 
 		JLabel label_1 = new JLabel("Power Cubes In Vault");
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_1.setBounds(431, 116, 129, 24);
+		label_1.setBounds(447, 116, 129, 24);
 		contentPane.add(label_1);
 
 		JLabel lblPower = new JLabel("Power Ups Played");
-		lblPower.setBounds(109, 298, 97, 20);
+		lblPower.setBounds(302, 300, 97, 20);
 		contentPane.add(lblPower);
 
 		JLabel lblForce = new JLabel("Force played at: ");
@@ -202,42 +251,18 @@ public class MatchDetail extends JFrame {
 		chkLevitate.setBounds(497, 333, 97, 23);
 		contentPane.add(chkLevitate);
 
-		JCheckBox chkAlliance = new JCheckBox("Check if on Red Alliance");
-		chkAlliance.setBounds(394, 86, 166, 23);
-		contentPane.add(chkAlliance);
-
 		btnSaveData.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Team team = new Team(Integer.parseInt(txtTeamNumber.getText()), chkAlliance.isSelected());
-				try {
-					regionalCollection.createTeam(team.getTeamNumber());
-					team.climb.add(chkClimb.isSelected() ? 1 : 0);
-					team.crossedBaseLine.add(chkBasline.isSelected() ? 1 : 0);
 
-					for (int i = 0; i < tblSwitch.getRowCount() - 2; i++) {
-					}
+				saveData();
 
-				} catch (ExistingException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Team already exists");
-				}
 			}
 		});
-		btnSaveData.setBounds(10, 298, 89, 23);
 		contentPane.add(btnSaveData);
-
-		JLabel label2 = new JLabel("Switch");
-		label2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label2.setBounds(231, 116, 47, 24);
-		contentPane.add(label2);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(231, 140, 147, 147);
 		contentPane.add(scrollPane);
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(485, 140, 147, 147);
-		contentPane.add(scrollPane_1);
 	}
 }
