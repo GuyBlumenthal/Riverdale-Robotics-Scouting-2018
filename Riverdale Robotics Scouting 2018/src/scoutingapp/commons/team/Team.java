@@ -2,6 +2,7 @@ package scoutingapp.commons.team;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import scoutingapp.commons.Match;
@@ -53,6 +54,10 @@ public class Team implements Serializable {
 
 	}
 
+	public HashMap<Integer, Integer> getMatches() {
+		return matches;
+	}
+
 	public boolean hasTeamPerformance(int matchID) {
 
 		return teamPerformances.containsKey(matchID);
@@ -65,66 +70,6 @@ public class Team implements Serializable {
 
 	}
 
-	public double calcAverage(ArrayList<Integer> data) {
-		double sum = 0;
-
-		for (int i = 0; i < data.size(); i++) {
-			sum += data.get(i);
-		}
-
-		return sum / ((data.size() > 0 ? data.size() : 1) * 1.0);
-	}
-
-	public double calcNumCubesOnSwitchAverage() {
-		double sum = 0;
-
-		for (int i = 0; i < teamPerformances.size(); i++) {
-			sum += teamPerformances.get(i);
-		}
-
-		for (int i = 0; i < numCubesOnOpponentsSwitch.size(); i++) {
-			sum += numCubesOnOpponentsSwitch.get(i);
-		}
-
-		return sum / ((numCubesOnAllianceSwitch.size() + numCubesOnOpponentsSwitch.size()) * 1.0);
-	}
-
-	public double calcNumCubesOnSwitchConsistency() {
-		double average = calcNumCubesOnSwitchAverage();
-		int numAboveAverage = 0;
-
-		for (int i = 0; i < numCubesOnAllianceSwitch.size(); i++) {
-			if (numCubesOnAllianceSwitch.get(i) >= average) {
-				numAboveAverage++;
-			}
-		}
-
-		for (int i = 0; i < numCubesOnOpponentsSwitch.size(); i++) {
-			if (numCubesOnOpponentsSwitch.get(i) >= average) {
-				numAboveAverage++;
-			}
-		}
-
-		return numAboveAverage / (numCubesOnAllianceSwitch.size() + numCubesOnOpponentsSwitch.size()) * 100;
-	}
-
-	public double calcConsistency(ArrayList<Integer> data) {
-		double average = calcAverage(data);
-		int numAboveAverage = 0;
-
-		for (int i = 0; i < data.size(); i++) {
-			if (data.get(i) >= average) {
-				numAboveAverage++;
-			}
-		}
-
-		return numAboveAverage / (data.size() > 0 ? data.size() : 1) * 100;
-	}
-
-	public HashMap<Integer, Integer> getMatches() {
-		return matches;
-	}
-
 	public String getTeamName() {
 		return teamName;
 	}
@@ -135,6 +80,128 @@ public class Team implements Serializable {
 
 	public Match getMatch(int matchID) {
 		return MatchHub.regionalCollection.getMatch(matchID);
+	}
+
+	/*
+	 * scenarios 0: switch auto 1: scale auto 2: scale teleop 3: vault auto 4:
+	 * vault teleop
+	 */
+	public double calcAverage(int scenario) {
+
+		double sum = 0;
+		int total = teamPerformances.size();
+
+		for (TeamPerformance performance : teamPerformances.values()) {
+			ArrayList<Integer> data = getData(scenario, performance);
+			sum += data.size();
+		}
+
+		return sum * 1.0 / (total > 0 ? total : 1);
+	}
+
+	public double calcConsistency(int scenario) {
+		double average = calcAverage(scenario);
+		int numAboveAverage = 0;
+		int total = teamPerformances.size();
+
+		for (TeamPerformance performance : teamPerformances.values()) {
+			ArrayList<Integer> data = getData(scenario, performance);
+			if (data.size() > average) {
+				numAboveAverage++;
+			}
+		}
+
+		return numAboveAverage * 1.0 / (total > 0 ? total : 1) * 100;
+	}
+
+	public double calcTeleopNumCubesOnSwitchAverage() {
+		double sum = 0;
+		int total = teamPerformances.size();
+
+		for (TeamPerformance performance : teamPerformances.values()) {
+			sum += performance.cubesOnAllianceSwitchTeleop.size() + performance.cubesOnOpponentSwitchTeleop.size();
+		}
+
+		return sum * 1.0 / (total > 0 ? total : 1);
+	}
+
+	public double calcTeleopNumCubesOnSwitchConsistency() {
+		double average = calcTeleopNumCubesOnSwitchAverage();
+		int numAboveAverage = 0;
+		int total = teamPerformances.size();
+
+		for (TeamPerformance performance : teamPerformances.values()) {
+			if (performance.cubesOnAllianceSwitchTeleop.size() > average
+					|| performance.cubesOnOpponentSwitchTeleop.size() > average) {
+				numAboveAverage++;
+			}
+		}
+
+		return numAboveAverage * 1.0 / (total > 0 ? total : 1) * 100;
+	}
+
+	public double calcBooleanAverage(boolean scenario) { // true = baseline,
+															// false = climb
+		return calcSum(scenario) * 1.0 / (teamPerformances.size() > 0 ? teamPerformances.size() : 1);
+	}
+
+	public double calcBooleanConsistency(boolean scenario) { // true = baseline,
+																// false = climb
+		return calcBooleanAverage(scenario) * 100;
+	}
+
+	public int calcSum(boolean scenario) {
+		int sum = 0;
+
+		for (TeamPerformance performances : teamPerformances.values()) {
+			if (scenario && performances.climb) {
+				sum++;
+			} else {
+				if (performances.crossedBaseLine) {
+					sum++;
+				}
+			}
+		}
+
+		return sum;
+	}
+
+	public int calcAverageTime(int scenario) {
+		/* TODO: FIXXXX */
+		int sum = 0;
+
+		if (scenario < 5) {
+			scenario = 5;
+		}
+
+		for (TeamPerformance performances : teamPerformances.values()) {
+			ArrayList<Integer> data = getData(scenario, performances);
+
+		}
+
+		return 0;
+	}
+
+	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
+		ArrayList<Integer> data = performance.cubesOnSwitchAuto;
+		switch (scenario) {
+		case 0:
+			data = performance.cubesOnSwitchAuto;
+		case 1:
+			data = performance.cubesOnScaleAuto;
+		case 2:
+			data = performance.cubesOnScaleTeleop;
+		case 3:
+			data = performance.cubesInVaultAuto;
+		case 4:
+			data = performance.cubesInVaultTeleop;
+		case 5:
+			data = performance.cubesOnAllianceSwitchTeleop;
+		case 6:
+			data = performance.cubesOnOpponentSwitchTeleop;
+		}
+
+		return data;
 	}
 
 }
