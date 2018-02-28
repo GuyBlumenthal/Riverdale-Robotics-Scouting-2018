@@ -28,6 +28,7 @@ public class MatchOverview extends JFrame {
 		Team[] testBlue = { new Team(1001, "The Testers"), new Team(1002, "The Ranoutofideas"),
 				new Team(1003, "The Slumdogmillionaires") };
 		Team[] testRed = { new Team(1004, "Bang blasters"), new Team(1005, "Spencini81"), new Team(1006, "Spoincer") };
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
