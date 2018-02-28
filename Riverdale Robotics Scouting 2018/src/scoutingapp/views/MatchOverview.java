@@ -28,7 +28,20 @@ public class MatchOverview extends JFrame {
 		Team[] testBlue = { new Team(1001, "The Testers"), new Team(1002, "The Ranoutofideas"),
 				new Team(1003, "The Slumdogmillionaires") };
 		Team[] testRed = { new Team(1004, "Bang blasters"), new Team(1005, "Spencini81"), new Team(1006, "Spoincer") };
+		try {
+			MatchHub.regionalCollection.createTeam(testBlue[0]);
+			MatchHub.regionalCollection.createTeam(testBlue[1]);
+			MatchHub.regionalCollection.createTeam(testBlue[2]);
 
+			MatchHub.regionalCollection.createTeam(testRed[0]);
+			MatchHub.regionalCollection.createTeam(testRed[1]);
+			MatchHub.regionalCollection.createTeam(testRed[2]);
+
+			MatchHub.regionalCollection.createMatch(1, testBlue, testRed);
+
+		} catch (Exception e) {
+
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
