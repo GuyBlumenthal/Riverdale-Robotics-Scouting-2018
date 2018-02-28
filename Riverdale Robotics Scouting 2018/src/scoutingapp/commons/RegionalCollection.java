@@ -65,7 +65,6 @@ public class RegionalCollection {
 	}
 
 	public void addTeamPerformance(int teamNumber, int matchID, TeamPerformanceWindow window) {
-
 		teams.get(teamNumber).addTeamPerformance(matchID, window);
 
 	}

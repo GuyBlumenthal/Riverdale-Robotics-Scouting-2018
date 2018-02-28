@@ -129,7 +129,11 @@ public class TeamPerformance {
 
 	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
 
-		ArrayList<Integer> data = times;
+		ArrayList<Integer> data = new ArrayList<Integer>();
+		
+		for (int q = 0; q < times.size(); q++) {
+			data.add(times.get(q));
+		}
 
 		for (int i = 0; i < times.size(); i++) {
 

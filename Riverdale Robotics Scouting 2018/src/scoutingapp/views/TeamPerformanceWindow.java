@@ -20,6 +20,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -48,6 +49,7 @@ public class TeamPerformanceWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					TeamPerformanceWindow frame = new TeamPerformanceWindow(5834, 10);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -66,7 +68,7 @@ public class TeamPerformanceWindow extends JFrame {
 			}
 
 			MatchHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
-
+			
 			MatchHub.regionalCollection.showTeamPerformance(matchID, teamNumber);
 
 		} catch (NumberFormatException e) {
@@ -88,7 +90,7 @@ public class TeamPerformanceWindow extends JFrame {
 		this.teamNumber = teamNumber;
 		this.matchID = matchID;
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 427);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -135,7 +137,7 @@ public class TeamPerformanceWindow extends JFrame {
 
 		txtClimb = new JTextField();
 		txtClimb.setBounds(435, 85, 68, 20);
-		txtClimb.setText(Integer.toString(teamPerformance.climb));
+		txtClimb.setText(String.valueOf(teamPerformance.climb));
 		txtClimb.setEnabled(false);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
@@ -214,7 +216,7 @@ public class TeamPerformanceWindow extends JFrame {
 		this.teamNumber = teamNumber;
 		this.matchID = matchID;
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 360);
 
 		JMenuBar menuBar = new JMenuBar();
