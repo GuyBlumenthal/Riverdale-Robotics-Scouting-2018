@@ -114,15 +114,18 @@ public class TeamDetail extends JFrame {
 		tblOverview.setModel(new DefaultTableModel(new Object[][] { 
 			
 				{ "Cube on Switch",
-					team.calcAverage(team.numCubesOnSwitchAuto), 	team.calcConsistency(team.numCubesOnSwitchAuto),	10/*TODO: Add switch auto average time*/,
-					team.calcNumCubesOnSwitchAverage(), 			team.calcNumCubesOnSwitchConsistency(),				10/*TODO: Add switch teleop average time*/, },
+					team.calcAverage(0), 						team.calcConsistency(0),						10/*TODO: Add switch auto average time*/,
+					team.calcTeleopNumCubesOnSwitchAverage(), 	team.calcTeleopNumCubesOnSwitchConsistency(),	10/*TODO: Add switch teleop average time*/, },
 				{ "Cube on Scale", 
-					team.calcAverage(team.numCubesOnScaleAuto),		team.calcConsistency(team.numCubesOnScaleAuto),		10/*TODO: Add scale auto average time*/, 
-					team.calcAverage(team.numCubesOnScaleTeleop),	team.calcConsistency(team.numCubesOnScaleTeleop),	10/*TODO: Add scale auto average time*/,  },
+					team.calcAverage(1),	team.calcConsistency(1),	10/*TODO: Add scale auto average time*/, 
+					team.calcAverage(2),	team.calcConsistency(2),	10/*TODO: Add scale auto average time*/,  },
+				{ "Cube in Vault", 
+					team.calcAverage(3),	team.calcConsistency(3),	10/*TODO: Add scale auto average time*/, 
+					team.calcAverage(4),	team.calcConsistency(4),	10/*TODO: Add scale auto average time*/,  },
 				{ "Baseline", 
-					team.calcAverage(team.crossedBaseLine), team.calcConsistency(team.crossedBaseLine), null, null, null, null },
+					team.calcBooleanAverage(true), 		team.calcBooleanConsistency(true), 		null, null, null, null },
 				{ "Climb", 
-					team.calcAverage(team.climb), team.calcConsistency(team.climb), null, null, null, null}
+					team.calcBooleanAverage(false), 	team.calcBooleanConsistency(false), 	null, null, null, null}
 		},
 		new String[] { 	"Robot Abilities", 	"Auto Average", 		"Auto Consistency", 	"Auto Average Time", 
 						"Teleop Average", 	"Teleop Consistency", 	"Teleop Average Time"}));

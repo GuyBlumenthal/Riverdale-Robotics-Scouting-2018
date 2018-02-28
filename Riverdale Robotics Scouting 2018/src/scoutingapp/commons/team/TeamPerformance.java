@@ -63,7 +63,6 @@ public class TeamPerformance {
 				cubesOnSwitchAuto.add(timeInSeconds((String) cubesOnSwitches.getValueAt(i, 2)));
 
 			}
-
 		}
 
 		TableModel cubesOnScale = teamPerformanceWindow.tblScale.getModel();
@@ -92,7 +91,16 @@ public class TeamPerformance {
 
 		climb = teamPerformanceWindow.chkClimb.isSelected();
 		crossedBaseLine = teamPerformanceWindow.chkBaseline.isSelected();
+		
+		//adjust times
+		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop);
+		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop);
+		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop);
+		cubesInVaultTeleop = calcCycleTime(cubesInVaultTeleop);
 
+		cubesOnSwitchAuto = calcCycleTime(cubesOnSwitchAuto);
+		cubesOnScaleAuto = calcCycleTime(cubesOnScaleAuto);
+		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto);
 	}
 
 	public static int timeInSeconds(String formattedTime) {
@@ -102,6 +110,26 @@ public class TeamPerformance {
 
 		return minutes * 60 + seconds;
 
+	}
+	
+	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times){
+		ArrayList<Integer> data = times;
+		
+		for(int i = 0 ; i < times.size(); i++){
+			
+			int lowest = Integer.MAX_VALUE;
+			
+			for(int j = 0; j < times.size(); j++){
+				int diff = Math.abs(times.get(i) - times.get(j));
+				if(diff <= lowest && i != j){
+					lowest = diff;
+				}
+			}
+			
+			data.add(lowest);
+		}
+		
+		return data;
 	}
 
 }
