@@ -14,6 +14,8 @@ import javax.swing.border.TitledBorder;
 
 import scoutingapp.commons.Match;
 import scoutingapp.commons.team.Team;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MatchOverview extends JFrame {
 
@@ -103,14 +105,29 @@ public class MatchOverview extends JFrame {
 		panel_1.add(btnRedMatchTeam3);
 
 		JButton btnRedTeamDetail1 = new JButton("...");
+		btnRedTeamDetail1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				openTeamDetail(0, true);
+			}
+		});
 		btnRedTeamDetail1.setBounds(254, 164, 68, 23);
 		panel_1.add(btnRedTeamDetail1);
 
 		JButton btnRedTeamDetail2 = new JButton("...");
+		btnRedTeamDetail2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				openTeamDetail(1, true);
+			}
+		});
 		btnRedTeamDetail2.setBounds(254, 219, 68, 23);
 		panel_1.add(btnRedTeamDetail2);
 
 		JButton btnRedTeamDetail3 = new JButton("...");
+		btnRedTeamDetail3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				openTeamDetail(2, true);
+			}
+		});
 		btnRedTeamDetail3.setBounds(254, 265, 68, 23);
 		panel_1.add(btnRedTeamDetail3);
 
@@ -145,15 +162,47 @@ public class MatchOverview extends JFrame {
 		panel.add(btnBlueMatchTeam3);
 
 		JButton btnBlueTeamDetail1 = new JButton("...");
+		btnBlueTeamDetail1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				openTeamDetail(0, false);
+			}
+		});
 		btnBlueTeamDetail1.setBounds(234, 163, 60, 23);
 		panel.add(btnBlueTeamDetail1);
 
 		JButton btnBlueTeamDetail2 = new JButton("...");
+		btnBlueTeamDetail2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				openTeamDetail(1, false);
+			}
+		});
 		btnBlueTeamDetail2.setBounds(234, 217, 60, 23);
 		panel.add(btnBlueTeamDetail2);
 
 		JButton btnBlueTeamDetail3 = new JButton("...");
+		btnBlueTeamDetail3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				openTeamDetail(2, false);
+			}
+		});
 		btnBlueTeamDetail3.setBounds(234, 266, 60, 23);
 		panel.add(btnBlueTeamDetail3);
+	}
+
+	public void openTeamDetail(int team, boolean isRed) {
+
+		if (isRed) {
+
+			switch (team) {
+			
+			case 0:
+				
+			
+			}
+			
+		} else {
+
+		}
+
 	}
 }

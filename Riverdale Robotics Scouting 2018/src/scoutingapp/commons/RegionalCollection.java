@@ -1,5 +1,6 @@
 package scoutingapp.commons;
 
+import java.awt.EventQueue;
 import java.util.HashMap;
 
 import scoutingapp.commons.team.Team;
@@ -52,6 +53,34 @@ public class RegionalCollection {
 	public void addTeamPerformance(int teamNumber, int matchID, TeamPerformanceWindow window) {
 
 		teams.get(teamNumber).addTeamPerformance(matchID, window);
+
+	}
+
+	public boolean hasTeamPerformance(int matchID, int teamNumber) {
+
+		return teams.get(teamNumber).hasTeamPerformance(matchID);
+
+	}
+
+	public void showTeamPerformance(int matchID, int teamNumber) throws ExistingException {
+
+		if (hasTeamPerformance(matchID, teamNumber)) {
+
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						TeamPerformanceWindow frame = teams.get(teamNumber).getTeamPerformance(matchID)
+								.createWindow(teamNumber, matchID);
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+
+		} else {
+			throw new ExistingException();
+		}
 
 	}
 

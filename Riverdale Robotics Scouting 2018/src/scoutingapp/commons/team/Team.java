@@ -53,6 +53,18 @@ public class Team implements Serializable {
 
 	}
 
+	public boolean hasTeamPerformance(int matchID) {
+
+		return teamPerformances.containsKey(matchID);
+
+	}
+
+	public TeamPerformance getTeamPerformance(int matchID) {
+
+		return teamPerformances.get(matchID);
+
+	}
+
 	public double calcAverage(ArrayList<Integer> data) {
 		double sum = 0;
 

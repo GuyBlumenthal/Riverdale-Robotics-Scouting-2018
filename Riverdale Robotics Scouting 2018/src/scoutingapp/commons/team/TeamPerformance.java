@@ -19,6 +19,12 @@ public class TeamPerformance {
 	public ArrayList<Integer> cubesOnScaleAuto;
 	public ArrayList<Integer> cubesInVaultAuto;
 
+	// Tables
+
+	public TableModel rawSwitchTable;
+	public TableModel rawScaleTable;
+	public TableModel rawVaultTable;
+
 	public boolean climb;
 	public boolean crossedBaseLine;
 
@@ -48,50 +54,58 @@ public class TeamPerformance {
 
 	private void parsePerformanceWindow(TeamPerformanceWindow teamPerformanceWindow) {
 
-		TableModel cubesOnSwitches = teamPerformanceWindow.tblSwitch.getModel();
+		rawSwitchTable = teamPerformanceWindow.tblSwitch.getModel();
 
-		for (int i = 0; i < cubesOnSwitches.getRowCount(); i++) {
+		for (int i = 0; i < rawSwitchTable.getRowCount(); i++) {
 
-			if (((boolean) cubesOnSwitches.getValueAt(i, 0)) == false) {
-				if (((boolean) cubesOnSwitches.getValueAt(i, 1)) == false) {
-					cubesOnAllianceSwitchTeleop.add(timeInSeconds((String) cubesOnSwitches.getValueAt(i, 2)));
+			if (((boolean) rawSwitchTable.getValueAt(i, 0)) == false) {
+				if (((boolean) rawSwitchTable.getValueAt(i, 1)) == false) {
+					cubesOnAllianceSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
 				} else {
-					cubesOnOpponentSwitchTeleop.add(timeInSeconds((String) cubesOnSwitches.getValueAt(i, 2)));
+					cubesOnOpponentSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
 				}
+
 			} else {
 
-				cubesOnSwitchAuto.add(timeInSeconds((String) cubesOnSwitches.getValueAt(i, 2)));
+				cubesOnSwitchAuto.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
 
+			}
+		}
+
+		rawScaleTable = teamPerformanceWindow.tblScale.getModel();
+
+		for (
+
+		int i = 0; i < rawScaleTable.getRowCount(); i++) {
+
+			if (((boolean) rawScaleTable.getValueAt(i, 0)) == false) {
+				cubesOnScaleTeleop.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 2)));
+			} else {
+				cubesOnScaleAuto.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 2)));
 			}
 
 		}
 
-		TableModel cubesOnScale = teamPerformanceWindow.tblScale.getModel();
+		rawVaultTable = teamPerformanceWindow.tblVault.getModel();
 
-		for (int i = 0; i < cubesOnScale.getRowCount(); i++) {
+		for (int i = 0; i < rawVaultTable.getRowCount(); i++) {
 
-			if (((boolean) cubesOnScale.getValueAt(i, 0)) == false) {
-				cubesOnScaleTeleop.add(timeInSeconds((String) cubesOnScale.getValueAt(i, 2)));
+			if (((boolean) rawVaultTable.getValueAt(i, 0)) == false) {
+				cubesInVaultTeleop.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
 			} else {
-				cubesOnScaleAuto.add(timeInSeconds((String) cubesOnScale.getValueAt(i, 2)));
-			}
-
-		}
-
-		TableModel cubesInVault = teamPerformanceWindow.tblVault.getModel();
-
-		for (int i = 0; i < cubesInVault.getRowCount(); i++) {
-
-			if (((boolean) cubesInVault.getValueAt(i, 0)) == false) {
-				cubesInVaultTeleop.add(timeInSeconds((String) cubesInVault.getValueAt(i, 2)));
-			} else {
-				cubesInVaultAuto.add(timeInSeconds((String) cubesInVault.getValueAt(i, 2)));
+				cubesInVaultAuto.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
 			}
 
 		}
 
 		climb = teamPerformanceWindow.chkClimb.isSelected();
 		crossedBaseLine = teamPerformanceWindow.chkBaseline.isSelected();
+
+	}
+
+	public TeamPerformanceWindow createWindow(int teamNumber, int matchID) {
+
+		return new TeamPerformanceWindow(teamNumber, matchID, this);
 
 	}
 
