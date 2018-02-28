@@ -16,6 +16,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ExistingException;
@@ -52,8 +54,9 @@ public class MatchDetail extends JFrame {
 	 * Create the frame.
 	 */
 	public MatchDetail() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 675, 406);
+		setBounds(100, 100, 650, 406);
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
@@ -61,7 +64,7 @@ public class MatchDetail extends JFrame {
 
 		JLabel lblMatchDetail = new JLabel("Match Detail");
 		lblMatchDetail.setFont(new Font("Trebuchet MS", Font.PLAIN, 16));
-		lblMatchDetail.setBounds(168, 11, 97, 24);
+		lblMatchDetail.setBounds(258, 11, 97, 24);
 		contentPane.add(lblMatchDetail);
 
 		JLabel lblTeam = new JLabel("Team Number: ");
@@ -72,15 +75,15 @@ public class MatchDetail extends JFrame {
 
 		lblMatchNumber = new JLabel("Match Number: ");
 		lblMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMatchNumber.setBounds(231, 44, 95, 24);
+		lblMatchNumber.setBounds(326, 46, 95, 24);
 		contentPane.add(lblMatchNumber);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 79, 438, 2);
+		separator.setBounds(10, 79, 586, 2);
 		contentPane.add(separator);
 
 		JCheckBox chkBasline = new JCheckBox("(Auto) Crossed Baseline");
-		chkBasline.setBounds(20, 86, 154, 23);
+		chkBasline.setBounds(20, 86, 189, 23);
 		contentPane.add(chkBasline);
 
 		JCheckBox chkClimb = new JCheckBox("(Teleop) Climb");
@@ -88,7 +91,7 @@ public class MatchDetail extends JFrame {
 		contentPane.add(chkClimb);
 
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 116, 438, 2);
+		separator_1.setBounds(10, 116, 584, 2);
 		contentPane.add(separator_1);
 
 		// headers for the table
@@ -106,6 +109,7 @@ public class MatchDetail extends JFrame {
 		contentPane.add(scrollPaneSwitch);
 
 		tblSwitch = new JTable(data, columns);
+
 		tblSwitch.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, "0:00"},
@@ -126,7 +130,7 @@ public class MatchDetail extends JFrame {
 		scrollPaneSwitch.setViewportView(tblSwitch);
 
 		JButton btnSaveData = new JButton("Save Data");
-		btnSaveData.setBounds(10, 333, 89, 23);
+		btnSaveData.setBounds(10, 298, 150, 23);
 		contentPane.add(btnSaveData);
 
 		JLabel label = new JLabel("Scale");
@@ -139,15 +143,22 @@ public class MatchDetail extends JFrame {
 		contentPane.add(scrollPaneScale);
 
 		tblScale = new JTable();
-		tblScale.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, "0:00" }, { null, null, null }, { null, null, null }, },
-				new String[] { "In Auto", "Defense", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, String.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		DefaultTableModel mdlScale = new DefaultTableModel(
+				new Object[][] {
+					{new Boolean(false), "0:00"},
+				},
+				new String[] {
+					"In Auto", "Time"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					Boolean.class, String.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+			};
+		tblScale.setModel(mdlScale);
 		scrollPaneScale.setViewportView(tblScale);
 
 		JScrollPane scrollPaneVault = new JScrollPane();
@@ -155,14 +166,23 @@ public class MatchDetail extends JFrame {
 		contentPane.add(scrollPaneVault);
 
 		tblVault = new JTable();
-		tblVault.setModel(new DefaultTableModel(new Object[][] { { null, "0:00" }, { null, null }, { null, null }, },
-				new String[] { "In Auto", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, String.class };
+		DefaultTableModel mdlVault = new DefaultTableModel(
+				new Object[][] {
+					{new Boolean(false), "0:00"},
+				},
+				new String[] {
+					"In Auto", "Time"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					Boolean.class, String.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+			};
+		tblVault.setModel(mdlVault);
 
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
 		scrollPaneVault.setViewportView(tblVault);
 
 		JLabel label_1 = new JLabel("Power Cubes In Vault");
@@ -171,15 +191,15 @@ public class MatchDetail extends JFrame {
 		contentPane.add(label_1);
 
 		JLabel lblPower = new JLabel("Power Ups Played");
-		lblPower.setBounds(109, 298, 97, 20);
+		lblPower.setBounds(109, 299, 169, 20);
 		contentPane.add(lblPower);
 
 		JLabel lblForce = new JLabel("Force played at: ");
-		lblForce.setBounds(109, 337, 83, 14);
+		lblForce.setBounds(57, 337, 105, 14);
 		contentPane.add(lblForce);
 
 		txtForce = new JTextField();
-		txtForce.setBounds(192, 334, 86, 20);
+		txtForce.setBounds(162, 334, 86, 20);
 		contentPane.add(txtForce);
 		txtForce.setColumns(10);
 
@@ -189,7 +209,7 @@ public class MatchDetail extends JFrame {
 		contentPane.add(txtBoost);
 
 		JLabel label_2 = new JLabel("Boost played at: ");
-		label_2.setBounds(288, 337, 83, 14);
+		label_2.setBounds(258, 337, 113, 14);
 		contentPane.add(label_2);
 
 		JCheckBox chkLevitate = new JCheckBox("Levitate");
@@ -200,17 +220,61 @@ public class MatchDetail extends JFrame {
 		chkAlliance.setBounds(394, 86, 166, 23);
 		contentPane.add(chkAlliance);
 
+		btnSaveData.setBounds(10, 298, 89, 23);
+		contentPane.add(btnSaveData);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(231, 140, 147, 147);
+		contentPane.add(scrollPane);
+		
+		JButton btnAddCubeOnSwitch = new JButton("Add");
+		btnAddCubeOnSwitch.setBounds(57, 118, 75, 20);
+		contentPane.add(btnAddCubeOnSwitch);
+		
+		JButton btnAddCubeOnScale = new JButton("Add");
+		btnAddCubeOnScale.setBounds(266, 118, 75, 20);
+		contentPane.add(btnAddCubeOnScale);
+		
+		JButton btnAddCubeInVault = new JButton("Add");
+		btnAddCubeInVault.setBounds(562, 119, 62, 20);
+		contentPane.add(btnAddCubeInVault);
+		
+		
+		btnAddCubeOnSwitch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlSwitch.addRow(new Object[] { null, null, "0:00" });
+				scrollPaneSwitch.setViewportView(tblSwitch);
+			}
+		});
+		
+		btnAddCubeOnScale.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlScale.addRow(new Object[] { null, "0:00" });
+				scrollPaneScale.setViewportView(tblScale);
+			}
+		});
+		
+		btnAddCubeInVault.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlVault.addRow(new Object[] { null, "0:00" });
+				scrollPaneVault.setViewportView(tblVault);
+			}
+		});
+		
+		
 		btnSaveData.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Team team = new Team(Integer.parseInt(txtTeamNumber.getText()));
 				try {
+					team = setTableData(team, tblSwitch);
+					setTableData(team, tblScale); /*TODO: joining objects together */
+					setTableData(team, tblVault);
+					
 					MatchHub.regionalCollection.createTeam(team);
-					team.climb.add(chkClimb.isSelected() ? 1 : 0);
-					team.crossedBaseLine.add(chkBasline.isSelected() ? 1 : 0);
-
-					for (int i = 0; i < tblSwitch.getRowCount() - 2; i++) {
-					}
 
 				} catch (ExistingException e) {
 					// TODO Auto-generated catch block
@@ -218,20 +282,70 @@ public class MatchDetail extends JFrame {
 				}
 			}
 		});
-		btnSaveData.setBounds(10, 298, 89, 23);
-		contentPane.add(btnSaveData);
+	}
 
-		JLabel label2 = new JLabel("Switch");
-		label2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label2.setBounds(231, 116, 47, 24);
-		contentPane.add(label2);
+	public Team setTableData(Team team, JTable tblTable) {
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(231, 140, 147, 147);
-		contentPane.add(scrollPane);
+		int nCubesInAuto = 0, isDefense = 0, isOffense = 0;
+		String[] timesAuto = new String[tblTable.getRowCount() - 1];
+		String[] timesTeleop = new String[tblTable.getRowCount() - 1];
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(485, 140, 147, 147);
-		contentPane.add(scrollPane_1);
+		// initialize arrays
+		for (int i = 0; i < timesAuto.length; i++) {
+			timesAuto[i] = "";
+			timesTeleop[i] = "";
+		}
+
+		for (int i = 1; i < tblTable.getRowCount() - 1; i++) {
+
+			// checking if cube was placed in auto or not
+			if ((Boolean) tblTable.getModel().getValueAt(i, 0)) {
+
+				nCubesInAuto++;
+				timesAuto[i - 1] = (String) tblTable.getModel().getValueAt(i, 2);
+
+			} else {
+
+				if (tblTable.getName().equals("tblSwitch")) {
+					// played defensively or offensively in teleop
+					if ((Boolean) tblTable.getModel().getValueAt(i, 1)) {
+						isDefense++;
+					} else {
+						isOffense++;
+					}
+
+					timesTeleop[i - 1] = (String) tblTable.getModel().getValueAt(i, 2);
+				} else {
+					timesTeleop[i - 1] = (String) tblTable.getModel().getValueAt(i, 1);
+				}
+			}
+
+		}
+
+		team.numCubesOnSwitchAuto.add(nCubesInAuto);
+		team.numCubesOnAllianceSwitch.add(isDefense);
+		team.numCubesOnOpponentsSwitch.add(isOffense);
+
+		int nAuto = 0, nTeleop = 0;
+
+		switch (tblTable.getName()) {
+		case "tblSwitch":
+			nAuto = 0;
+			nTeleop = 1;
+			break;
+		case "tblScale":
+			nAuto = 2;
+			nTeleop = 3;
+			break;
+		case "tblVault":
+			nAuto = 4;
+			nTeleop = 4;
+			break;
+		}
+
+		team.convertTimes(timesAuto, nAuto);
+		team.convertTimes(timesTeleop, nTeleop);
+
+		return team;
 	}
 }
