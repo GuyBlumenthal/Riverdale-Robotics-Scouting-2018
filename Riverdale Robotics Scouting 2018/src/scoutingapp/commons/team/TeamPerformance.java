@@ -25,7 +25,8 @@ public class TeamPerformance {
 	public TableModel rawScaleTable;
 	public TableModel rawVaultTable;
 
-	public boolean climb;
+	public int climb;
+
 	public boolean crossedBaseLine;
 
 	public TeamPerformance(TeamPerformanceWindow teamPerformanceWindow) {
@@ -97,10 +98,10 @@ public class TeamPerformance {
 
 		}
 
-		climb = teamPerformanceWindow.chkClimb.isSelected();
+		climb = timeInSeconds(teamPerformanceWindow.txtClimb.getText());
 		crossedBaseLine = teamPerformanceWindow.chkBaseline.isSelected();
-		
-		//adjust times
+
+		// adjust times
 		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop);
 		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop);
 		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop);
@@ -125,24 +126,24 @@ public class TeamPerformance {
 		return minutes * 60 + seconds;
 
 	}
-	
-	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times){
+
+	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
 		ArrayList<Integer> data = times;
-		
-		for(int i = 0 ; i < times.size(); i++){
-			
+
+		for (int i = 0; i < times.size(); i++) {
+
 			int lowest = Integer.MAX_VALUE;
-			
-			for(int j = 0; j < times.size(); j++){
+
+			for (int j = 0; j < times.size(); j++) {
 				int diff = Math.abs(times.get(i) - times.get(j));
-				if(diff <= lowest && i != j){
+				if (diff <= lowest && i != j) {
 					lowest = diff;
 				}
 			}
-			
+
 			data.add(lowest);
 		}
-		
+
 		return data;
 	}
 
