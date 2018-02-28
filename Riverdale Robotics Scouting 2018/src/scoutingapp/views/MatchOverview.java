@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.Match;
 import scoutingapp.commons.team.Team;
 import java.awt.event.ActionListener;
@@ -21,7 +22,7 @@ public class MatchOverview extends JFrame {
 
 	private JPanel contentPane;
 
-	private Match match;
+	private int match;
 
 	/**
 	 * Launch the application.
@@ -47,7 +48,7 @@ public class MatchOverview extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MatchOverview frame = new MatchOverview(new Match(0, testBlue, testRed));
+					MatchOverview frame = new MatchOverview(1);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +60,7 @@ public class MatchOverview extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MatchOverview(Match match) {
+	public MatchOverview(int match) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 400);
@@ -80,15 +81,18 @@ public class MatchOverview extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		JLabel lblRedTeam1 = new JLabel(match.getRedTeams()[0].getTeamName() + " : ");
+		JLabel lblRedTeam1 = new JLabel(
+				MatchHub.regionalCollection.getMatch(match).getRedTeams()[0].getTeamName() + " : ");
 		lblRedTeam1.setBounds(10, 168, 137, 14);
 		panel_1.add(lblRedTeam1);
 
-		JLabel lblRedTeam2 = new JLabel(match.getRedTeams()[1].getTeamName() + " : ");
+		JLabel lblRedTeam2 = new JLabel(
+				MatchHub.regionalCollection.getMatch(match).getRedTeams()[1].getTeamName() + " : ");
 		lblRedTeam2.setBounds(10, 223, 137, 14);
 		panel_1.add(lblRedTeam2);
 
-		JLabel lblRedTeam3 = new JLabel(match.getRedTeams()[2].getTeamName() + " : ");
+		JLabel lblRedTeam3 = new JLabel(
+				MatchHub.regionalCollection.getMatch(match).getRedTeams()[2].getTeamName() + " : ");
 		lblRedTeam3.setBounds(10, 269, 137, 14);
 		panel_1.add(lblRedTeam3);
 
@@ -137,15 +141,18 @@ public class MatchOverview extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		JLabel lblBlueTeam1 = new JLabel(match.getBlueTeams()[0].getTeamName() + " : ");
+		JLabel lblBlueTeam1 = new JLabel(
+				MatchHub.regionalCollection.getMatch(match).getBlueTeams()[0].getTeamName() + " : ");
 		lblBlueTeam1.setBounds(10, 167, 143, 14);
 		panel.add(lblBlueTeam1);
 
-		JLabel lblBlueTeam2 = new JLabel(match.getBlueTeams()[1].getTeamName() + " : ");
+		JLabel lblBlueTeam2 = new JLabel(
+				MatchHub.regionalCollection.getMatch(match).getBlueTeams()[1].getTeamName() + " : ");
 		lblBlueTeam2.setBounds(10, 221, 155, 14);
 		panel.add(lblBlueTeam2);
 
-		JLabel lblBlueTeam3 = new JLabel(match.getBlueTeams()[2].getTeamName() + " : ");
+		JLabel lblBlueTeam3 = new JLabel(
+				MatchHub.regionalCollection.getMatch(match).getBlueTeams()[2].getTeamName() + " : ");
 		lblBlueTeam3.setBounds(10, 270, 155, 14);
 		panel.add(lblBlueTeam3);
 
@@ -190,18 +197,32 @@ public class MatchOverview extends JFrame {
 	}
 
 	public void openTeamDetail(int team, boolean isRed) {
+		try {
 
-		if (isRed) {
+			int teamNumber = -1;
 
-			switch (team) {
-			
-			case 0:
-				
-			
+			if (isRed) {
+
+				teamNumber = MatchHub.regionalCollection.getMatch(match).getRedTeams()[team].getTeamNumber();
+
+			} else {
+
+				teamNumber = MatchHub.regionalCollection.getMatch(match).getBlueTeams()[team].getTeamNumber();
+
 			}
-			
-		} else {
 
+			if (MatchHub.regionalCollection.hasTeamPerformance(match, teamNumber)) {
+
+				MatchHub.regionalCollection.showTeamPerformance(match, teamNumber);
+
+			} else {
+
+				MatchHub.regionalCollection.createTeamPerformanceWindow(match, teamNumber);
+
+			}
+
+		} catch (ExistingException e) {
+			System.out.println("nothing is real");
 		}
 
 	}
