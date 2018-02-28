@@ -15,26 +15,34 @@ public class Team implements Serializable {
 
 	private int teamNumber;
 	private String teamName;
-	private boolean allianceColour; // true = red, false = blue
+	private boolean allianceColour; 
+	
 	/**
 	 * matches map: given the nth match, a corresponding qualification match number can be found  
+	 * all times added onto team abilities will be converted to SECONDS
+	 * set alliance colour to true if red and false if blue
+	 * 
 	 */
+	
 	private HashMap<Integer, Integer> matches;
+	
 	//teleop
 	public ArrayList<Integer> numCubesOnAllianceSwitch;
 	public ArrayList<Integer> numCubesOnOpponentsSwitch;
 	public ArrayList<Integer> numCubesOnScaleTeleop;
 	public ArrayList<Integer> timeCubesOnSwitchTeleop;
 	public ArrayList<Integer> timeCubesOnScaleTeleop;
+	public ArrayList<Integer> timeCubesInVaultTeleop;
+	
 	//auto
 	public ArrayList<Integer> numCubesOnSwitchAuto;
 	public ArrayList<Integer> numCubesOnScaleAuto;
 	public ArrayList<Integer> timeCubesOnSwitchAuto;
 	public ArrayList<Integer> timeCubesOnScaleAuto;
+	public ArrayList<Integer> timeCubesInVaultAuto;
 	public ArrayList<Integer> climb; // 0 means no climb, 1 means climbed
 	public ArrayList<Integer> crossedBaseLine; // 0 means no climb, 1 means climbed
 
-	private RegionalCollection regionalCollection = MatchHub.regionalCollection;
 	
 	public Team(int teamNumber, String teamName, boolean allianceColour) {
 		this.teamNumber = teamNumber;
@@ -128,6 +136,44 @@ public class Team implements Serializable {
 
 	public Match getMatch(int matchID) {
 		return MatchHub.regionalCollection.getMatch(matchID);
+	}
+
+	/**
+	 * @param times: the raw string values from the table
+	 * @param scenario: 0 = switch in auto
+	 * 					1 = switch in teleop
+	 * 					2 = scale in auto
+	 * 					3 = scale in teleop 
+	 * 					4 = vault in auto
+	 * 					5 = vault in teleop
+	 */
+	public void convertTimes(String[] times, int scenario) {
+		ArrayList<Integer> timeScenario = timeCubesOnSwitchAuto;
+		
+		switch(scenario){
+		case 0:
+			timeScenario = timeCubesOnSwitchAuto;
+		case 1:
+			timeScenario = timeCubesOnSwitchTeleop;
+		case 2:
+			timeScenario = timeCubesOnScaleAuto;
+		case 3:
+			timeScenario = timeCubesOnScaleTeleop;
+		case 4:
+			timeScenario = timeCubesInVaultAuto;
+		case 5:
+			timeScenario = timeCubesInVaultTeleop;
+		}
+		
+		for(int i = 0; i < times.length; i++){
+			if(!times[i].equals("")){
+				int minutes = Integer.parseInt(times[i].substring(0, times[i].indexOf(':')));
+				int seconds = Integer.parseInt(times[i].substring(times[i].indexOf(':') + 1));
+				timeScenario.add(minutes * 60 + seconds);
+			}
+		}	
+	
+		
 	}
 
 }
