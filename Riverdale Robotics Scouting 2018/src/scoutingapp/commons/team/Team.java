@@ -154,7 +154,7 @@ public class Team implements Serializable {
 		int sum = 0;
 
 		for (TeamPerformance performances : teamPerformances.values()) {
-			if (scenario && performances.climb) {
+			if (scenario && performances.climb > -1) {
 				sum++;
 			} else {
 				if (performances.crossedBaseLine) {

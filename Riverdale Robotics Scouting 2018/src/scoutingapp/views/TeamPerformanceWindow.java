@@ -135,7 +135,7 @@ public class TeamPerformanceWindow extends JFrame {
 
 		txtClimb = new JTextField();
 		txtClimb.setBounds(435, 85, 68, 20);
-		txtClimb.setText(teamPerformance.climb);
+		txtClimb.setText(Integer.toString(teamPerformance.climb));
 		txtClimb.setEnabled(false);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
