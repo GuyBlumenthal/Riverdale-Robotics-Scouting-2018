@@ -69,7 +69,7 @@ public class TeamPerformanceWindow extends JFrame {
 			}
 			TeamHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
 
-			dispose();
+			TeamHub.regionalCollection.showTeamPerformance(matchID, teamNumber);
 			
 
 		} catch (NumberFormatException e) {

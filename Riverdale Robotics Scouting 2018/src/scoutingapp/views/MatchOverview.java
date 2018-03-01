@@ -17,6 +17,9 @@ import scoutingapp.commons.Match;
 import scoutingapp.commons.team.Team;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JMenuBar;
 
 @SuppressWarnings("serial")
 public class MatchOverview extends JFrame {
@@ -28,6 +31,9 @@ public class MatchOverview extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	static MatchOverview frame;
+	
 	public static void main(String[] args) {
 
 		try {
@@ -56,7 +62,7 @@ public class MatchOverview extends JFrame {
 
 			public void run() {
 				try {
-					MatchOverview frame = new MatchOverview(1);
+					frame = new MatchOverview(1);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,6 +81,58 @@ public class MatchOverview extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 400);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnViews = new JMenu("Views");
+		menuBar.add(mnViews);
+		
+		JMenuItem mntmMatchHub = new JMenuItem("Match Hub");
+		mntmMatchHub.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							MatchHub frame = new MatchHub();
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				frame.dispose();
+			}
+		});
+		mnViews.add(mntmMatchHub);
+		
+		JMenuItem mntmTeamHub = new JMenuItem("Team Hub");
+		mntmTeamHub.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (Throwable e2) {
+					e2.printStackTrace();
+				}
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							TeamHub frame = new TeamHub();
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				frame.dispose();
+			}
+		});
+		mnViews.add(mntmTeamHub);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
