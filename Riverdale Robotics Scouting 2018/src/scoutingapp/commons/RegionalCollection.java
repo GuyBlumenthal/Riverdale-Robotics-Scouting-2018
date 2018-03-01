@@ -164,6 +164,22 @@ public class RegionalCollection {
 		return teams.get(teamNumber);
 	}
 
+	public int[] getTeamList() {
+		if (teams.size() == 0) {
+			return new int[0];
+		}
+
+		Object[] teamObjects = teams.keySet().toArray();
+		int[] teamList = new int[teamObjects.length];
+
+		for (int i = 0; i < teamList.length; i++) {
+			teamList[i] = (int) teamObjects[i];
+		}
+
+		return teamList;
+
+	}
+	
 	public int[] getMatchIDList() {
 		if (matches.size() == 0) {
 			return new int[0];

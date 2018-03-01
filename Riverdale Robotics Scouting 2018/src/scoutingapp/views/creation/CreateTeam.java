@@ -1,6 +1,7 @@
 package scoutingapp.views.creation;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -23,28 +24,33 @@ public class CreateTeam extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtNumber;
 	private JTextField txtName;
-
+	private static TeamHub teamHub;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			CreateTeam dialog = new CreateTeam();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public static void main(String[] args) {		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					CreateTeam dialog = new CreateTeam(teamHub);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);				
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public CreateTeam() {
-
+	public CreateTeam(TeamHub teamHub) {
+		this.teamHub = teamHub;
+		
 		setModal(true);
-
+		
 		setBounds(100, 100, 383, 110);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,22 +76,6 @@ public class CreateTeam extends JDialog {
 		contentPanel.add(lblTeamName);
 
 		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				try {
-					TeamHub.regionalCollection.createTeam(Integer.parseInt(txtNumber.getText()), txtName.getText());
-					dispose();
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Please fill in the team number with a number.",
-							"Improper Team Number", JOptionPane.OK_OPTION);
-				} catch (ExistingException e) {
-					JOptionPane.showMessageDialog(null, "This team already exists!", "Exisiting Team",
-							JOptionPane.OK_OPTION);
-				}
-
-			}
-		});
 		okButton.setBounds(231, 37, 47, 23);
 		contentPanel.add(okButton);
 		okButton.setActionCommand("OK");
@@ -100,6 +90,24 @@ public class CreateTeam extends JDialog {
 		cancelButton.setBounds(287, 37, 65, 23);
 		contentPanel.add(cancelButton);
 		cancelButton.setActionCommand("Cancel");
+		
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+					TeamHub.regionalCollection.createTeam(Integer.parseInt(txtNumber.getText()), txtName.getText());
+					teamHub.updateTeamTable();
+					dispose();
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Please fill in the team number with a number.",
+							"Improper Team Number", JOptionPane.OK_OPTION);
+				} catch (ExistingException e) {
+					JOptionPane.showMessageDialog(null, "This team already exists!", "Exisiting Team",
+							JOptionPane.OK_OPTION);
+				}
+
+			}
+		});
 	}
 
 }
