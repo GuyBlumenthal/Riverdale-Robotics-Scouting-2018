@@ -104,7 +104,7 @@ public class MatchHub extends JFrame {
 		Object[][] arrayValues = new Object[TeamHub.regionalCollection.getMatchIDList().length][8];
 
 		int[] matchIDList = TeamHub.regionalCollection.getMatchIDList();
-		
+
 		for (int i = 0; i < arrayValues.length; i++) {
 
 			arrayValues[i][0] = TeamHub.regionalCollection.getMatch(matchIDList[i]).getMatchID();
@@ -162,11 +162,11 @@ public class MatchHub extends JFrame {
 		menuBar.add(mnEdit);
 
 		MatchHub hub = this;
-		
+
 		mntmAddMatch = new JMenuItem("Add Match");
 		mntmAddMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					CreateMatch window = new CreateMatch(hub);
@@ -182,21 +182,21 @@ public class MatchHub extends JFrame {
 		mntmRemoveMatch = new JMenuItem("Remove Match");
 		mntmRemoveMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+
 				if (tblMatches.getSelectedRowCount() > 1) {
 					int[] selectedMatchIDs = tblMatches.getSelectedRows();
-					
+
 					for (int i : selectedMatchIDs) {
-						TeamHub.regionalCollection.removeMatch((int) tblMatches.getValueAt(i, 0 ));
+						TeamHub.regionalCollection.removeMatch((int) tblMatches.getValueAt(i, 0));
 					}
 				} else if (tblMatches.getSelectedRowCount() == 1) {
-					
-					TeamHub.regionalCollection.removeMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0 ));
-					
+
+					TeamHub.regionalCollection.removeMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
+
 				}
-				
+
 				updateMatchTable();
-				
+
 			}
 		});
 		mnEdit.add(mntmRemoveMatch);
@@ -208,6 +208,20 @@ public class MatchHub extends JFrame {
 		menuBar.add(mnView);
 
 		JMenuItem mntmTeams = new JMenuItem("Teams");
+		mntmTeams.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					TeamHub frame = new TeamHub();
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+				dispose();
+
+			}
+		});
 		mnView.add(mntmTeams);
 		contentPane = new JPanel();
 		contentPane.setSize(new Dimension(1024, 600));
