@@ -14,6 +14,7 @@ import javax.swing.border.TitledBorder;
 
 import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.Match;
+import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.team.Team;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,11 +32,11 @@ public class MatchOverview extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	
+
 	static MatchOverview frame;
-	
+
 	public static void main(String[] args) {
-//TODO: Add Powerups
+		// TODO: Add Powerups
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -79,15 +80,30 @@ public class MatchOverview extends JFrame {
 		this.matchID = matchID;
 
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 672, 400);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+
+		JMenuItem mntmDeleteMatch = new JMenuItem("Delete Match");
+		mntmDeleteMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				TeamHub.regionalCollection.removeMatch(matchID);
+
+				dispose();
+
+			}
+		});
+		mnEdit.add(mntmDeleteMatch);
+
 		JMenu mnViews = new JMenu("Views");
 		menuBar.add(mnViews);
-		
+
 		JMenuItem mntmMatchHub = new JMenuItem("Match Hub");
 		mntmMatchHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -110,7 +126,7 @@ public class MatchOverview extends JFrame {
 			}
 		});
 		mnViews.add(mntmMatchHub);
-		
+
 		JMenuItem mntmTeamHub = new JMenuItem("Team Hub");
 		mntmTeamHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -263,6 +279,18 @@ public class MatchOverview extends JFrame {
 		});
 		btnBlueTeamDetail3.setBounds(234, 266, 60, 23);
 		panel.add(btnBlueTeamDetail3);
+
+		JLabel lblBoost = new JLabel("Boost:");
+		lblBoost.setBounds(10, 127, 46, 14);
+		panel.add(lblBoost);
+
+		JLabel lblForce = new JLabel("Force:");
+		lblForce.setBounds(119, 127, 46, 14);
+		panel.add(lblForce);
+
+		JLabel lblLevitate = new JLabel("Levitate:");
+		lblLevitate.setBounds(207, 127, 46, 14);
+		panel.add(lblLevitate);
 	}
 
 	public void openTeamDetail(int team, boolean isRed) {
