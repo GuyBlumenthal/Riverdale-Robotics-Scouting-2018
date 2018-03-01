@@ -183,6 +183,9 @@ public class Team implements Serializable {
 		return sum / (total > 0 ? total : 1);
 	}
 
+	//TODO: Calculate Average Climb Time
+	//TODO: Convert Time into seconds (game time into real time)
+	
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
 		ArrayList<Integer> data = performance.cubesOnSwitchAuto;
 		switch (scenario) {
