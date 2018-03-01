@@ -35,7 +35,7 @@ public class MatchOverview extends JFrame {
 	static MatchOverview frame;
 	
 	public static void main(String[] args) {
-
+//TODO: Add Powerups
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
