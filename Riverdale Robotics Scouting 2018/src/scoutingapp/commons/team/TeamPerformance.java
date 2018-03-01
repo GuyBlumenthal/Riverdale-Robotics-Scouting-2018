@@ -112,9 +112,9 @@ public class TeamPerformance {
 		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto);
 	}
 
-	public TeamPerformanceWindow createWindow(int teamNumber, int matchID) {
+	public TeamPerformanceWindow createWindow(int teamNumber, int matchID, boolean editable) {
 
-		return new TeamPerformanceWindow(teamNumber, matchID, this);
+		return new TeamPerformanceWindow(teamNumber, matchID, this, editable);
 
 	}
 

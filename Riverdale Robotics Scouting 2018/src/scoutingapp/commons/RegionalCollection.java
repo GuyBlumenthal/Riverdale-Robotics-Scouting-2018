@@ -86,7 +86,7 @@ public class RegionalCollection {
 				public void run() {
 					try {
 						TeamPerformanceWindow frame = teams.get(teamNumber).getTeamPerformance(matchID)
-								.createWindow(teamNumber, matchID);
+								.createWindow(teamNumber, matchID, false);
 						frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();

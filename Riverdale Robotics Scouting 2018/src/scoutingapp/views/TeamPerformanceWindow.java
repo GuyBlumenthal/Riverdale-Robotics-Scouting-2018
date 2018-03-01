@@ -26,6 +26,8 @@ import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.team.TeamPerformance;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class TeamPerformanceWindow extends JFrame {
@@ -41,6 +43,8 @@ public class TeamPerformanceWindow extends JFrame {
 
 	private int teamNumber, matchID;
 	public JTextField txtClimb;
+
+	TeamPerformance teamPerformance;
 
 	/**
 	 * Launch the application.
@@ -79,14 +83,41 @@ public class TeamPerformanceWindow extends JFrame {
 		}
 
 	}
+	
+	public void replaceData() {
+
+		try {
+
+			if (!TeamHub.regionalCollection.teamExists(teamNumber)) {
+				TeamHub.regionalCollection.createTeam(teamNumber);
+			}
+			TeamHub.regionalCollection.removeTeamPerformance(teamNumber, matchID);
+			TeamHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
+			
+
+		} catch (NumberFormatException e) {
+
+			JOptionPane.showMessageDialog(null, "Please fill in the match detail page properly.",
+					"Incomplete Match Detail", JOptionPane.OK_OPTION);
+
+		} catch (ExistingException e) {
+
+		}
+
+	}
+	
+	public String secondsToStandard(int time) {
+		return Math.floorDiv(time, 60) + ":" + time%60;
+	}
 
 	/**
 	 * Create a window from a team performance file
 	 */
-	public TeamPerformanceWindow(int teamNumber, int matchID, TeamPerformance teamPerformance) {
+	public TeamPerformanceWindow(int teamNumber, int matchID, TeamPerformance teamPerformance, boolean editable) {
 
 		this.teamNumber = teamNumber;
 		this.matchID = matchID;
+		this.teamPerformance = teamPerformance;
 
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 427);
@@ -109,7 +140,7 @@ public class TeamPerformanceWindow extends JFrame {
 
 		JLabel lblMatchDetail = new JLabel("Match Detail");
 		lblMatchDetail.setFont(new Font("Trebuchet MS", Font.PLAIN, 16));
-		lblMatchDetail.setBounds(222, 2, 97, 36);
+		lblMatchDetail.setBounds(255, 2, 97, 36);
 		contentPane.add(lblMatchDetail);
 
 		JLabel lblTeam = new JLabel("Team " + teamNumber);
@@ -117,10 +148,25 @@ public class TeamPerformanceWindow extends JFrame {
 
 		lblTeam.setBounds(134, 42, 95, 24);
 		contentPane.add(lblTeam);
+		
+		if (editable) {
+			JButton btnSaveData = new JButton("Save Data");
+			btnSaveData.setBounds(250, 44, 110, 23);
+			contentPane.add(btnSaveData);
+			
+			btnSaveData.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+
+					replaceData();
+
+				}
+			});
+		}
 
 		lblMatchNumber = new JLabel("Match " + matchID);
 		lblMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMatchNumber.setBounds(331, 42, 95, 24);
+		lblMatchNumber.setBounds(420, 42, 95, 24);
 		contentPane.add(lblMatchNumber);
 
 		JSeparator separator = new JSeparator();
@@ -130,13 +176,13 @@ public class TeamPerformanceWindow extends JFrame {
 		chkBaseline = new JCheckBox("(Auto) Crossed Baseline");
 		chkBaseline.setBounds(138, 84, 154, 23);
 		chkBaseline.setSelected(teamPerformance.crossedBaseLine);
-		chkBaseline.setEnabled(false);
+		chkBaseline.setEnabled(editable);
 		contentPane.add(chkBaseline);
 
 		txtClimb = new JTextField();
 		txtClimb.setBounds(435, 85, 68, 20);
-		txtClimb.setText(String.valueOf(teamPerformance.climb));
-		txtClimb.setEnabled(false);
+		txtClimb.setText(secondsToStandard(teamPerformance.climb));
+		txtClimb.setEnabled(editable);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
 
@@ -165,7 +211,7 @@ public class TeamPerformanceWindow extends JFrame {
 
 		tblSwitch = new JTable(data, columns);
 		tblSwitch.setModel(teamPerformance.rawSwitchTable);
-		tblSwitch.setEnabled(false);
+		tblSwitch.setEnabled(editable);
 		scrollPaneSwitch.setViewportView(tblSwitch);
 
 		JLabel label = new JLabel("Scale");
@@ -180,8 +226,30 @@ public class TeamPerformanceWindow extends JFrame {
 
 		tblScale = new JTable();
 		tblScale.setModel(teamPerformance.rawScaleTable);
-		tblScale.setEnabled(false);
+		tblScale.setEnabled(editable);
 		scrollPaneScale.setViewportView(tblScale);
+		
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+		
+		JMenuItem mntmEditPerformanceWindow = new JMenuItem("Edit Performance Window");
+		mntmEditPerformanceWindow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID, teamPerformance, true);
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		
+		mnEdit.add(mntmEditPerformanceWindow);
 
 		JScrollPane scrollPaneVault = new JScrollPane();
 		scrollPaneVault.setBounds(431, 140, 163, 147);
@@ -189,7 +257,7 @@ public class TeamPerformanceWindow extends JFrame {
 
 		tblVault = new JTable();
 		tblVault.setModel(teamPerformance.rawVaultTable);
-		tblVault.setEnabled(false);
+		tblVault.setEnabled(editable);
 		scrollPaneVault.setViewportView(tblVault);
 
 		JLabel label_1 = new JLabel("Power Cubes In Vault");
@@ -228,6 +296,28 @@ public class TeamPerformanceWindow extends JFrame {
 
 		JMenuItem mntmMatches = new JMenuItem("Matches");
 		mnView.add(mntmMatches);
+		
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+		
+		JMenuItem mntmEditPerformanceWindow = new JMenuItem("Edit Performance Window");
+		mntmEditPerformanceWindow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID, teamPerformance, true);
+							frame.setVisible(true);
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		mnEdit.add(mntmEditPerformanceWindow);
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
