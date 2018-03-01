@@ -46,23 +46,6 @@ public class TeamPerformanceWindow extends JFrame {
 
 	TeamPerformance teamPerformance;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					TeamPerformanceWindow frame = new TeamPerformanceWindow(5834, 10);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public void saveData() {
 
 		try {

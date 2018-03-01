@@ -36,43 +36,6 @@ public class MatchOverview extends JFrame {
 
 	static MatchOverview frame;
 
-	public static void main(String[] args) {
-		// TODO: Add Powerups
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Team[] testBlue = { new Team(1001, "The Testers"), new Team(1002, "The Ranoutofideas"),
-				new Team(1003, "The Slumdogmillionaires") };
-		Team[] testRed = { new Team(1004, "Bang blasters"), new Team(1005, "Spencini81"), new Team(1006, "Spoincer") };
-		try {
-			TeamHub.regionalCollection.createTeam(testBlue[0]);
-			TeamHub.regionalCollection.createTeam(testBlue[1]);
-			TeamHub.regionalCollection.createTeam(testBlue[2]);
-
-			TeamHub.regionalCollection.createTeam(testRed[0]);
-			TeamHub.regionalCollection.createTeam(testRed[1]);
-			TeamHub.regionalCollection.createTeam(testRed[2]);
-
-			TeamHub.regionalCollection.createMatch(1, testBlue, testRed);
-
-		} catch (Exception e) {
-
-		}
-		EventQueue.invokeLater(new Runnable() {
-
-			public void run() {
-				try {
-					frame = new MatchOverview(1);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */

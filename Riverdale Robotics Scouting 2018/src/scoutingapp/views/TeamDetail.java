@@ -27,29 +27,6 @@ public class TeamDetail extends JFrame {
 	private JTable tblOverview;
 	private Team team;
 
-	private static Team test = new Team(5834);
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TeamDetail frame = new TeamDetail(test);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public TeamDetail(Team team) {
 		this.team = team;
 		setResizable(false);

@@ -39,37 +39,6 @@ public class CreateMatch {
 	HashMap<Team, Boolean> usedTeams = new HashMap<Team, Boolean>();
 
 	private int matchID;
-	
-	static MatchHub matchHub;
-	static TeamHub teamHub;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					CreateMatch window = new CreateMatch(matchHub, teamHub);
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//					CreateMatch window = new CreateMatch();
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-	}
 
 	/**
 	 * Create the application.

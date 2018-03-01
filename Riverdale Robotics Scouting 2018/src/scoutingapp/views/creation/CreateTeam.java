@@ -24,24 +24,6 @@ public class CreateTeam extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtNumber;
 	private JTextField txtName;
-	private static TeamHub teamHub;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					CreateTeam dialog = new CreateTeam(teamHub);
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);				
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the dialog.
