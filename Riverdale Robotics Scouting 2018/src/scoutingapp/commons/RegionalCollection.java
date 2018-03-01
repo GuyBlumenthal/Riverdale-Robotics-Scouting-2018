@@ -18,6 +18,10 @@ public class RegionalCollection {
 
 	}
 
+	public HashMap<Integer, Team> getTeams() {
+		return teams;
+	}
+
 	public void createTeam(int teamNumber, String teamName) throws ExistingException {
 
 		if (teams.containsKey(teamNumber)) {
@@ -29,22 +33,7 @@ public class RegionalCollection {
 		}
 
 	}
-	
-	public HashMap<Integer, Team> getTeams() {
-		return teams;
-	}
 
-	public void createTeam(int teamNumber) throws ExistingException {
-
-		if (teams.containsKey(teamNumber)) {
-			throw new ExistingException();
-		} else {
-			Team team = new Team(teamNumber);
-
-			teams.put(teamNumber, team);
-		}
-	}
-	
 	public void createTeamPerformanceWindow(int matchID, int teamNumber) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -56,6 +45,17 @@ public class RegionalCollection {
 				}
 			}
 		});
+	}
+
+	public void createTeam(int teamNumber) throws ExistingException {
+
+		if (teams.containsKey(teamNumber)) {
+			throw new ExistingException();
+		} else {
+			Team team = new Team(teamNumber);
+
+			teams.put(teamNumber, team);
+		}
 	}
 
 	public void createTeam(Team team) throws ExistingException {
@@ -100,6 +100,12 @@ public class RegionalCollection {
 
 	}
 
+	public void removeTeamPerformance(int teamNumber, int matchID) {
+
+		teams.get(teamNumber).removeTeamPerformance(matchID);
+
+	}
+
 	public boolean teamExists(int teamNumber) {
 
 		return teams.containsKey(teamNumber);
@@ -131,6 +137,26 @@ public class RegionalCollection {
 	public boolean matchExists(int matchID) {
 
 		return matches.containsKey(matchID);
+
+	}
+
+	public void removeMatch(int matchID) {
+
+		if (matchExists(matchID)) {
+
+			matches.remove(matchID);
+
+			for (int teamNumber : teams.keySet()) {
+
+				if (hasTeamPerformance(matchID, teamNumber)) {
+
+					removeTeamPerformance(matchID, teamNumber);
+
+				}
+
+			}
+
+		}
 
 	}
 

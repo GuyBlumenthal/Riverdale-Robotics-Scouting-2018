@@ -70,6 +70,14 @@ public class Team implements Serializable {
 
 	}
 
+	public void removeTeamPerformance(int matchID) {
+
+		if (teamPerformances.containsKey(matchID)) {
+			teamPerformances.remove(matchID);
+		}
+
+	}
+
 	public String getTeamName() {
 		return teamName;
 	}
@@ -162,12 +170,14 @@ public class Team implements Serializable {
 	public int calcAverageTime(int scenario) {
 		int sum = 0;
 		int total = 0;
-		
-		if (scenario < 5) 	{	scenario = 5;	}
+
+		if (scenario < 5) {
+			scenario = 5;
+		}
 
 		for (TeamPerformance performances : teamPerformances.values()) {
 			ArrayList<Integer> data = getData(scenario, performances);
-			for(Integer i : teamPerformances.keySet()){
+			for (Integer i : teamPerformances.keySet()) {
 				sum += data.get(i);
 			}
 			total += data.size();
@@ -176,6 +186,7 @@ public class Team implements Serializable {
 		return sum / (total > 0 ? total : 1);
 	}
 
+<<<<<<< HEAD
 	public int calcAverageSwitchTimeTeleop(){
 		return (calcAverageTime(5) + calcAverageTime(6))/2;
 	}
@@ -183,6 +194,11 @@ public class Team implements Serializable {
 	//TODO: Calculate Average Climb Time
 	//TODO: Convert Time into seconds (game time into real time)
 	
+=======
+	// TODO: Calculate Average Climb Time
+	// TODO: Convert Time into seconds (game time into real time)
+
+>>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
 		ArrayList<Integer> data = performance.cubesOnSwitchAuto;
 		switch (scenario) {
