@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class TeamHub extends JFrame {
 	static public RegionalCollection regionalCollection = new RegionalCollection();
+<<<<<<< HEAD
 	
 	private static final long serialVersionUID = 6184145860176117808L;
 	private JTable table;
@@ -93,6 +94,9 @@ public class TeamHub extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+=======
+
+>>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -110,5 +114,13 @@ public class TeamHub extends JFrame {
 			}
 		});
 	}
+<<<<<<< HEAD
 	
+=======
+
+	public TeamHub() {
+
+	}
+
+>>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 }

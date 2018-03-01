@@ -18,6 +18,7 @@ import scoutingapp.commons.team.Team;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class MatchOverview extends JFrame {
 
 	private JPanel contentPane;
@@ -28,6 +29,12 @@ public class MatchOverview extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Team[] testBlue = { new Team(1001, "The Testers"), new Team(1002, "The Ranoutofideas"),
 				new Team(1003, "The Slumdogmillionaires") };
 		Team[] testRed = { new Team(1004, "Bang blasters"), new Team(1005, "Spencini81"), new Team(1006, "Spoincer") };
@@ -46,6 +53,7 @@ public class MatchOverview extends JFrame {
 
 		}
 		EventQueue.invokeLater(new Runnable() {
+
 			public void run() {
 				try {
 					MatchOverview frame = new MatchOverview(1);
@@ -61,9 +69,9 @@ public class MatchOverview extends JFrame {
 	 * Create the frame.
 	 */
 	public MatchOverview(int match) {
-		
+
 		this.match = match;
-		
+
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 672, 400);
