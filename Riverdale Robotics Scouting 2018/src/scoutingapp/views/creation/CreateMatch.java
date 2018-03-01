@@ -36,8 +36,9 @@ public class CreateMatch {
 
 	private int matchID;
 	
-	MatchHub matchHub;
-
+	static MatchHub matchHub;
+	static TeamHub teamHub;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -46,7 +47,7 @@ public class CreateMatch {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					CreateMatch window = new CreateMatch();
+					CreateMatch window = new CreateMatch(matchHub, teamHub);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,10 +60,10 @@ public class CreateMatch {
 	 * Create the application.
 	 * @param matchHub 
 	 */
-	public CreateMatch(MatchHub matchHub) {
+	public CreateMatch(MatchHub matchHub, TeamHub teamHub) {
 		
 		this.matchHub = matchHub;
-
+		this.teamHub = teamHub;
 //		Team[] testBlue = { new Team(1001, "The Testers"), new Team(1002, "The Ranoutofideas"),
 //				new Team(1003, "The Slumdogmillionaires") };
 //		Team[] testRed = { new Team(1004, "Bang blasters"), new Team(1005, "Spencini81"), new Team(1006, "Spoincer") };
@@ -80,6 +81,10 @@ public class CreateMatch {
 		initialize();
 	}
 
+	public CreateMatch(MatchHub matchHub){
+		this.matchHub = matchHub;
+		initialize();
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -177,11 +182,12 @@ public class CreateMatch {
 
 		// TODO: Make more efficient
 
+		
 		btnCreateTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					CreateTeam dialog = new CreateTeam();
+					CreateTeam dialog = new CreateTeam(teamHub);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e3) {
