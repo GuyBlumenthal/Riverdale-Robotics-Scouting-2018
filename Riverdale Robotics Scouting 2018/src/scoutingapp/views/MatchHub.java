@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.creation.CreateMatch;
 
@@ -45,9 +46,6 @@ public class MatchHub extends JFrame {
 	private JPanel contentPane;
 	private JTable tblMatches;
 
-	public final static Color BACKGROUND_COLOR = new Color(224, 255, 255);
-	public final static Color RED_ALLIANCE_COLOR = new Color(255, 109, 81);
-	public final static Color BLUE_ALLIANCE_COLOR = new Color(135, 206, 250);
 	private JScrollPane scrollPane;
 	private JMenuItem mntmAddMatch;
 	private JMenuItem mntmRemoveMatch;
@@ -140,15 +138,13 @@ public class MatchHub extends JFrame {
 		JMenu mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);
 
-		MatchHub hub = this;
-
 		mntmAddMatch = new JMenuItem("Add Match");
 		mntmAddMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					CreateMatch window = new CreateMatch(hub);
+					CreateMatch window = new CreateMatch();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -178,7 +174,7 @@ public class MatchHub extends JFrame {
 
 			}
 		});
-		
+
 		JMenuItem mntmViewMatch = new JMenuItem("View Match");
 		mntmViewMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -192,7 +188,8 @@ public class MatchHub extends JFrame {
 					public void run() {
 						try {
 							if (tblMatches.getSelectedRowCount() == 1) {
-								MatchOverview frame = new MatchOverview(((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0)));
+								MatchOverview frame = new MatchOverview(
+										((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0)));
 								frame.setVisible(true);
 							}
 						} catch (Exception e) {
@@ -215,14 +212,7 @@ public class MatchHub extends JFrame {
 		mntmTeams.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				try {
-					TeamHub frame = new TeamHub();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-
-				dispose();
+				ScoutingApp.showTeamHub();
 
 			}
 		});
@@ -230,7 +220,7 @@ public class MatchHub extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setSize(new Dimension(1024, 600));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setBackground(BACKGROUND_COLOR);
+		contentPane.setBackground(ScoutingApp.BACKGROUND_COLOR);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 

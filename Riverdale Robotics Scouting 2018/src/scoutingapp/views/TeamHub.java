@@ -18,20 +18,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.RegionalCollection;
+import scoutingapp.commons.ScoutingApp;
 import scoutingapp.views.creation.CreateTeam;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class TeamHub extends JFrame {
-	
+
 	static public RegionalCollection regionalCollection = new RegionalCollection();
-	
+
 	private static final long serialVersionUID = 6184145860176117808L;
 	private JTable tblTeams;
 	private JPanel contentPane;
-	
+
 	Object[][] arrayValues = new Object[TeamHub.regionalCollection.getTeamList().length][3];
-	
+
 	public TeamHub() {
 		initInterface();
 		updateTeamTable();
@@ -48,50 +49,44 @@ public class TeamHub extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		getContentPane().setLayout(null);
-		
+
 		JScrollPane scrollPaneTeams = new JScrollPane();
 		scrollPaneTeams.setBounds(63, 61, 633, 354);
 		getContentPane().add(scrollPaneTeams);
-		
+
 		tblTeams = new JTable();
-		tblTeams.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-			},
-			new String[] {
-				"Rank", "Team Number", "Team Name"
-			}
-		));
+		tblTeams.setModel(new DefaultTableModel(new Object[][] { { null, null, null }, },
+				new String[] { "Rank", "Team Number", "Team Name" }));
 		scrollPaneTeams.setViewportView(tblTeams);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
-		
+
 		JMenuItem mntmSaveData = new JMenuItem("Save Data ...");
 		mnFile.add(mntmSaveData);
-		
+
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mnFile.add(mntmSave);
-		
+
 		JMenu mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);
-		
+
 		JMenuItem mntmAddNewTeam = new JMenuItem("Add New Team");
 		mnEdit.add(mntmAddNewTeam);
-		
+
 		JMenuItem mntmRemoveTeam = new JMenuItem("Remove Team");
 		mntmRemoveTeam.setEnabled(false);
 		mnEdit.add(mntmRemoveTeam);
-		
+
 		JMenu mnView = new JMenu("View");
 		menuBar.add(mnView);
-		
+
 		JMenuItem mntmViewMatchhub = new JMenuItem("View MatchHub ...");
 		mnView.add(mntmViewMatchhub);
-		
+
 		TeamHub teamHub = this;
 		mntmAddNewTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,9 +94,9 @@ public class TeamHub extends JFrame {
 					public void run() {
 						try {
 							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							CreateTeam dialog = new CreateTeam(teamHub);
+							CreateTeam dialog = new CreateTeam();
 							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-							dialog.setVisible(true);	
+							dialog.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -110,58 +105,52 @@ public class TeamHub extends JFrame {
 
 			}
 		});
-		
+
 		mntmViewMatchhub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							MatchHub matchHub = new MatchHub();
-							matchHub.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-							matchHub.setVisible(true);	
-							dispose();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
+
+				ScoutingApp.showMatchHub();
+
 			}
 		});
-		
+
 		tblTeams.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if(tblTeams.isRowSelected(tblTeams.getSelectedRow())){
+				if (tblTeams.isRowSelected(tblTeams.getSelectedRow())) {
 					mntmRemoveTeam.setEnabled(true);
 				}
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(tblTeams.isRowSelected(tblTeams.getSelectedRow())){
-					EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							try {
-								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//								TeamDetail teamDetail = new TeamDetail(regionalCollection.getTeam(teamNumber));
-//								teamHub.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//								teamHub.setVisible(true);	
-								dispose();
-							} catch (Exception e) {
-								e.printStackTrace();
+				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+					if (tblTeams.isRowSelected(tblTeams.getSelectedRow())) {
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+									// TeamDetail teamDetail = new
+									// TeamDetail(regionalCollection.getTeam(teamNumber));
+									// teamHub.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+									// teamHub.setVisible(true);
+									dispose();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							}
-						}
-					});
+						});
+					}
 				}
 			}
+
 		});
-		
-		
+
 	}
 
 	public void updateTeamTable() {
 		int[] teamList = TeamHub.regionalCollection.getTeamList();
-		
+
 		for (int i = 0; i < arrayValues.length; i++) {
 			arrayValues[i][0] = i + 1;
 			arrayValues[i][1] = teamList[i];
@@ -169,9 +158,9 @@ public class TeamHub extends JFrame {
 		}
 
 		DefaultTableModel tableModel = new DefaultTableModel(arrayValues,
-			new String[] { "Rank", "Team Number", "Team Name"}) {
+				new String[] { "Rank", "Team Number", "Team Name" }) {
 			private static final long serialVersionUID = -6261637160294735163L;
-			boolean[] columnEditables = new boolean[] { false, false, false};
+			boolean[] columnEditables = new boolean[] { false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -179,5 +168,5 @@ public class TeamHub extends JFrame {
 		};
 		tblTeams.setModel(tableModel);
 	}
-	
+
 }

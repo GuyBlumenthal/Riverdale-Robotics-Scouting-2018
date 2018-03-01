@@ -15,6 +15,7 @@ import javax.swing.border.TitledBorder;
 import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.Match;
 import scoutingapp.commons.RegionalCollection;
+import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -293,6 +294,7 @@ public class MatchOverview extends JFrame {
 		JCheckBox chckbxLevitate = new JCheckBox("Levitate");
 		chckbxLevitate.setBounds(215, 115, 83, 23);
 		panel.add(chckbxLevitate);
+		
 	}
 
 	public void openTeamDetail(int team, boolean isRed) {

@@ -20,6 +20,7 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 import scoutingapp.commons.ExistingException;
+import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.MatchHub;
 import scoutingapp.views.TeamHub;
@@ -35,44 +36,15 @@ public class CreateMatch {
 	private JComboBox<Integer> cmbRed2;
 	private JComboBox<Integer> cmbRed3;
 	private JTextField txtMatchID;
-	
+
 	HashMap<Team, Boolean> usedTeams = new HashMap<Team, Boolean>();
 
 	private int matchID;
 
 	/**
-	 * Create the application.
-	 * @param matchHub 
-	 */
-	public CreateMatch(MatchHub matchHub, TeamHub teamHub) {
-		
-		this.matchHub = matchHub;
-		this.teamHub = teamHub;
-//		Team[] testBlue = { new Team(1001, "The Testers"), new Team(1002, "The Ranoutofideas"),
-//				new Team(1003, "The Slumdogmillionaires") };
-//		Team[] testRed = { new Team(1004, "Bang blasters"), new Team(1005, "Spencini81"), new Team(1006, "Spoincer") };
-//		try {
-//			TeamHub.regionalCollection.createTeam(testBlue[0]);
-//			TeamHub.regionalCollection.createTeam(testBlue[1]);
-//			TeamHub.regionalCollection.createTeam(testBlue[2]);
-//
-//			TeamHub.regionalCollection.createTeam(testRed[0]);
-//			TeamHub.regionalCollection.createTeam(testRed[1]);
-//			TeamHub.regionalCollection.createTeam(testRed[2]);
-//		} catch (Exception e) {
-//
-//		}
-		initialize();
-	}
-
-	public CreateMatch(MatchHub matchHub){
-		this.matchHub = matchHub;
-		initialize();
-	}
-	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public CreateMatch() {
 
 		Object[] temp = TeamHub.regionalCollection.getTeams().keySet().toArray();
 
@@ -136,9 +108,9 @@ public class CreateMatch {
 		JButton btnCreateMatch = new JButton("Create Match");
 		btnCreateMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				boolean worked = true;
-				
+
 				Team[] blueTeam = {
 						TeamHub.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbBlue1.getSelectedItem()))),
@@ -146,16 +118,15 @@ public class CreateMatch {
 								.getTeam(Integer.parseInt(String.valueOf(cmbBlue2.getSelectedItem()))),
 						TeamHub.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbBlue3.getSelectedItem()))) };
-				
+
 				Team[] redTeam = {
 						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed1.getSelectedItem()))),
 						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed2.getSelectedItem()))),
 						TeamHub.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbRed3.getSelectedItem()))) };
-				
-				
-				//TODO: This is really bad, fix it later.
-				
+
+				// TODO: This is really bad, fix it later.
+
 				for (int i = 0; i < 3; i++) {
 					if (!usedTeams.containsKey(blueTeam[i])) {
 						usedTeams.put(blueTeam[i], true);
@@ -163,7 +134,7 @@ public class CreateMatch {
 						worked = false;
 					}
 				}
-				
+
 				for (int i = 0; i < 3; i++) {
 					if (!usedTeams.containsKey(redTeam[i])) {
 						usedTeams.put(redTeam[i], true);
@@ -171,26 +142,25 @@ public class CreateMatch {
 						worked = false;
 					}
 				}
-				
-				
+
 				if (worked) {
-					
+
 					try {
-						TeamHub.regionalCollection.createMatch(Integer.parseInt(txtMatchID.getText()), blueTeam, redTeam);
+						TeamHub.regionalCollection.createMatch(Integer.parseInt(txtMatchID.getText()), blueTeam,
+								redTeam);
 					} catch (NumberFormatException | ExistingException e1) {
 						JOptionPane.showMessageDialog(null, "Team either already exists or ID was not valid.");
 						usedTeams.clear();
 						return;
 					}
-				
-					matchHub.updateMatchTable();
+
+					ScoutingApp.updateMatchHubTable();
 					frame.dispose();
-	
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Teams must be unique.");
 				}
-				
-				
+
 				usedTeams.clear();
 			}
 		});
@@ -201,12 +171,11 @@ public class CreateMatch {
 
 		// TODO: Make more efficient
 
-		
 		btnCreateTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					CreateTeam dialog = new CreateTeam(teamHub);
+					CreateTeam dialog = new CreateTeam();
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e3) {
@@ -227,7 +196,7 @@ public class CreateMatch {
 				for (int i = 0; i < temp.length; i++) {
 					teams.add(Integer.parseInt(String.valueOf(temp[i])));
 				}
-				
+
 				Collections.sort(teams);
 
 				for (int i = 0; i < teams.size(); i++) {

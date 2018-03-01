@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import scoutingapp.commons.ExistingException;
+import scoutingapp.commons.ScoutingApp;
 import scoutingapp.views.TeamHub;
 
 import javax.swing.JLabel;
@@ -28,8 +29,7 @@ public class CreateTeam extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CreateTeam(TeamHub teamHub) {
-		this.teamHub = teamHub;
+	public CreateTeam() {
 		
 		setModal(true);
 		
@@ -78,7 +78,7 @@ public class CreateTeam extends JDialog {
 
 				try {
 					TeamHub.regionalCollection.createTeam(Integer.parseInt(txtNumber.getText()), txtName.getText());
-					teamHub.updateTeamTable();
+					ScoutingApp.updateTeamHubTable();
 					dispose();
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Please fill in the team number with a number.",
