@@ -7,22 +7,36 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
+import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.TeamHub;
 
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
 public class CreateMatch {
 
 	private JFrame frame;
 	ArrayList<Integer> teams = new ArrayList<Integer>();
 	ArrayList<Integer> usedTeams = new ArrayList<Integer>();
+	private JComboBox<Integer> cmbBlue1;
+	private JComboBox<Integer> cmbBlue2;
+	private JComboBox<Integer> cmbBlue3;
+	private JComboBox<Integer> cmbRed1;
+	private JComboBox<Integer> cmbRed2;
+	private JComboBox<Integer> cmbRed3;
+	private JTextField txtMatchID;
+	
+	private int matchID;
 
 	/**
 	 * Launch the application.
@@ -79,7 +93,7 @@ public class CreateMatch {
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblMatchId = new JLabel("Match ID:");
-		lblMatchId.setBounds(20, 11, 154, 14);
+		lblMatchId.setBounds(20, 11, 53, 14);
 		frame.getContentPane().add(lblMatchId);
 		
 		JSeparator separator = new JSeparator();
@@ -98,37 +112,97 @@ public class CreateMatch {
 		frame.getContentPane().add(pnlRedTeam);
 		pnlRedTeam.setLayout(null);
 		
-		JComboBox<Integer> cmbBlue1 = new JComboBox<Integer>();
+		cmbBlue1 = new JComboBox<Integer>();
 		cmbBlue1.setBounds(104, 22, 81, 20);
 		pnlBlueTeam.add(cmbBlue1);
 		
-		JComboBox<Integer> cmbBlue2 = new JComboBox<Integer>();
+		cmbBlue2 = new JComboBox<Integer>();
 		cmbBlue2.setBounds(104, 115, 81, 20);
 		pnlBlueTeam.add(cmbBlue2);
 		
-		JComboBox<Integer> cmbBlue3 = new JComboBox<Integer>();
+		cmbBlue3 = new JComboBox<Integer>();
 		cmbBlue3.setBounds(104, 211, 81, 20);
 		pnlBlueTeam.add(cmbBlue3);
 		
-		JComboBox<Integer> cmbRed1 = new JComboBox<Integer>();
+		cmbRed1 = new JComboBox<Integer>();
 		cmbRed1.setBounds(97, 21, 81, 20);
 		pnlRedTeam.add(cmbRed1);
 		
-		JComboBox<Integer> cmbRed2 = new JComboBox<Integer>();
+		cmbRed2 = new JComboBox<Integer>();
 		cmbRed2.setBounds(97, 114, 81, 20);
 		pnlRedTeam.add(cmbRed2);
 		
-		JComboBox<Integer> cmbRed3 = new JComboBox<Integer>();
+		cmbRed3 = new JComboBox<Integer>();
 		cmbRed3.setBounds(97, 211, 81, 20);
 		pnlRedTeam.add(cmbRed3);
 		
 		JButton btnCreateMatch = new JButton("Create Match");
+		btnCreateMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Team[] blueTeam = {TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbBlue1.getSelectedItem()))),
+						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbBlue2.getSelectedItem()))),
+						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbBlue3.getSelectedItem())))};
+				
+				Team[] redTeam = {TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed1.getSelectedItem()))),
+						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed2.getSelectedItem()))),
+						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed3.getSelectedItem())))};
+				try {
+					TeamHub.regionalCollection.createMatch(Integer.parseInt(txtMatchID.getText()), 
+							blueTeam, redTeam);
+				} catch (NumberFormatException | ExistingException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnCreateMatch.setBounds(184, 7, 108, 23);
 		frame.getContentPane().add(btnCreateMatch);
 		
 		JButton btnCreateTeam = new JButton("Create Team");
+		
+		//TODO: Make more efficient
+		
+		btnCreateTeam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					CreateTeam dialog = new CreateTeam();
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception e3) {
+					e3.printStackTrace();
+				}
+				cmbBlue1.removeAllItems();
+				cmbBlue2.removeAllItems();
+				cmbBlue3.removeAllItems();
+				cmbRed1.removeAllItems();
+				cmbRed2.removeAllItems();
+				cmbRed3.removeAllItems();
+				
+				Object[] temp = TeamHub.regionalCollection.getTeams().keySet().toArray();
+				
+				teams.clear();
+				
+				for (int i = 0; i < temp.length; i++) {
+					teams.add(Integer.parseInt(String.valueOf(temp[i])));
+				}
+				
+				for (int i = 0; i < teams.size(); i++) {
+					cmbBlue1.addItem(teams.get(i));
+					cmbBlue2.addItem(teams.get(i));
+					cmbBlue3.addItem(teams.get(i));
+					cmbRed1.addItem(teams.get(i));
+					cmbRed2.addItem(teams.get(i));
+					cmbRed3.addItem(teams.get(i));
+				}
+			}
+		});
 		btnCreateTeam.setBounds(302, 7, 108, 23);
 		frame.getContentPane().add(btnCreateTeam);
+		
+		txtMatchID = new JTextField();
+		txtMatchID.setBounds(88, 8, 86, 20);
+		frame.getContentPane().add(txtMatchID);
+		txtMatchID.setColumns(10);
 		
 		for (int i = 0; i < teams.size(); i++) {
 			cmbBlue1.addItem(teams.get(i));
