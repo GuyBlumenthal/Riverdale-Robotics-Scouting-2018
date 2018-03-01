@@ -21,6 +21,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import scoutingapp.commons.team.Team;
+import scoutingapp.views.creation.CreateMatch;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MatchHub extends JFrame {
 
@@ -152,6 +156,23 @@ public class MatchHub extends JFrame {
 		contentPane.setLayout(null);
 
 		btnAddMatch = new JButton();
+		btnAddMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							CreateMatch window = new CreateMatch();
+							window.frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+
+			}
+		});
 		btnAddMatch.setText("<html><center>" + "Add" + "<br>" + "Match" + "</center></html>");
 		btnAddMatch.setBounds(57, 13, 80, 45);
 		contentPane.add(btnAddMatch);
