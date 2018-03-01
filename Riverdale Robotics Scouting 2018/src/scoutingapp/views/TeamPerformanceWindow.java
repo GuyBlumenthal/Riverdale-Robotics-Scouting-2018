@@ -64,7 +64,6 @@ public class TeamPerformanceWindow extends JFrame {
 		try {
 
 			if (!TeamHub.regionalCollection.teamExists(teamNumber)) {
-				System.out.println("not exists");
 				TeamHub.regionalCollection.createTeam(teamNumber);
 			}
 			TeamHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
