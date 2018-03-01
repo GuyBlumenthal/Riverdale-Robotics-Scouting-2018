@@ -16,6 +16,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.team.Team;
+import javax.swing.JMenuItem;
 
 public class TeamDetail extends JFrame {
 	/**
@@ -57,10 +58,18 @@ public class TeamDetail extends JFrame {
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-
-		JMenu mnFile = new JMenu("File");
-		mnFile.setPreferredSize(new Dimension(80, 22));
-		menuBar.add(mnFile);
+		
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+		
+		JMenuItem mntmShowTeamHub = new JMenuItem("Show Team Hub ...");
+		mnView.add(mntmShowTeamHub);
+		
+		JMenuItem mntmShowMatchHub = new JMenuItem("Show Match Hub ...");
+		mnView.add(mntmShowMatchHub);
+		
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mnView.add(mntmExit);
 		getContentPane().setLayout(null);
 
 		JLabel lblTeamNumber = new JLabel(Integer.toString(team.getTeamNumber()));

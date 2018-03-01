@@ -30,6 +30,8 @@ public class TeamHub extends JFrame {
 	private JTable tblTeams;
 	private JPanel contentPane;
 	
+	Object[][] arrayValues = new Object[TeamHub.regionalCollection.getTeamList().length][3];
+	
 	public TeamHub() {
 		initInterface();
 		updateTeamTable();
@@ -59,15 +61,7 @@ public class TeamHub extends JFrame {
 			new String[] {
 				"Rank", "Team Number", "Team Name"
 			}
-		) {
-			private static final long serialVersionUID = 1L;
-			Class[] columnTypes = new Class[] {
-				Integer.class, Integer.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		));
 		scrollPaneTeams.setViewportView(tblTeams);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -137,21 +131,37 @@ public class TeamHub extends JFrame {
 		
 		tblTeams.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				if(tblTeams.isRowSelected(tblTeams.getSelectedRow())){
 					mntmRemoveTeam.setEnabled(true);
 				}
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(tblTeams.isRowSelected(tblTeams.getSelectedRow())){
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//								TeamDetail teamDetail = new TeamDetail(regionalCollection.getTeam(teamNumber));
+//								teamHub.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//								teamHub.setVisible(true);	
+								dispose();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			}
 		});
+		
 		
 	}
 
 	public void updateTeamTable() {
-
-		Object[][] arrayValues = new Object[TeamHub.regionalCollection.getTeamList().length][3];
-
 		int[] teamList = TeamHub.regionalCollection.getTeamList();
-
+		
 		for (int i = 0; i < arrayValues.length; i++) {
 			arrayValues[i][0] = i + 1;
 			arrayValues[i][1] = teamList[i];
