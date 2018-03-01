@@ -173,25 +173,7 @@ public class MatchHub extends JFrame {
 
 	void createMatchTable() {
 
-		tblMatches = new JTable() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -7944290291409346981L;
-
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-				Component comp = super.prepareRenderer(renderer, row, column);
-
-				if (column > 0 && column < 4) {
-					comp.setBackground(BLUE_ALLIANCE_COLOR);
-				} else if (column >= 4 && column < 7) {
-					comp.setBackground(RED_ALLIANCE_COLOR);
-				} else {
-					comp.setBackground(BACKGROUND_COLOR);
-				}
-				return comp;
-			}
-		};
+		tblMatches = new JTable();
 		tblMatches.setModel(new DefaultTableModel(
 				new Object[][] {
 						{ new Integer(0), new Integer(0), new Integer(0), new Integer(1), new Integer(0),
