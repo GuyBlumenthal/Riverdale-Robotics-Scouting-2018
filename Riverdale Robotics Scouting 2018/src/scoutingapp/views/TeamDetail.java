@@ -27,6 +27,7 @@ public class TeamDetail extends JFrame {
 	private Team team;
 
 	private static Team test = new Team(5834);
+
 	/**
 	 * Launch the application.
 	 */
@@ -111,25 +112,21 @@ public class TeamDetail extends JFrame {
 		tblOverview = new JTable();
 		tblOverview.setEnabled(false);
 
-		tblOverview.setModel(new DefaultTableModel(new Object[][] { 
-			
-				{ "Cube on Switch",
-					team.calcAverage(0), 						team.calcConsistency(0),						team.calcAverageTime(0),
-					team.calcTeleopNumCubesOnSwitchAverage(), 	team.calcTeleopNumCubesOnSwitchConsistency(),	10},
-				{ "Cube on Scale", 
-					team.calcAverage(1),	team.calcConsistency(1),	team.calcAverageTime(1), 
-					team.calcAverage(2),	team.calcConsistency(2),	team.calcAverageTime(2)},
-				{ "Cube in Vault", 
-					team.calcAverage(3),	team.calcConsistency(3),	team.calcAverageTime(3), 
-					team.calcAverage(4),	team.calcConsistency(4),	team.calcAverageTime(4)},
-				{ "Baseline", 
-					team.calcBooleanAverage(true), 		team.calcBooleanConsistency(true), 		null, null, null, null },
-				{ "Climb", 
-					team.calcBooleanAverage(false), 	team.calcBooleanConsistency(false), 	null, null, null, null}
-		},
-		new String[] { 	"Robot Abilities", 	"Auto Average", 		"Auto Consistency", 	"Auto Average Time", 
-						"Teleop Average", 	"Teleop Consistency", 	"Teleop Average Time"}));
-		
+		tblOverview.setModel(new DefaultTableModel(new Object[][] {
+
+				{ "Cube on Switch", team.calcAverage(0), team.calcConsistency(0), team.calcAverageTime(0),
+						team.calcTeleopNumCubesOnSwitchAverage(), team.calcTeleopNumCubesOnSwitchConsistency(), 10 },
+				{ "Cube on Scale", team.calcAverage(1), team.calcConsistency(1), team.calcAverageTime(1),
+						team.calcAverage(2), team.calcConsistency(2), team.calcAverageTime(2) },
+				{ "Cube in Vault", team.calcAverage(3), team.calcConsistency(3), team.calcAverageTime(3),
+						team.calcAverage(4), team.calcConsistency(4), team.calcAverageTime(4) },
+				{ "Baseline", team.calcBooleanAverage(true), team.calcBooleanConsistency(true), null, null, null,
+						null },
+				{ "Climb", team.calcBooleanAverage(false), team.calcBooleanConsistency(false), null, null, null,
+						null } },
+				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Auto Average Time",
+						"Teleop Average", "Teleop Consistency", "Teleop Average Time" }));
+
 		scrollPane_1.setViewportView(tblOverview);
 
 		JButton btnTeamDetail = new JButton("Team Detail");
