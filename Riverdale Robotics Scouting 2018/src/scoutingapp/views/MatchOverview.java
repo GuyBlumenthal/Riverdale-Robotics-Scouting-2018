@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+import javax.swing.JCheckBox;
 
 @SuppressWarnings("serial")
 public class MatchOverview extends JFrame {
@@ -81,7 +82,7 @@ public class MatchOverview extends JFrame {
 
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 672, 400);
+		setBounds(100, 100, 654, 412);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -100,6 +101,16 @@ public class MatchOverview extends JFrame {
 			}
 		});
 		mnEdit.add(mntmDeleteMatch);
+		
+		JMenuItem mntmSetPowerUp = new JMenuItem("Set Power Up Values");
+		mntmSetPowerUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+			
+				
+			}
+		});
+		mnEdit.add(mntmSetPowerUp);
 
 		JMenu mnViews = new JMenu("Views");
 		menuBar.add(mnViews);
@@ -162,7 +173,7 @@ public class MatchOverview extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Red Alliance",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(324, 54, 332, 306);
+		panel_1.setBounds(324, 54, 318, 306);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -182,15 +193,15 @@ public class MatchOverview extends JFrame {
 		panel_1.add(lblRedTeam3);
 
 		JButton btnRedMatchTeam1 = new JButton("...");
-		btnRedMatchTeam1.setBounds(167, 164, 68, 23);
+		btnRedMatchTeam1.setBounds(163, 163, 68, 23);
 		panel_1.add(btnRedMatchTeam1);
 
 		JButton btnRedMatchTeam2 = new JButton("...");
-		btnRedMatchTeam2.setBounds(167, 219, 68, 23);
+		btnRedMatchTeam2.setBounds(163, 219, 68, 23);
 		panel_1.add(btnRedMatchTeam2);
 
 		JButton btnRedMatchTeam3 = new JButton("...");
-		btnRedMatchTeam3.setBounds(167, 265, 68, 23);
+		btnRedMatchTeam3.setBounds(163, 265, 68, 23);
 		panel_1.add(btnRedMatchTeam3);
 
 		JButton btnRedTeamDetail1 = new JButton("...");
@@ -199,7 +210,7 @@ public class MatchOverview extends JFrame {
 				openTeamDetail(0, true);
 			}
 		});
-		btnRedTeamDetail1.setBounds(254, 164, 68, 23);
+		btnRedTeamDetail1.setBounds(241, 164, 68, 23);
 		panel_1.add(btnRedTeamDetail1);
 
 		JButton btnRedTeamDetail2 = new JButton("...");
@@ -208,7 +219,7 @@ public class MatchOverview extends JFrame {
 				openTeamDetail(1, true);
 			}
 		});
-		btnRedTeamDetail2.setBounds(254, 219, 68, 23);
+		btnRedTeamDetail2.setBounds(241, 219, 68, 23);
 		panel_1.add(btnRedTeamDetail2);
 
 		JButton btnRedTeamDetail3 = new JButton("...");
@@ -217,8 +228,28 @@ public class MatchOverview extends JFrame {
 				openTeamDetail(2, true);
 			}
 		});
-		btnRedTeamDetail3.setBounds(254, 265, 68, 23);
+		btnRedTeamDetail3.setBounds(241, 265, 68, 23);
 		panel_1.add(btnRedTeamDetail3);
+		
+		JCheckBox checkBox = new JCheckBox("Levitate");
+		checkBox.setBounds(215, 115, 97, 23);
+		panel_1.add(checkBox);
+		
+		JLabel label = new JLabel("0:00");
+		label.setBounds(163, 119, 46, 14);
+		panel_1.add(label);
+		
+		JLabel label_1 = new JLabel("Force:");
+		label_1.setBounds(119, 119, 46, 14);
+		panel_1.add(label_1);
+		
+		JLabel label_2 = new JLabel("0:00");
+		label_2.setBounds(50, 119, 46, 14);
+		panel_1.add(label_2);
+		
+		JLabel label_5 = new JLabel("Boost:");
+		label_5.setBounds(10, 119, 46, 14);
+		panel_1.add(label_5);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Blue Alliance", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -279,18 +310,26 @@ public class MatchOverview extends JFrame {
 		});
 		btnBlueTeamDetail3.setBounds(234, 266, 60, 23);
 		panel.add(btnBlueTeamDetail3);
-
-		JLabel lblBoost = new JLabel("Boost:");
-		lblBoost.setBounds(10, 127, 46, 14);
-		panel.add(lblBoost);
-
-		JLabel lblForce = new JLabel("Force:");
-		lblForce.setBounds(119, 127, 46, 14);
-		panel.add(lblForce);
-
-		JLabel lblLevitate = new JLabel("Levitate:");
-		lblLevitate.setBounds(207, 127, 46, 14);
-		panel.add(lblLevitate);
+		
+		JLabel label_3 = new JLabel("Boost:");
+		label_3.setBounds(10, 119, 46, 14);
+		panel.add(label_3);
+		
+		JLabel label_4 = new JLabel("Force:");
+		label_4.setBounds(119, 119, 46, 14);
+		panel.add(label_4);
+		
+		JLabel label_6 = new JLabel("0:00");
+		label_6.setBounds(50, 119, 46, 14);
+		panel.add(label_6);
+		
+		JLabel label_7 = new JLabel("0:00");
+		label_7.setBounds(163, 119, 46, 14);
+		panel.add(label_7);
+		
+		JCheckBox chckbxLevitate = new JCheckBox("Levitate");
+		chckbxLevitate.setBounds(215, 115, 83, 23);
+		panel.add(chckbxLevitate);
 	}
 
 	public void openTeamDetail(int team, boolean isRed) {
