@@ -219,7 +219,6 @@ public class MatchOverview extends JFrame {
 				TeamHub.regionalCollection.showTeamPerformance(match, teamNumber);
 
 			} else {
-
 				TeamHub.regionalCollection.createTeamPerformanceWindow(match, teamNumber);
 
 			}
