@@ -5,11 +5,14 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -25,7 +28,6 @@ public class CreateMatch {
 
 	public JDialog frame;
 	ArrayList<Integer> teams = new ArrayList<Integer>();
-	ArrayList<Integer> usedTeams = new ArrayList<Integer>();
 	private JComboBox<Integer> cmbBlue1;
 	private JComboBox<Integer> cmbBlue2;
 	private JComboBox<Integer> cmbBlue3;
@@ -33,6 +35,8 @@ public class CreateMatch {
 	private JComboBox<Integer> cmbRed2;
 	private JComboBox<Integer> cmbRed3;
 	private JTextField txtMatchID;
+	
+	HashMap<Team, Boolean> usedTeams = new HashMap<Team, Boolean>();
 
 	private int matchID;
 	
@@ -93,7 +97,7 @@ public class CreateMatch {
 
 		frame = new JDialog();
 		frame.setBounds(100, 100, 450, 366);
-		frame.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setModal(true);
 
@@ -146,6 +150,9 @@ public class CreateMatch {
 		JButton btnCreateMatch = new JButton("Create Match");
 		btnCreateMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				boolean worked = true;
+				
 				Team[] blueTeam = {
 						TeamHub.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbBlue1.getSelectedItem()))),
@@ -153,21 +160,52 @@ public class CreateMatch {
 								.getTeam(Integer.parseInt(String.valueOf(cmbBlue2.getSelectedItem()))),
 						TeamHub.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbBlue3.getSelectedItem()))) };
-
+				
 				Team[] redTeam = {
 						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed1.getSelectedItem()))),
 						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed2.getSelectedItem()))),
 						TeamHub.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbRed3.getSelectedItem()))) };
 				
-				matchHub.updateMatchTable();
-				frame.dispose();
 				
-				try {
-					TeamHub.regionalCollection.createMatch(Integer.parseInt(txtMatchID.getText()), blueTeam, redTeam);
-				} catch (NumberFormatException | ExistingException e1) {
-					e1.printStackTrace();
+				//TODO: This is really bad, fix it later.
+				
+				for (int i = 0; i < 3; i++) {
+					if (!usedTeams.containsKey(blueTeam[i])) {
+						usedTeams.put(blueTeam[i], true);
+					} else {
+						worked = false;
+					}
 				}
+				
+				for (int i = 0; i < 3; i++) {
+					if (!usedTeams.containsKey(redTeam[i])) {
+						usedTeams.put(redTeam[i], true);
+					} else {
+						worked = false;
+					}
+				}
+				
+				
+				if (worked) {
+					
+					try {
+						TeamHub.regionalCollection.createMatch(Integer.parseInt(txtMatchID.getText()), blueTeam, redTeam);
+					} catch (NumberFormatException | ExistingException e1) {
+						JOptionPane.showMessageDialog(null, "Team either already exists or ID was not valid.");
+						usedTeams.clear();
+						return;
+					}
+				
+					matchHub.updateMatchTable();
+					frame.dispose();
+	
+				} else {
+					JOptionPane.showMessageDialog(null, "Teams must be unique.");
+				}
+				
+				
+				usedTeams.clear();
 			}
 		});
 		btnCreateMatch.setBounds(184, 7, 108, 23);
@@ -197,10 +235,13 @@ public class CreateMatch {
 				Object[] temp = TeamHub.regionalCollection.getTeams().keySet().toArray();
 
 				teams.clear();
+				usedTeams.clear();
 
 				for (int i = 0; i < temp.length; i++) {
 					teams.add(Integer.parseInt(String.valueOf(temp[i])));
 				}
+				
+				Collections.sort(teams);
 
 				for (int i = 0; i < teams.size(); i++) {
 					cmbBlue1.addItem(teams.get(i));
