@@ -25,6 +25,8 @@ import scoutingapp.views.creation.CreateMatch;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class MatchHub extends JFrame {
 
@@ -76,19 +78,6 @@ public class MatchHub extends JFrame {
 			TeamHub.regionalCollection.createTeam(new Team(1005, "Spencini81"));
 			TeamHub.regionalCollection.createTeam(new Team(1006, "Spoincer"));
 		} catch (Exception e) {
-
-		}
-
-		try {
-
-			int[] blueTeams = { 1001, 1002, 1003 };
-			int[] redTeams = { 1004, 1005, 1006 };
-
-			TeamHub.regionalCollection.createMatch(1, blueTeams, redTeams);
-
-		} catch (
-
-		Exception e) {
 
 		}
 
@@ -156,14 +145,16 @@ public class MatchHub extends JFrame {
 		contentPane.setLayout(null);
 
 		btnAddMatch = new JButton();
+		MatchHub k = this;
 		btnAddMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
 							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							CreateMatch window = new CreateMatch();
+							CreateMatch window = new CreateMatch(k);
 							window.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
