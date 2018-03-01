@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +28,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 public class MatchHub extends JFrame {
 
@@ -36,13 +43,14 @@ public class MatchHub extends JFrame {
 
 	private static final long serialVersionUID = 6184145860176117808L;
 	private JPanel contentPane;
-	private JButton btnAddMatch, buttonRemoveMatch;
 	private JTable tblMatches;
 
 	public final static Color BACKGROUND_COLOR = new Color(224, 255, 255);
 	public final static Color RED_ALLIANCE_COLOR = new Color(255, 109, 81);
 	public final static Color BLUE_ALLIANCE_COLOR = new Color(135, 206, 250);
 	private JScrollPane scrollPane;
+	private JMenuItem mntmAddMatch;
+	private JMenuItem mntmRemoveMatch;
 
 	/**
 	 * Launch the application.
@@ -96,7 +104,7 @@ public class MatchHub extends JFrame {
 		Object[][] arrayValues = new Object[TeamHub.regionalCollection.getMatchIDList().length][8];
 
 		int[] matchIDList = TeamHub.regionalCollection.getMatchIDList();
-
+		
 		for (int i = 0; i < arrayValues.length; i++) {
 
 			arrayValues[i][0] = TeamHub.regionalCollection.getMatch(matchIDList[i]).getMatchID();
@@ -133,10 +141,74 @@ public class MatchHub extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MatchHub.class.getResource("/scoutingapp/resources/MagnifyingGlass.png")));
 		setTitle("Scouting");
-		setSize(new Dimension(1024, 600));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 787, 530);
+		setBounds(100, 100, 721, 485);
+
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+		mnFile.add(mntmSave);
+
+		JMenuItem mntmNew = new JMenuItem("New");
+		mnFile.add(mntmNew);
+
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+
+		MatchHub hub = this;
+		
+		mntmAddMatch = new JMenuItem("Add Match");
+		mntmAddMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					CreateMatch window = new CreateMatch(hub);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+		mnEdit.add(mntmAddMatch);
+
+		mntmRemoveMatch = new JMenuItem("Remove Match");
+		mntmRemoveMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				if (tblMatches.getSelectedRowCount() > 1) {
+					int[] selectedMatchIDs = tblMatches.getSelectedRows();
+					
+					for (int i : selectedMatchIDs) {
+						TeamHub.regionalCollection.removeMatch((int) tblMatches.getValueAt(i, 0 ));
+					}
+				} else if (tblMatches.getSelectedRowCount() == 1) {
+					
+					TeamHub.regionalCollection.removeMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0 ));
+					
+				}
+				
+				updateMatchTable();
+				
+			}
+		});
+		mnEdit.add(mntmRemoveMatch);
+
+		JMenuItem mntmRefreshMatchTable = new JMenuItem("Refresh Match Table");
+		mnEdit.add(mntmRefreshMatchTable);
+
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+
+		JMenuItem mntmTeams = new JMenuItem("Teams");
+		mnView.add(mntmTeams);
 		contentPane = new JPanel();
 		contentPane.setSize(new Dimension(1024, 600));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -144,42 +216,8 @@ public class MatchHub extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		btnAddMatch = new JButton();
-		MatchHub k = this;
-		btnAddMatch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							CreateMatch window = new CreateMatch(k);
-							window.frame.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-
-			}
-		});
-		btnAddMatch.setText("<html><center>" + "Add" + "<br>" + "Match" + "</center></html>");
-		btnAddMatch.setBounds(57, 13, 80, 45);
-		contentPane.add(btnAddMatch);
-
-		buttonRemoveMatch = new JButton();
-		buttonRemoveMatch.setText("<html><center>" + "Remove" + "<br>" + "Match" + "</center></html>");
-		buttonRemoveMatch.setBounds(149, 13, 80, 45);
-		contentPane.add(buttonRemoveMatch);
-
-		JButton btnopenmatch = new JButton();
-		btnopenmatch.setText("<html><center>Open<br>Match</center></html>");
-		btnopenmatch.setBounds(239, 13, 80, 45);
-		contentPane.add(btnopenmatch);
-
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(57, 71, 673, 388);
+		scrollPane.setBounds(22, 22, 673, 388);
 		contentPane.add(scrollPane);
 	}
 
@@ -222,13 +260,5 @@ public class MatchHub extends JFrame {
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.RIGHT);
 
-		/* functions */
-		btnAddMatch.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			}
-		});
-
 	}
-
 }
