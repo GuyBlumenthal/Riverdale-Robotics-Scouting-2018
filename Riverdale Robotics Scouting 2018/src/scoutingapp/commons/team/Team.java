@@ -123,14 +123,7 @@ public class Team implements Serializable {
 	}
 
 	public double calcTeleopNumCubesOnSwitchAverage() {
-		double sum = 0;
-		int total = teamPerformances.size();
-
-		for (TeamPerformance performance : teamPerformances.values()) {
-			sum += performance.cubesOnAllianceSwitchTeleop.size() + performance.cubesOnOpponentSwitchTeleop.size();
-		}
-
-		return sum * 1.0 / (total > 0 ? total : 1);
+		return (calcAverage(5) + calcAverage(6))/2;
 	}
 
 	public double calcTeleopNumCubesOnSwitchConsistency() {
@@ -148,12 +141,12 @@ public class Team implements Serializable {
 		return numAboveAverage * 1.0 / (total > 0 ? total : 1) * 100;
 	}
 
-	public double calcBooleanAverage(boolean scenario) { // true = baseline,
+	public double calcBooleanAverage(boolean scenario) { 	// true = baseline,
 															// false = climb
 		return calcSum(scenario) * 1.0 / (teamPerformances.size() > 0 ? teamPerformances.size() : 1);
 	}
 
-	public double calcBooleanConsistency(boolean scenario) { // true = baseline,
+	public double calcBooleanConsistency(boolean scenario) { 	// true = baseline,
 																// false = climb
 		return calcBooleanAverage(scenario) * 100;
 	}
@@ -193,9 +186,14 @@ public class Team implements Serializable {
 		return sum / (total > 0 ? total : 1);
 	}
 
-	// TODO: Calculate Average Climb Time
-	// TODO: Convert Time into seconds (game time into real time)
 
+	public int calcAverageSwitchTimeTeleop(){
+		return (calcAverageTime(5) + calcAverageTime(6))/2;
+	}
+	
+	//TODO: Calculate Average Climb Time
+	//TODO: Convert Time into seconds (game time into real time)
+	
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
 		ArrayList<Integer> data = performance.cubesOnSwitchAuto;
 		switch (scenario) {
