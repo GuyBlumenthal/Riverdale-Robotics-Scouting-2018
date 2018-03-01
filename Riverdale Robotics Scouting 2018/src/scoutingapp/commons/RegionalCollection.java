@@ -29,6 +29,10 @@ public class RegionalCollection {
 		}
 
 	}
+	
+	public HashMap<Integer, Team> getTeams() {
+		return teams;
+	}
 
 	public void createTeam(int teamNumber) throws ExistingException {
 
