@@ -47,7 +47,6 @@ public class CreateMatch {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-<<<<<<< HEAD
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -59,7 +58,6 @@ public class CreateMatch {
 				}
 			}
 		});
-=======
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 //				try {
@@ -71,7 +69,6 @@ public class CreateMatch {
 //				}
 //			}
 //		});
->>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 	}
 
 	/**
