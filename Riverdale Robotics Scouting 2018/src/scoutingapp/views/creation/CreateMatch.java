@@ -98,6 +98,7 @@ public class CreateMatch {
 		frame = new JDialog();
 		frame.setBounds(100, 100, 450, 366);
 		frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		frame.setTitle("Create Match");
 		frame.getContentPane().setLayout(null);
 		frame.setModal(true);
 
