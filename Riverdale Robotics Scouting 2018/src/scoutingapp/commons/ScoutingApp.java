@@ -13,8 +13,10 @@ public class ScoutingApp {
 
 	public static MatchHub matchHub;
 	public static TeamHub teamHub;
-	
-	//TODO: Background Colour
+
+	public static RegionalCollection regionalCollection = new RegionalCollection();
+
+	// TODO: Background Colour
 	public final static Color BACKGROUND_COLOR = new Color(224, 255, 255);
 	public final static Color RED_ALLIANCE_COLOR = new Color(255, 109, 81);
 	public final static Color BLUE_ALLIANCE_COLOR = new Color(135, 206, 250);
@@ -43,12 +45,12 @@ public class ScoutingApp {
 	public static void createTestTeams() {
 
 		try {
-			TeamHub.regionalCollection.createTeam(new Team(1001, "The Testers"));
-			TeamHub.regionalCollection.createTeam(new Team(1002, "The Ranoutofideas"));
-			TeamHub.regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires"));
-			TeamHub.regionalCollection.createTeam(new Team(1004, "Bang blasters"));
-			TeamHub.regionalCollection.createTeam(new Team(1005, "Spencini81"));
-			TeamHub.regionalCollection.createTeam(new Team(1006, "Spoincer"));
+			regionalCollection.createTeam(new Team(1001, "The Testers"));
+			regionalCollection.createTeam(new Team(1002, "The Ranoutofideas"));
+			regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires"));
+			regionalCollection.createTeam(new Team(1004, "Bang blasters"));
+			regionalCollection.createTeam(new Team(1005, "Spencini81"));
+			regionalCollection.createTeam(new Team(1006, "Spoincer"));
 		} catch (Exception e) {
 
 		}

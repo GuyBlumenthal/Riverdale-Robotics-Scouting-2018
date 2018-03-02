@@ -32,12 +32,6 @@ public class MatchOverview extends JFrame {
 	private int matchID;
 
 	/**
-	 * Launch the application.
-	 */
-
-	static MatchOverview frame;
-
-	/**
 	 * Create the frame.
 	 */
 	public MatchOverview(int matchID) {
@@ -58,7 +52,7 @@ public class MatchOverview extends JFrame {
 		mntmDeleteMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TeamHub.regionalCollection.removeMatch(matchID);
+				ScoutingApp.regionalCollection.removeMatch(matchID);
 
 				dispose();
 
@@ -97,7 +91,7 @@ public class MatchOverview extends JFrame {
 						}
 					}
 				});
-				frame.dispose();
+				dispose();
 			}
 		});
 		mnViews.add(mntmMatchHub);
@@ -113,14 +107,14 @@ public class MatchOverview extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							TeamHub frame = new TeamHub();
-							frame.setVisible(true);
+							ScoutingApp frame = new ScoutingApp();
+							setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				});
-				frame.dispose();
+				dispose();
 			}
 		});
 		mnViews.add(mntmTeamHub);
@@ -142,17 +136,17 @@ public class MatchOverview extends JFrame {
 		panel_1.setLayout(null);
 
 		JLabel lblRedTeam1 = new JLabel(
-				TeamHub.regionalCollection.getMatch(matchID).getRedTeams()[0].getTeamName() + " : ");
+				ScoutingApp.regionalCollection.getMatch(matchID).getRedTeams()[0].getTeamName() + " : ");
 		lblRedTeam1.setBounds(10, 168, 137, 14);
 		panel_1.add(lblRedTeam1);
 
 		JLabel lblRedTeam2 = new JLabel(
-				TeamHub.regionalCollection.getMatch(matchID).getRedTeams()[1].getTeamName() + " : ");
+				ScoutingApp.regionalCollection.getMatch(matchID).getRedTeams()[1].getTeamName() + " : ");
 		lblRedTeam2.setBounds(10, 223, 137, 14);
 		panel_1.add(lblRedTeam2);
 
 		JLabel lblRedTeam3 = new JLabel(
-				TeamHub.regionalCollection.getMatch(matchID).getRedTeams()[2].getTeamName() + " : ");
+				ScoutingApp.regionalCollection.getMatch(matchID).getRedTeams()[2].getTeamName() + " : ");
 		lblRedTeam3.setBounds(10, 269, 137, 14);
 		panel_1.add(lblRedTeam3);
 
@@ -222,17 +216,17 @@ public class MatchOverview extends JFrame {
 		panel.setLayout(null);
 
 		JLabel lblBlueTeam1 = new JLabel(
-				TeamHub.regionalCollection.getMatch(matchID).getBlueTeams()[0].getTeamName() + " : ");
+				ScoutingApp.regionalCollection.getMatch(matchID).getBlueTeams()[0].getTeamName() + " : ");
 		lblBlueTeam1.setBounds(10, 167, 143, 14);
 		panel.add(lblBlueTeam1);
 
 		JLabel lblBlueTeam2 = new JLabel(
-				TeamHub.regionalCollection.getMatch(matchID).getBlueTeams()[1].getTeamName() + " : ");
+				ScoutingApp.regionalCollection.getMatch(matchID).getBlueTeams()[1].getTeamName() + " : ");
 		lblBlueTeam2.setBounds(10, 221, 155, 14);
 		panel.add(lblBlueTeam2);
 
 		JLabel lblBlueTeam3 = new JLabel(
-				TeamHub.regionalCollection.getMatch(matchID).getBlueTeams()[2].getTeamName() + " : ");
+				ScoutingApp.regionalCollection.getMatch(matchID).getBlueTeams()[2].getTeamName() + " : ");
 		lblBlueTeam3.setBounds(10, 270, 155, 14);
 		panel.add(lblBlueTeam3);
 
@@ -304,20 +298,20 @@ public class MatchOverview extends JFrame {
 
 			if (isRed) {
 
-				teamNumber = TeamHub.regionalCollection.getMatch(matchID).getRedTeams()[team].getTeamNumber();
+				teamNumber = ScoutingApp.regionalCollection.getMatch(matchID).getRedTeams()[team].getTeamNumber();
 
 			} else {
 
-				teamNumber = TeamHub.regionalCollection.getMatch(matchID).getBlueTeams()[team].getTeamNumber();
+				teamNumber = ScoutingApp.regionalCollection.getMatch(matchID).getBlueTeams()[team].getTeamNumber();
 
 			}
 
-			if (TeamHub.regionalCollection.hasTeamPerformance(matchID, teamNumber)) {
+			if (ScoutingApp.regionalCollection.hasTeamPerformance(matchID, teamNumber)) {
 
-				TeamHub.regionalCollection.showTeamPerformance(matchID, teamNumber);
+				ScoutingApp.regionalCollection.showTeamPerformance(matchID, teamNumber);
 
 			} else {
-				TeamHub.regionalCollection.createTeamPerformanceWindow(matchID, teamNumber);
+				ScoutingApp.regionalCollection.createTeamPerformanceWindow(matchID, teamNumber);
 
 			}
 

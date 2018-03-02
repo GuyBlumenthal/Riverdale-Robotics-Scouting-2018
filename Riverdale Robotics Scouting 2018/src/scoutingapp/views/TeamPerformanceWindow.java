@@ -3,6 +3,8 @@ package scoutingapp.views;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -25,9 +27,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ExistingException;
+import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.TeamPerformance;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class TeamPerformanceWindow extends JFrame {
@@ -50,10 +51,10 @@ public class TeamPerformanceWindow extends JFrame {
 
 		try {
 
-			if (!TeamHub.regionalCollection.teamExists(teamNumber)) {
-				TeamHub.regionalCollection.createTeam(teamNumber);
+			if (!ScoutingApp.regionalCollection.teamExists(teamNumber)) {
+				ScoutingApp.regionalCollection.createTeam(teamNumber);
 			}
-			TeamHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
+			ScoutingApp.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
 			
 
 		} catch (NumberFormatException e) {
@@ -71,11 +72,11 @@ public class TeamPerformanceWindow extends JFrame {
 
 		try {
 
-			if (!TeamHub.regionalCollection.teamExists(teamNumber)) {
-				TeamHub.regionalCollection.createTeam(teamNumber);
+			if (!ScoutingApp.regionalCollection.teamExists(teamNumber)) {
+				ScoutingApp.regionalCollection.createTeam(teamNumber);
 			}
-			TeamHub.regionalCollection.removeTeamPerformance(teamNumber, matchID);
-			TeamHub.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
+			ScoutingApp.regionalCollection.removeTeamPerformance(teamNumber, matchID);
+			ScoutingApp.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
 			
 
 		} catch (NumberFormatException e) {

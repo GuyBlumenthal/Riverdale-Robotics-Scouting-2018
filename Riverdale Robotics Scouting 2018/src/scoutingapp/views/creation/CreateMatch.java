@@ -46,7 +46,7 @@ public class CreateMatch {
 	 */
 	public CreateMatch() {
 
-		Object[] temp = TeamHub.regionalCollection.getTeams().keySet().toArray();
+		Object[] temp = ScoutingApp.regionalCollection.getTeams().keySet().toArray();
 
 		for (int i = 0; i < temp.length; i++) {
 			teams.add(Integer.parseInt(String.valueOf(temp[i])));
@@ -112,17 +112,17 @@ public class CreateMatch {
 				boolean worked = true;
 
 				Team[] blueTeam = {
-						TeamHub.regionalCollection
+						ScoutingApp.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbBlue1.getSelectedItem()))),
-						TeamHub.regionalCollection
+						ScoutingApp.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbBlue2.getSelectedItem()))),
-						TeamHub.regionalCollection
+						ScoutingApp.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbBlue3.getSelectedItem()))) };
 
 				Team[] redTeam = {
-						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed1.getSelectedItem()))),
-						TeamHub.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed2.getSelectedItem()))),
-						TeamHub.regionalCollection
+						ScoutingApp.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed1.getSelectedItem()))),
+						ScoutingApp.regionalCollection.getTeam(Integer.parseInt(String.valueOf(cmbRed2.getSelectedItem()))),
+						ScoutingApp.regionalCollection
 								.getTeam(Integer.parseInt(String.valueOf(cmbRed3.getSelectedItem()))) };
 
 				// TODO: This is really bad, fix it later.
@@ -146,7 +146,7 @@ public class CreateMatch {
 				if (worked) {
 
 					try {
-						TeamHub.regionalCollection.createMatch(Integer.parseInt(txtMatchID.getText()), blueTeam,
+						ScoutingApp.regionalCollection.createMatch(Integer.parseInt(txtMatchID.getText()), blueTeam,
 								redTeam);
 					} catch (NumberFormatException | ExistingException e1) {
 						JOptionPane.showMessageDialog(null, "Team either already exists or ID was not valid.");
@@ -188,7 +188,7 @@ public class CreateMatch {
 				cmbRed2.removeAllItems();
 				cmbRed3.removeAllItems();
 
-				Object[] temp = TeamHub.regionalCollection.getTeams().keySet().toArray();
+				Object[] temp = ScoutingApp.regionalCollection.getTeams().keySet().toArray();
 
 				teams.clear();
 				usedTeams.clear();

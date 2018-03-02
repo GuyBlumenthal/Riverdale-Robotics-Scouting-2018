@@ -1,7 +1,6 @@
 package scoutingapp.commons;
 
 import scoutingapp.commons.team.Team;
-import scoutingapp.views.TeamHub;
 
 public class Match {
 
@@ -68,7 +67,7 @@ public class Match {
 		Team[] teams = new Team[this.blueTeams.length];
 
 		for (int i = 0; i < teams.length; i++) {
-			teams[i] = TeamHub.regionalCollection.getTeam(this.blueTeams[i]);
+			teams[i] = ScoutingApp.regionalCollection.getTeam(this.blueTeams[i]);
 		}
 
 		return teams;
@@ -79,7 +78,7 @@ public class Match {
 		Team[] teams = new Team[this.redTeams.length];
 
 		for (int i = 0; i < teams.length; i++) {
-			teams[i] = TeamHub.regionalCollection.getTeam(this.redTeams[i]);
+			teams[i] = ScoutingApp.regionalCollection.getTeam(this.redTeams[i]);
 		}
 
 		return teams;

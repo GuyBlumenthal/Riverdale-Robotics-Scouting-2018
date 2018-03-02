@@ -77,7 +77,7 @@ public class CreateTeam extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					TeamHub.regionalCollection.createTeam(Integer.parseInt(txtNumber.getText()), txtName.getText());
+					ScoutingApp.regionalCollection.createTeam(Integer.parseInt(txtNumber.getText()), txtName.getText());
 					ScoutingApp.updateTeamHubTable();
 					dispose();
 				} catch (NumberFormatException e) {

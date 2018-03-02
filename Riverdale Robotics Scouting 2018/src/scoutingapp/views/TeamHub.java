@@ -25,13 +25,11 @@ import java.awt.event.MouseEvent;
 
 public class TeamHub extends JFrame {
 
-	static public RegionalCollection regionalCollection = new RegionalCollection();
-
 	private static final long serialVersionUID = 6184145860176117808L;
 	private JTable tblTeams;
 	private JPanel contentPane;
 
-	Object[][] arrayValues = new Object[TeamHub.regionalCollection.getTeamList().length][3];
+	Object[][] arrayValues = new Object[ScoutingApp.regionalCollection.getTeamList().length][3];
 
 	public TeamHub() {
 		initInterface();
@@ -87,7 +85,7 @@ public class TeamHub extends JFrame {
 		JMenuItem mntmViewMatchhub = new JMenuItem("View MatchHub ...");
 		mnView.add(mntmViewMatchhub);
 
-		TeamHub teamHub = this;
+		TeamHub Temp = this;
 		mntmAddNewTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
@@ -125,16 +123,15 @@ public class TeamHub extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-					if (tblTeams.isRowSelected(tblTeams.getSelectedRow())) {
+					if (tblTeams.getSelectedRowCount() == 1) {
 						EventQueue.invokeLater(new Runnable() {
 							public void run() {
 								try {
-									UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-									// TeamDetail teamDetail = new
-									// TeamDetail(regionalCollection.getTeam(teamNumber));
-									// teamHub.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-									// teamHub.setVisible(true);
-									dispose();
+									
+									setVisible(false);
+
+									
+
 								} catch (Exception e) {
 									e.printStackTrace();
 								}
@@ -149,12 +146,12 @@ public class TeamHub extends JFrame {
 	}
 
 	public void updateTeamTable() {
-		int[] teamList = TeamHub.regionalCollection.getTeamList();
+		int[] teamList = ScoutingApp.regionalCollection.getTeamList();
 
 		for (int i = 0; i < arrayValues.length; i++) {
 			arrayValues[i][0] = i + 1;
 			arrayValues[i][1] = teamList[i];
-			arrayValues[i][2] = TeamHub.regionalCollection.getTeam(teamList[i]).getTeamName();
+			arrayValues[i][2] = ScoutingApp.regionalCollection.getTeam(teamList[i]).getTeamName();
 		}
 
 		DefaultTableModel tableModel = new DefaultTableModel(arrayValues,
