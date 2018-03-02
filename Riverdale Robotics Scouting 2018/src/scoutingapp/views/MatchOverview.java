@@ -3,10 +3,18 @@ package scoutingapp.views;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -14,15 +22,8 @@ import javax.swing.border.TitledBorder;
 
 import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.Match;
-import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.ScoutingApp;
-import scoutingapp.commons.team.Team;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JMenuBar;
-import javax.swing.JCheckBox;
+import java.awt.event.WindowAdapter;
 
 @SuppressWarnings("serial")
 public class MatchOverview extends JFrame {
@@ -61,11 +62,18 @@ public class MatchOverview extends JFrame {
 	}
 	
 	public MatchOverview(int matchID) {
+		addWindowListener(new WindowAdapter() {
+		    @Override
+			public void windowClosing(WindowEvent e) {
+		    	ScoutingApp.unshowMatch(matchID);
+			}
+		});
 
 		this.matchID = matchID;
 
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+
 		setBounds(100, 100, 654, 412);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -85,10 +93,11 @@ public class MatchOverview extends JFrame {
 			}
 		});
 		mnEdit.add(mntmDeleteMatch);
-		
+
 		JMenuItem mntmSetPowerUp = new JMenuItem("Set Power Up Values");
 		mntmSetPowerUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 			
 				SetPowerUps spu = new SetPowerUps(matchID, me);
 				spu.setVisible(true);
@@ -223,7 +232,7 @@ public class MatchOverview extends JFrame {
 		redForce.setText("0:00");
 		redForce.setBounds(163, 119, 46, 14);
 		panel_1.add(redForce);
-		
+
 		JLabel label_1 = new JLabel("Force:");
 		label_1.setBounds(119, 119, 46, 14);
 		panel_1.add(label_1);
@@ -231,7 +240,7 @@ public class MatchOverview extends JFrame {
 		redBoost.setText("0:00");
 		redBoost.setBounds(50, 119, 46, 14);
 		panel_1.add(redBoost);
-		
+
 		JLabel label_5 = new JLabel("Boost:");
 		label_5.setBounds(10, 119, 46, 14);
 		panel_1.add(label_5);
@@ -295,11 +304,11 @@ public class MatchOverview extends JFrame {
 		});
 		btnBlueTeamDetail3.setBounds(234, 266, 60, 23);
 		panel.add(btnBlueTeamDetail3);
-		
+
 		JLabel label_3 = new JLabel("Boost:");
 		label_3.setBounds(10, 119, 46, 14);
 		panel.add(label_3);
-		
+
 		JLabel blueForceTitle = new JLabel("Force:");
 		blueForceTitle.setBounds(119, 119, 46, 14);
 		panel.add(blueForceTitle);
@@ -315,7 +324,6 @@ public class MatchOverview extends JFrame {
 		JCheckBox blueLev = new JCheckBox("Levitate");
 		blueLev.setBounds(215, 115, 83, 23);
 		panel.add(blueLev);
-		
 	}
 
 	public void openTeamDetail(int team, boolean isRed) {

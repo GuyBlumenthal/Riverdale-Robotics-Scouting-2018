@@ -178,25 +178,9 @@ public class MatchHub extends JFrame {
 		JMenuItem mntmViewMatch = new JMenuItem("View Match");
 		mntmViewMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (Exception e) {
-					e.printStackTrace();
+				if (tblMatches.getSelectedRowCount() == 1) {
+					ScoutingApp.showMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));					
 				}
-				EventQueue.invokeLater(new Runnable() {
-
-					public void run() {
-						try {
-							if (tblMatches.getSelectedRowCount() == 1) {
-								MatchOverview frame = new MatchOverview(
-										((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0)));
-								frame.setVisible(true);
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
 			}
 		});
 		mnEdit.add(mntmViewMatch);
