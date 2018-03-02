@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -59,6 +60,7 @@ public class MatchOverview extends JFrame {
 		redBoost.setText(secondsToStandard(k.getRedPowerups()[0]));
 		redForce.setText(secondsToStandard(k.getRedPowerups()[1]));
 		redLev.setSelected(k.getRedPowerups()[2] == 1);
+		
 	}
 	
 	public MatchOverview(int matchID) {
@@ -320,8 +322,7 @@ public class MatchOverview extends JFrame {
 		forceBlue.setText("0:00");
 		forceBlue.setBounds(163, 119, 46, 14);
 		panel.add(forceBlue);
-		
-		JCheckBox blueLev = new JCheckBox("Levitate");
+
 		blueLev.setBounds(215, 115, 83, 23);
 		panel.add(blueLev);
 	}
