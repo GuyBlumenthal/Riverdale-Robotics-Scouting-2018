@@ -99,6 +99,16 @@ public class RegionalCollection {
 		}
 
 	}
+	
+	public void setPowerUps(int matchID, int[] powerUps, boolean isRed) {
+		
+		if (isRed) {
+			getMatch(matchID).redPowerUps = powerUps;
+		} else {
+			getMatch(matchID).bluePowerUps = powerUps;
+		}
+		
+	}
 
 	public void removeTeamPerformance(int teamNumber, int matchID) {
 

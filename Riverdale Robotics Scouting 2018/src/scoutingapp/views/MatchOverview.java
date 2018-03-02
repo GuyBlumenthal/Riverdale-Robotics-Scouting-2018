@@ -30,10 +30,36 @@ public class MatchOverview extends JFrame {
 	private JPanel contentPane;
 
 	private int matchID;
+	
+	JLabel blueBoost = new JLabel(), redBoost = new JLabel(), forceBlue = new JLabel(), redForce = new JLabel();
+	JCheckBox blueLev = new JCheckBox(), redLev = new JCheckBox();
+	
+	MatchOverview me = this;
 
 	/**
 	 * Create the frame.
 	 */
+	
+	private int standardToSeconds(String time) {
+		return Integer.parseInt(time.split(":")[0]) * 60 + Integer.parseInt(time.split(":")[1]);
+	}
+	
+	private String secondsToStandard(int time) {
+		return Math.floorDiv(time, 60) + ":" + time % 60;
+	}
+	
+	public void updatePowers() {
+		Match k = ScoutingApp.regionalCollection.getMatch(matchID);
+		
+		blueBoost.setText(secondsToStandard(k.getBluePowerups()[0]));
+		forceBlue.setText(secondsToStandard(k.getBluePowerups()[1]));
+		blueLev.setSelected(k.getBluePowerups()[2] == 1);
+		
+		redBoost.setText(secondsToStandard(k.getRedPowerups()[0]));
+		redForce.setText(secondsToStandard(k.getRedPowerups()[1]));
+		redLev.setSelected(k.getRedPowerups()[2] == 1);
+	}
+	
 	public MatchOverview(int matchID) {
 
 		this.matchID = matchID;
@@ -64,7 +90,8 @@ public class MatchOverview extends JFrame {
 		mntmSetPowerUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-			
+				SetPowerUps spu = new SetPowerUps(matchID, me);
+				spu.setVisible(true);
 				
 			}
 		});
@@ -189,21 +216,21 @@ public class MatchOverview extends JFrame {
 		btnRedTeamDetail3.setBounds(241, 265, 68, 23);
 		panel_1.add(btnRedTeamDetail3);
 		
-		JCheckBox checkBox = new JCheckBox("Levitate");
-		checkBox.setBounds(215, 115, 97, 23);
-		panel_1.add(checkBox);
+		redLev.setText("Levitated");
+		redLev.setBounds(215, 115, 97, 23);
+		panel_1.add(redLev);
 		
-		JLabel label = new JLabel("0:00");
-		label.setBounds(163, 119, 46, 14);
-		panel_1.add(label);
+		redForce.setText("0:00");
+		redForce.setBounds(163, 119, 46, 14);
+		panel_1.add(redForce);
 		
 		JLabel label_1 = new JLabel("Force:");
 		label_1.setBounds(119, 119, 46, 14);
 		panel_1.add(label_1);
 		
-		JLabel label_2 = new JLabel("0:00");
-		label_2.setBounds(50, 119, 46, 14);
-		panel_1.add(label_2);
+		redBoost.setText("0:00");
+		redBoost.setBounds(50, 119, 46, 14);
+		panel_1.add(redBoost);
 		
 		JLabel label_5 = new JLabel("Boost:");
 		label_5.setBounds(10, 119, 46, 14);
@@ -273,21 +300,21 @@ public class MatchOverview extends JFrame {
 		label_3.setBounds(10, 119, 46, 14);
 		panel.add(label_3);
 		
-		JLabel label_4 = new JLabel("Force:");
-		label_4.setBounds(119, 119, 46, 14);
-		panel.add(label_4);
+		JLabel blueForceTitle = new JLabel("Force:");
+		blueForceTitle.setBounds(119, 119, 46, 14);
+		panel.add(blueForceTitle);
 		
-		JLabel label_6 = new JLabel("0:00");
-		label_6.setBounds(50, 119, 46, 14);
-		panel.add(label_6);
+		blueBoost.setText("0:00");
+		blueBoost.setBounds(50, 119, 46, 14);
+		panel.add(blueBoost);
 		
-		JLabel label_7 = new JLabel("0:00");
-		label_7.setBounds(163, 119, 46, 14);
-		panel.add(label_7);
+		forceBlue.setText("0:00");
+		forceBlue.setBounds(163, 119, 46, 14);
+		panel.add(forceBlue);
 		
-		JCheckBox chckbxLevitate = new JCheckBox("Levitate");
-		chckbxLevitate.setBounds(215, 115, 83, 23);
-		panel.add(chckbxLevitate);
+		JCheckBox blueLev = new JCheckBox("Levitate");
+		blueLev.setBounds(215, 115, 83, 23);
+		panel.add(blueLev);
 		
 	}
 
