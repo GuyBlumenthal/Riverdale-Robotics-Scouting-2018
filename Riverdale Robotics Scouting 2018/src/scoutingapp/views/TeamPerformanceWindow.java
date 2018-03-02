@@ -46,6 +46,7 @@ public class TeamPerformanceWindow extends JFrame {
 	public JTextField txtClimb;
 
 	TeamPerformance teamPerformance;
+	TeamPerformanceWindow me = this;
 
 	public void saveData() {
 
@@ -56,7 +57,7 @@ public class TeamPerformanceWindow extends JFrame {
 			}
 			ScoutingApp.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
 			
-
+			JOptionPane.showMessageDialog(null, "Saved Changes.");
 		} catch (NumberFormatException e) {
 
 			JOptionPane.showMessageDialog(null, "Please fill in the match detail page properly.",
@@ -78,6 +79,7 @@ public class TeamPerformanceWindow extends JFrame {
 			ScoutingApp.regionalCollection.removeTeamPerformance(teamNumber, matchID);
 			ScoutingApp.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
 			
+			JOptionPane.showMessageDialog(null, "Saved Changes.");
 
 		} catch (NumberFormatException e) {
 
@@ -213,27 +215,32 @@ public class TeamPerformanceWindow extends JFrame {
 		tblScale.setEnabled(editable);
 		scrollPaneScale.setViewportView(tblScale);
 		
-		JMenu mnEdit = new JMenu("Edit");
-		menuBar.add(mnEdit);
+		if (!editable) {
 		
-		JMenuItem mntmEditPerformanceWindow = new JMenuItem("Edit Performance Window");
-		mntmEditPerformanceWindow.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID, teamPerformance, true);
-							frame.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
+			JMenu mnEdit = new JMenu("Edit");
+			menuBar.add(mnEdit);
+			
+			JMenuItem mntmEditPerformanceWindow = new JMenuItem("Edit Performance Window");
+			mntmEditPerformanceWindow.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+								TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID, teamPerformance, true);
+								frame.setVisible(true);
+								me.dispose();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
-					}
-				});
-			}
-		});
+					});
+				}
+			});
 		
-		mnEdit.add(mntmEditPerformanceWindow);
+			mnEdit.add(mntmEditPerformanceWindow);
+		
+		}
 
 		JScrollPane scrollPaneVault = new JScrollPane();
 		scrollPaneVault.setBounds(431, 140, 163, 147);
@@ -293,7 +300,7 @@ public class TeamPerformanceWindow extends JFrame {
 							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 							TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID, teamPerformance, true);
 							frame.setVisible(true);
-							
+							me.dispose();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
