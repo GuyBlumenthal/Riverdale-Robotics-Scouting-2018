@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -17,11 +19,8 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import scoutingapp.commons.RegionalCollection;
 import scoutingapp.commons.ScoutingApp;
 import scoutingapp.views.creation.CreateTeam;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class TeamHub extends JFrame {
 
@@ -127,10 +126,9 @@ public class TeamHub extends JFrame {
 						EventQueue.invokeLater(new Runnable() {
 							public void run() {
 								try {
-									
-									setVisible(false);
 
-									
+									setVisible(false);
+									ScoutingApp.showTeam((int) tblTeams.getValueAt(tblTeams.getSelectedRow(), 1));
 
 								} catch (Exception e) {
 									e.printStackTrace();

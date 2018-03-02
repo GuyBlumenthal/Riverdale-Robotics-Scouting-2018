@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
+import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
 import javax.swing.JMenuItem;
 
@@ -25,31 +26,30 @@ public class TeamDetail extends JFrame {
 	private static final long serialVersionUID = 4828606662028786474L;
 	private JTable tblMatches;
 	private JTable tblOverview;
-	private Team team;
 
-	public TeamDetail(Team team) {
-		this.team = team;
+	public TeamDetail(int team) {
+
 		setResizable(false);
 
 		setSize(new Dimension(1024, 600));
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnView = new JMenu("View");
 		menuBar.add(mnView);
-		
+
 		JMenuItem mntmShowTeamHub = new JMenuItem("Show Team Hub ...");
 		mnView.add(mntmShowTeamHub);
-		
+
 		JMenuItem mntmShowMatchHub = new JMenuItem("Show Match Hub ...");
 		mnView.add(mntmShowMatchHub);
-		
+
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mnView.add(mntmExit);
 		getContentPane().setLayout(null);
 
-		JLabel lblTeamNumber = new JLabel(Integer.toString(team.getTeamNumber()));
+		JLabel lblTeamNumber = new JLabel(Integer.toString(team));
 		lblTeamNumber.setFont(new Font("Courier New", Font.PLAIN, 15));
 		lblTeamNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTeamNumber.setBounds(10, 11, 155, 51);
@@ -66,12 +66,11 @@ public class TeamDetail extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(47, 73, 903, 176);
 		getContentPane().add(scrollPane);
-
+System.out.println(team);
 		tblMatches = new JTable();
 		tblMatches.setEnabled(false);
-		tblMatches.setModel(new DefaultTableModel(
-				new String[] { "Match Number", "Performance", "Comments" },
-				team.getMatchesPlayed()) {
+		tblMatches.setModel(new DefaultTableModel(new String[] { "Match Number", "Performance", "Comments" },
+				ScoutingApp.regionalCollection.getTeam(team).getMatchesPlayed()) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false };
 
@@ -98,20 +97,32 @@ public class TeamDetail extends JFrame {
 
 		tblOverview.setModel(new DefaultTableModel(new Object[][] {
 
-				{ "Cube on Switch", team.calcAverage(0), team.calcConsistency(0), team.calcAverageTime(0),
-						team.calcTeleopNumCubesOnSwitchAverage(), team.calcTeleopNumCubesOnSwitchConsistency(), 
-						team.calcAverageSwitchTimeTeleop()},
-				
-				{ "Cube on Scale", team.calcAverage(1), team.calcConsistency(1), team.calcAverageTime(1),
-						team.calcAverage(2), team.calcConsistency(2), team.calcAverageTime(2) },
-				
-				{ "Cube in Vault", team.calcAverage(3), team.calcConsistency(3), team.calcAverageTime(3),
-						team.calcAverage(4), team.calcConsistency(4), team.calcAverageTime(4) },
-				
-				{ "Baseline", team.calcBooleanAverage(true), team.calcBooleanConsistency(true), null, null, null,
+				{ "Cube on Switch", ScoutingApp.regionalCollection.getTeam(team).calcAverage(0),
+						ScoutingApp.regionalCollection.getTeam(team).calcConsistency(0),
+						ScoutingApp.regionalCollection.getTeam(team).calcAverageTime(0),
+						ScoutingApp.regionalCollection.getTeam(team).calcTeleopNumCubesOnSwitchAverage(),
+						ScoutingApp.regionalCollection.getTeam(team).calcTeleopNumCubesOnSwitchConsistency(),
+						ScoutingApp.regionalCollection.getTeam(team).calcAverageSwitchTimeTeleop() },
+
+				{ "Cube on Scale", ScoutingApp.regionalCollection.getTeam(team).calcAverage(1),
+						ScoutingApp.regionalCollection.getTeam(team).calcConsistency(1),
+						ScoutingApp.regionalCollection.getTeam(team).calcAverageTime(1),
+						ScoutingApp.regionalCollection.getTeam(team).calcAverage(2),
+						ScoutingApp.regionalCollection.getTeam(team).calcConsistency(2),
+						ScoutingApp.regionalCollection.getTeam(team).calcAverageTime(2) },
+
+				{ "Cube in Vault", ScoutingApp.regionalCollection.getTeam(team).calcAverage(3),
+						ScoutingApp.regionalCollection.getTeam(team).calcConsistency(3),
+						ScoutingApp.regionalCollection.getTeam(team).calcAverageTime(3),
+						ScoutingApp.regionalCollection.getTeam(team).calcAverage(4),
+						ScoutingApp.regionalCollection.getTeam(team).calcConsistency(4),
+						ScoutingApp.regionalCollection.getTeam(team).calcAverageTime(4) },
+
+				{ "Baseline", ScoutingApp.regionalCollection.getTeam(team).calcBooleanAverage(true),
+						ScoutingApp.regionalCollection.getTeam(team).calcBooleanConsistency(true), null, null, null,
 						null },
-				
-				{ "Climb", team.calcBooleanAverage(false), team.calcBooleanConsistency(false), null, null, null,
+
+				{ "Climb", ScoutingApp.regionalCollection.getTeam(team).calcBooleanAverage(false), ScoutingApp.regionalCollection.getTeam(team).calcBooleanConsistency(false), null, null, null,
 						null } },
 				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Auto Average Time",
 						"Teleop Average", "Teleop Consistency", "Teleop Average Time" }));

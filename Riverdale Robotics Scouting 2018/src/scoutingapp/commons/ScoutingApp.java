@@ -9,6 +9,7 @@ import javax.swing.UIManager;
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.MatchHub;
 import scoutingapp.views.MatchOverview;
+import scoutingapp.views.TeamDetail;
 import scoutingapp.views.TeamHub;
 
 public class ScoutingApp {
@@ -19,6 +20,7 @@ public class ScoutingApp {
 	public static RegionalCollection regionalCollection = new RegionalCollection();
 
 	private static HashMap<Integer, MatchOverview> matchesShown = new HashMap<Integer, MatchOverview>();
+	private static HashMap<Integer, TeamDetail> teamsShown = new HashMap<Integer, TeamDetail>();
 
 	// TODO: Background Colour
 	public final static Color BACKGROUND_COLOR = new Color(224, 255, 255);
@@ -125,6 +127,46 @@ public class ScoutingApp {
 			matchesShown.get(matchID).dispose();
 
 			matchesShown.remove(matchID);
+
+		}
+
+	}
+
+	public static void showTeam(int team) {
+
+		if (matchesShown.containsKey(team) == false) {
+
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			EventQueue.invokeLater(new Runnable() {
+
+				public void run() {
+					try {
+						TeamDetail frame = new TeamDetail(team);
+						frame.setVisible(true);
+
+						teamsShown.put(team, frame);
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+
+		}
+
+	}
+
+	public static void unshowTeam(int team) {
+
+		if (teamsShown.containsKey(team)) {
+
+			teamsShown.get(team).dispose();
+
+			teamsShown.remove(team);
 
 		}
 

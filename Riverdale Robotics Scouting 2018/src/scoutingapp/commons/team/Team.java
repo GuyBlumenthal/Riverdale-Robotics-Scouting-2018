@@ -46,6 +46,7 @@ public class Team implements Serializable {
 	}
 
 	public int getMatchesPlayed() {
+		
 		return teamPerformances.size();
 	}
 
