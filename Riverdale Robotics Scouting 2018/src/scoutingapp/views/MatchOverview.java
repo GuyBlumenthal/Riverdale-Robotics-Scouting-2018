@@ -33,8 +33,8 @@ public class MatchOverview extends JFrame {
 
 	private int matchID;
 	
-	JLabel blueBoost = new JLabel(), redBoost = new JLabel(), forceBlue = new JLabel(), redForce = new JLabel();
-	JCheckBox blueLev = new JCheckBox(), redLev = new JCheckBox();
+	JLabel blueBoost = new JLabel("0:00"), redBoost = new JLabel("0:00"), forceBlue = new JLabel("0:00"), redForce = new JLabel("0:00");
+	JCheckBox blueLev = new JCheckBox("Levitated"), redLev = new JCheckBox();
 	
 	MatchOverview me = this;
 
@@ -72,6 +72,8 @@ public class MatchOverview extends JFrame {
 		});
 
 		this.matchID = matchID;
+		
+		updatePowers();
 
 		setResizable(false);
 		
@@ -226,12 +228,12 @@ public class MatchOverview extends JFrame {
 		});
 		btnRedTeamDetail3.setBounds(241, 265, 68, 23);
 		panel_1.add(btnRedTeamDetail3);
+		redLev.setEnabled(false);
 		
 		redLev.setText("Levitated");
 		redLev.setBounds(215, 115, 97, 23);
 		panel_1.add(redLev);
 		
-		redForce.setText("0:00");
 		redForce.setBounds(163, 119, 46, 14);
 		panel_1.add(redForce);
 
@@ -239,7 +241,6 @@ public class MatchOverview extends JFrame {
 		label_1.setBounds(119, 119, 46, 14);
 		panel_1.add(label_1);
 		
-		redBoost.setText("0:00");
 		redBoost.setBounds(50, 119, 46, 14);
 		panel_1.add(redBoost);
 
@@ -315,13 +316,12 @@ public class MatchOverview extends JFrame {
 		blueForceTitle.setBounds(119, 119, 46, 14);
 		panel.add(blueForceTitle);
 		
-		blueBoost.setText("0:00");
 		blueBoost.setBounds(50, 119, 46, 14);
 		panel.add(blueBoost);
 		
-		forceBlue.setText("0:00");
 		forceBlue.setBounds(163, 119, 46, 14);
 		panel.add(forceBlue);
+		blueLev.setEnabled(false);
 
 		blueLev.setBounds(215, 115, 83, 23);
 		panel.add(blueLev);
