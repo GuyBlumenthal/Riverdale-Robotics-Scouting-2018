@@ -21,7 +21,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ExistingException;
-import scoutingapp.commons.team.Team;
+import scoutingapp.commons.Team;
 
 public class MatchDetail extends JFrame {
 
@@ -280,7 +280,7 @@ public class MatchDetail extends JFrame {
 		btnSaveData.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Team team = new Team(Integer.parseInt(txtTeamNumber.getText()));
+				Team team = new Team(Integer.parseInt(txtTeamNumber.getText()), chkAlliance.isSelected());
 				try {
 					team = setTableData(team, tblSwitch);
 					setTableData(team, tblScale); /*TODO: joining objects together */
@@ -330,9 +330,9 @@ public class MatchDetail extends JFrame {
 
 		}
 		
-		team.numCubesOnSwitchAuto.add(nCubesInAuto);
-		team.numCubesOnAllianceSwitch.add(isDefense);
-		team.numCubesOnOpponentsSwitch.add(isOffense);
+		team.numCubesOnSwitchAuto.add(nCubesInAuto); 	/*TODO:fix*/
+		team.numCubesOnAllianceSwitch.add(isDefense); 	/*TODO:fix*/
+		team.numCubesOnOpponentsSwitch.add(isOffense); 	/*TODO:fix*/
 		
 		int nAuto = 0, nTeleop = 0;
 		
