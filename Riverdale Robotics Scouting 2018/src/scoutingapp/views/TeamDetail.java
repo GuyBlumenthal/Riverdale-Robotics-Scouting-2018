@@ -16,6 +16,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.team.Team;
+import javax.swing.JMenuItem;
 
 public class TeamDetail extends JFrame {
 	/**
@@ -26,28 +27,6 @@ public class TeamDetail extends JFrame {
 	private JTable tblOverview;
 	private Team team;
 
-	private static Team test = new Team(5834);
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TeamDetail frame = new TeamDetail(test);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public TeamDetail(Team team) {
 		this.team = team;
 		setResizable(false);
@@ -56,10 +35,18 @@ public class TeamDetail extends JFrame {
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-
-		JMenu mnFile = new JMenu("File");
-		mnFile.setPreferredSize(new Dimension(80, 22));
-		menuBar.add(mnFile);
+		
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+		
+		JMenuItem mntmShowTeamHub = new JMenuItem("Show Team Hub ...");
+		mnView.add(mntmShowTeamHub);
+		
+		JMenuItem mntmShowMatchHub = new JMenuItem("Show Match Hub ...");
+		mnView.add(mntmShowMatchHub);
+		
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mnView.add(mntmExit);
 		getContentPane().setLayout(null);
 
 		JLabel lblTeamNumber = new JLabel(Integer.toString(team.getTeamNumber()));
@@ -82,11 +69,9 @@ public class TeamDetail extends JFrame {
 
 		tblMatches = new JTable();
 		tblMatches.setEnabled(false);
-		tblMatches.setModel(new DefaultTableModel(new String[] { "Match Number", "Performance", "Comments" },
+		tblMatches.setModel(new DefaultTableModel(
+				new String[] { "Match Number", "Performance", "Comments" },
 				team.getMatchesPlayed()) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false };
 
@@ -105,28 +90,32 @@ public class TeamDetail extends JFrame {
 		getContentPane().add(lblOverview);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(47, 353, 903, 91);
+		scrollPane_1.setBounds(47, 353, 903, 110);
 		getContentPane().add(scrollPane_1);
 
 		tblOverview = new JTable();
 		tblOverview.setEnabled(false);
 
-		tblOverview.setModel(new DefaultTableModel(new Object[][] { 
-			
-				{ "Cube on Switch",
-					team.calcAverage(team.numCubesOnSwitchAuto), 	team.calcConsistency(team.numCubesOnSwitchAuto),	10/*TODO: Add switch auto average time*/,
-					team.calcNumCubesOnSwitchAverage(), 			team.calcNumCubesOnSwitchConsistency(),				10/*TODO: Add switch teleop average time*/, },
-				{ "Cube on Scale", 
-					team.calcAverage(team.numCubesOnScaleAuto),		team.calcConsistency(team.numCubesOnScaleAuto),		10/*TODO: Add scale auto average time*/, 
-					team.calcAverage(team.numCubesOnScaleTeleop),	team.calcConsistency(team.numCubesOnScaleTeleop),	10/*TODO: Add scale auto average time*/,  },
-				{ "Baseline", 
-					team.calcAverage(team.crossedBaseLine), team.calcConsistency(team.crossedBaseLine), null, null, null, null },
-				{ "Climb", 
-					team.calcAverage(team.climb), team.calcConsistency(team.climb), null, null, null, null}
-		},
-		new String[] { 	"Robot Abilities", 	"Auto Average", 		"Auto Consistency", 	"Auto Average Time", 
-						"Teleop Average", 	"Teleop Consistency", 	"Teleop Average Time"}));
-		
+		tblOverview.setModel(new DefaultTableModel(new Object[][] {
+
+				{ "Cube on Switch", team.calcAverage(0), team.calcConsistency(0), team.calcAverageTime(0),
+						team.calcTeleopNumCubesOnSwitchAverage(), team.calcTeleopNumCubesOnSwitchConsistency(), 
+						team.calcAverageSwitchTimeTeleop()},
+				
+				{ "Cube on Scale", team.calcAverage(1), team.calcConsistency(1), team.calcAverageTime(1),
+						team.calcAverage(2), team.calcConsistency(2), team.calcAverageTime(2) },
+				
+				{ "Cube in Vault", team.calcAverage(3), team.calcConsistency(3), team.calcAverageTime(3),
+						team.calcAverage(4), team.calcConsistency(4), team.calcAverageTime(4) },
+				
+				{ "Baseline", team.calcBooleanAverage(true), team.calcBooleanConsistency(true), null, null, null,
+						null },
+				
+				{ "Climb", team.calcBooleanAverage(false), team.calcBooleanConsistency(false), null, null, null,
+						null } },
+				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Auto Average Time",
+						"Teleop Average", "Teleop Consistency", "Teleop Average Time" }));
+
 		scrollPane_1.setViewportView(tblOverview);
 
 		JButton btnTeamDetail = new JButton("Team Detail");

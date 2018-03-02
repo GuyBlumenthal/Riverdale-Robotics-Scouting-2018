@@ -5,7 +5,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-import java.util.HashMap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,10 +20,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 
-import scoutingapp.commons.RegionalCollection;
+import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
+import scoutingapp.views.creation.CreateMatch;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 public class MatchHub extends JFrame {
 
@@ -29,38 +42,13 @@ public class MatchHub extends JFrame {
 	 * 
 	 */
 
-	static public RegionalCollection regionalCollection = new RegionalCollection();
-
 	private static final long serialVersionUID = 6184145860176117808L;
 	private JPanel contentPane;
-	private JButton btnAddMatch, buttonRemoveMatch;
 	private JTable tblMatches;
 
-	public final static Color BACKGROUND_COLOR = new Color(224, 255, 255);
-	public final static Color RED_ALLIANCE_COLOR = new Color(255, 109, 81);
-	public final static Color BLUE_ALLIANCE_COLOR = new Color(135, 206, 250);
 	private JScrollPane scrollPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MatchHub frame = new MatchHub();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JMenuItem mntmAddMatch;
+	private JMenuItem mntmRemoveMatch;
 
 	/**
 	 * Create the frame.
@@ -68,26 +56,13 @@ public class MatchHub extends JFrame {
 	public MatchHub() {
 
 		try {
-			regionalCollection.createTeam(new Team(1001, "The Testers"));
-			regionalCollection.createTeam(new Team(1002, "The Ranoutofideas"));
-			regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires"));
-			regionalCollection.createTeam(new Team(1004, "Bang blasters"));
-			regionalCollection.createTeam(new Team(1005, "Spencini81"));
-			regionalCollection.createTeam(new Team(1006, "Spoincer"));
+			ScoutingApp.regionalCollection.createTeam(new Team(1001, "The Testers"));
+			ScoutingApp.regionalCollection.createTeam(new Team(1002, "The Ranoutofideas"));
+			ScoutingApp.regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires"));
+			ScoutingApp.regionalCollection.createTeam(new Team(1004, "Bang blasters"));
+			ScoutingApp.regionalCollection.createTeam(new Team(1005, "Spencini81"));
+			ScoutingApp.regionalCollection.createTeam(new Team(1006, "Spoincer"));
 		} catch (Exception e) {
-
-		}
-
-		try {
-
-			int[] blueTeams = { 1001, 1002, 1003 };
-			int[] redTeams = { 1004, 1005, 1006 };
-
-			regionalCollection.createMatch(1, blueTeams, redTeams);
-
-		} catch (
-
-		Exception e) {
 
 		}
 
@@ -103,20 +78,22 @@ public class MatchHub extends JFrame {
 
 	public void updateMatchTable() {
 
-		Object[][] arrayValues = new Object[regionalCollection.getMatchIDList().length][8];
+		Object[][] arrayValues = new Object[ScoutingApp.regionalCollection.getMatchIDList().length][8];
 
-		int[] matchIDList = regionalCollection.getMatchIDList();
+		int[] matchIDList = ScoutingApp.regionalCollection.getMatchIDList();
 
 		for (int i = 0; i < arrayValues.length; i++) {
 
-			arrayValues[i][0] = regionalCollection.getMatch(matchIDList[i]).getMatchID();
+			arrayValues[i][0] = ScoutingApp.regionalCollection.getMatch(matchIDList[i]).getMatchID();
 
 			for (int j = 0; j < 3; j++) {
-				arrayValues[i][j + 1] = regionalCollection.getMatch(matchIDList[i]).getBlueTeams()[j].getTeamNumber();
+				arrayValues[i][j + 1] = ScoutingApp.regionalCollection.getMatch(matchIDList[i]).getBlueTeams()[j]
+						.getTeamNumber();
 			}
 
 			for (int j = 0; j < 3; j++) {
-				arrayValues[i][j + 4] = regionalCollection.getMatch(matchIDList[i]).getRedTeams()[j].getTeamNumber();
+				arrayValues[i][j + 4] = ScoutingApp.regionalCollection.getMatch(matchIDList[i]).getRedTeams()[j]
+						.getTeamNumber();
 			}
 
 		}
@@ -141,58 +118,104 @@ public class MatchHub extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MatchHub.class.getResource("/scoutingapp/resources/MagnifyingGlass.png")));
 		setTitle("Scouting");
-		setSize(new Dimension(1024, 600));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 787, 530);
+		setBounds(100, 100, 721, 485);
+
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+		mnFile.add(mntmSave);
+
+		JMenuItem mntmNew = new JMenuItem("New");
+		mnFile.add(mntmNew);
+
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+
+		mntmAddMatch = new JMenuItem("Add Match");
+		mntmAddMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					CreateMatch window = new CreateMatch();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+		mnEdit.add(mntmAddMatch);
+
+		mntmRemoveMatch = new JMenuItem("Remove Match");
+		mntmRemoveMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (tblMatches.getSelectedRowCount() > 1) {
+					int[] selectedMatchIDs = tblMatches.getSelectedRows();
+
+					for (int i : selectedMatchIDs) {
+						ScoutingApp.regionalCollection.removeMatch((int) tblMatches.getValueAt(i, 0));
+					}
+				} else if (tblMatches.getSelectedRowCount() == 1) {
+
+					ScoutingApp.regionalCollection.removeMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
+
+				}
+
+				updateMatchTable();
+
+			}
+		});
+
+		JMenuItem mntmViewMatch = new JMenuItem("View Match");
+		mntmViewMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (tblMatches.getSelectedRowCount() == 1) {
+					ScoutingApp.showMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));					
+				}
+			}
+		});
+		mnEdit.add(mntmViewMatch);
+		mnEdit.add(mntmRemoveMatch);
+
+		JMenuItem mntmRefreshMatchTable = new JMenuItem("Refresh Match Table");
+		mnEdit.add(mntmRefreshMatchTable);
+
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+
+		JMenuItem mntmTeams = new JMenuItem("Teams");
+		mntmTeams.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				ScoutingApp.showTeamHub();
+
+			}
+		});
+		mnView.add(mntmTeams);
 		contentPane = new JPanel();
 		contentPane.setSize(new Dimension(1024, 600));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setBackground(BACKGROUND_COLOR);
+		contentPane.setBackground(ScoutingApp.BACKGROUND_COLOR);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		btnAddMatch = new JButton();
-		btnAddMatch.setText("<html><center>" + "Add" + "<br>" + "Match" + "</center></html>");
-		btnAddMatch.setBounds(57, 13, 80, 45);
-		contentPane.add(btnAddMatch);
-
-		buttonRemoveMatch = new JButton();
-		buttonRemoveMatch.setText("<html><center>" + "Remove" + "<br>" + "Match" + "</center></html>");
-		buttonRemoveMatch.setBounds(149, 13, 80, 45);
-		contentPane.add(buttonRemoveMatch);
-
-		JButton btnopenmatch = new JButton();
-		btnopenmatch.setText("<html><center>Open<br>Match</center></html>");
-		btnopenmatch.setBounds(239, 13, 80, 45);
-		contentPane.add(btnopenmatch);
-
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(57, 71, 673, 388);
+		scrollPane.setBounds(22, 22, 673, 388);
 		contentPane.add(scrollPane);
 	}
 
 	void createMatchTable() {
 
-		tblMatches = new JTable() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -7944290291409346981L;
-
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-				Component comp = super.prepareRenderer(renderer, row, column);
-
-				if (column > 0 && column < 4) {
-					comp.setBackground(BLUE_ALLIANCE_COLOR);
-				} else if (column >= 4 && column < 7) {
-					comp.setBackground(RED_ALLIANCE_COLOR);
-				} else {
-					comp.setBackground(BACKGROUND_COLOR);
-				}
-				return comp;
-			}
-		};
+		tblMatches = new JTable();
 		tblMatches.setModel(new DefaultTableModel(
 				new Object[][] {
 						{ new Integer(0), new Integer(0), new Integer(0), new Integer(1), new Integer(0),
@@ -230,5 +253,4 @@ public class MatchHub extends JFrame {
 		centerRenderer.setHorizontalAlignment(JLabel.RIGHT);
 
 	}
-
 }

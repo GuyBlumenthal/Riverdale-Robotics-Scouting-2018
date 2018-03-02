@@ -1,14 +1,13 @@
 package scoutingapp.commons;
 
 import scoutingapp.commons.team.Team;
-import scoutingapp.views.MatchHub;
 
 public class Match {
 
 	int redScore, blueScore, matchID;
 
-	double[] redPowerUps;
-	double[] bluePowerUps;
+	int[] redPowerUps;
+	int[] bluePowerUps;
 
 	int[] blueTeams;
 	int[] redTeams;
@@ -19,8 +18,8 @@ public class Match {
 		this.redTeams = redTeams;
 		this.matchID = matchID;
 
-		double[] redPowerUps = new double[3];
-		double[] bluePowerUps = new double[3];
+		int[] redPowerUps = new int[3];
+		int[] bluePowerUps = new int[3];
 
 		for (int i = 0; i < 3; i++) {
 
@@ -28,6 +27,9 @@ public class Match {
 			bluePowerUps[i] = -1;
 
 		}
+		
+		this.redPowerUps = redPowerUps;
+		this.bluePowerUps = bluePowerUps;
 
 	}
 
@@ -47,8 +49,8 @@ public class Match {
 
 		this.matchID = matchID;
 
-		double[] redPowerUps = new double[3];
-		double[] bluePowerUps = new double[3];
+		int[] redPowerUps = new int[3];
+		int[] bluePowerUps = new int[3];
 
 		for (int i = 0; i < 3; i++) {
 
@@ -56,11 +58,22 @@ public class Match {
 			bluePowerUps[i] = -1;
 
 		}
+		
+		this.bluePowerUps = bluePowerUps;
+		this.redPowerUps = redPowerUps;
 
 	}
 
 	public int getMatchID() {
 		return this.matchID;
+	}
+	
+	public int[] getBluePowerups() {
+		return bluePowerUps;
+	}
+	
+	public int[] getRedPowerups() {
+		return redPowerUps;
 	}
 
 	public Team[] getBlueTeams() {
@@ -68,7 +81,7 @@ public class Match {
 		Team[] teams = new Team[this.blueTeams.length];
 
 		for (int i = 0; i < teams.length; i++) {
-			teams[i] = MatchHub.regionalCollection.getTeam(this.blueTeams[i]);
+			teams[i] = ScoutingApp.regionalCollection.getTeam(this.blueTeams[i]);
 		}
 
 		return teams;
@@ -79,7 +92,7 @@ public class Match {
 		Team[] teams = new Team[this.redTeams.length];
 
 		for (int i = 0; i < teams.length; i++) {
-			teams[i] = MatchHub.regionalCollection.getTeam(this.redTeams[i]);
+			teams[i] = ScoutingApp.regionalCollection.getTeam(this.redTeams[i]);
 		}
 
 		return teams;
