@@ -104,27 +104,14 @@ public class SetPowerUps extends JDialog {
 		int[] bluePowers = ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups();
 		int[] redPowers = ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerups();
 		
-		System.out.println(bluePowers[0]);
-		
-		boolean worked = true;
-		
-		for (int i = 0; i < 3; i++) {
-			if (bluePowers[i] == -1 || redPowers[i] == -1) {
-				worked = false;
-				break;
-			}
-		}
-		
-		if (worked) {
 			
-			txtBoostBlue.setText(ScoutingApp.regionalCollection().secondsToStandard(bluePowers[0]));
-			txtForceBlue.setText(ScoutingApp.regionalCollection().secondsToStandard(bluePowers[1]));
-			chckbxLevitatedBlue.setSelected(bluePowers[2] == 1);
+		txtBoostBlue.setText((bluePowers[0] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(bluePowers[0]));
+		txtForceBlue.setText((bluePowers[1] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(bluePowers[1]));
+		chckbxLevitatedBlue.setSelected(bluePowers[2] == 1);
 			
-			txtBoostRed.setText(ScoutingApp.regionalCollection().secondsToStandard(redPowers[0]));
-			txtForceRed.setText(ScoutingApp.regionalCollection().secondsToStandard(redPowers[1]));
-			chckbxLevitatedRed.setSelected(redPowers[2] == 1);
-		}
+		txtBoostRed.setText((redPowers[0] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(redPowers[0]));
+		txtForceRed.setText((redPowers[1] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(redPowers[1]));
+		chckbxLevitatedRed.setSelected(redPowers[2] == 1);
 		
 		{
 			JPanel buttonPane = new JPanel();
@@ -134,9 +121,9 @@ public class SetPowerUps extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						int[] redPowerups = {ScoutingApp.regionalCollection().standardToSeconds(txtBoostRed.getText()), ScoutingApp.regionalCollection().standardToSeconds(txtForceRed.getText()),
+						int[] redPowerups = {(txtBoostRed.getText().equals("")) ? -1 : ScoutingApp.regionalCollection().standardToSeconds(txtBoostRed.getText()), (txtForceRed.getText().equals("")) ? -1 : ScoutingApp.regionalCollection().standardToSeconds(txtForceRed.getText()),
 								(chckbxLevitatedRed.isSelected() ? 1 : 0)};
-						int[] bluePowerups = {ScoutingApp.regionalCollection().standardToSeconds(txtBoostBlue.getText()), ScoutingApp.regionalCollection().standardToSeconds(txtForceBlue.getText()),
+						int[] bluePowerups = {(txtBoostBlue.getText().equals("")) ? -1 : ScoutingApp.regionalCollection().standardToSeconds(txtBoostBlue.getText()), (txtForceBlue.getText().equals("")) ? -1 : ScoutingApp.regionalCollection().standardToSeconds(txtForceBlue.getText()),
 								(chckbxLevitatedBlue.isSelected() ? 1 : 0)};
 						
 						ScoutingApp.regionalCollection().setPowerUps(matchID, redPowerups, true);
