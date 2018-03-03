@@ -220,6 +220,8 @@ public class TeamPerformanceWindow extends JFrame {
 			JMenu mnEdit = new JMenu("Edit");
 			menuBar.add(mnEdit);
 			
+			if (!editable) {
+			
 			JMenuItem mntmEditPerformanceWindow = new JMenuItem("Edit Performance Window");
 			mntmEditPerformanceWindow.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -239,6 +241,8 @@ public class TeamPerformanceWindow extends JFrame {
 			});
 		
 			mnEdit.add(mntmEditPerformanceWindow);
+			
+			}
 		
 		}
 
@@ -288,27 +292,7 @@ public class TeamPerformanceWindow extends JFrame {
 		JMenuItem mntmMatches = new JMenuItem("Matches");
 		mnView.add(mntmMatches);
 		
-		JMenu mnEdit = new JMenu("Edit");
-		menuBar.add(mnEdit);
-		
-		JMenuItem mntmEditPerformanceWindow = new JMenuItem("Edit Performance Window");
-		mntmEditPerformanceWindow.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID, teamPerformance, true);
-							frame.setVisible(true);
-							me.dispose();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			}
-		});
-		mnEdit.add(mntmEditPerformanceWindow);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
