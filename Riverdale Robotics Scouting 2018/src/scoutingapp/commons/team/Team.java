@@ -2,12 +2,10 @@ package scoutingapp.commons.team;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 import scoutingapp.commons.Match;
 import scoutingapp.commons.ScoutingApp;
-import scoutingapp.views.TeamHub;
 import scoutingapp.views.TeamPerformanceWindow;
 
 public class Team implements Serializable {

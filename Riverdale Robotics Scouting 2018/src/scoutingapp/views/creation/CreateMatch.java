@@ -1,7 +1,6 @@
 package scoutingapp.views.creation;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,8 +21,6 @@ import javax.swing.border.TitledBorder;
 import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
-import scoutingapp.views.MatchHub;
-import scoutingapp.views.TeamHub;
 
 public class CreateMatch {
 

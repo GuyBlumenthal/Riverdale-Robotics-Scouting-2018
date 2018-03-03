@@ -1,7 +1,6 @@
 package scoutingapp.views;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -9,15 +8,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ScoutingApp;
-import scoutingapp.commons.team.Team;
-import javax.swing.JMenuItem;
 
 public class TeamDetail extends JFrame {
 	/**
