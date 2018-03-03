@@ -2,30 +2,41 @@ package scoutingapp.commons;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.UIManager;
 
+import scoutingapp.commons.fileIO.ReadFile;
+import scoutingapp.commons.fileIO.SaveFile;
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.MatchHub;
 import scoutingapp.views.MatchOverview;
 import scoutingapp.views.TeamDetail;
 import scoutingapp.views.TeamHub;
+import scoutingapp.views.fileIO.CollectionName;
+import scoutingapp.views.fileIO.SaveConfirm;
+import scoutingapp.views.fileIO.ViewDirectories;
 
 public class ScoutingApp {
 
 	public static MatchHub matchHub;
 	public static TeamHub teamHub;
 
-	public static RegionalCollection regionalCollection = new RegionalCollection();
+	private static RegionalCollection regionalCollection = new RegionalCollection();
 
 	private static HashMap<Integer, MatchOverview> matchesShown = new HashMap<Integer, MatchOverview>();
 	private static HashMap<Integer, TeamDetail> teamsShown = new HashMap<Integer, TeamDetail>();
 
-	// TODO: Background Colour
+	private static boolean saved = false;
+
+	// TODO: Background Colours
 	public final static Color BACKGROUND_COLOR = new Color(224, 255, 255);
 	public final static Color RED_ALLIANCE_COLOR = new Color(255, 109, 81);
 	public final static Color BLUE_ALLIANCE_COLOR = new Color(135, 206, 250);
+
+	public final static String FILE_EXTENSION = "sct";
 
 	public static void main(String[] args) {
 
@@ -70,6 +81,11 @@ public class ScoutingApp {
 
 	}
 
+	public static RegionalCollection regionalCollection() {
+		saved = false;
+		return regionalCollection;
+	}
+
 	public static void showMatchHub() {
 
 		if (matchHub.isVisible() == false) {
@@ -77,6 +93,7 @@ public class ScoutingApp {
 				teamHub.setVisible(false);
 			}
 			matchHub.setVisible(true);
+			matchHub.updateMatchTable();
 		}
 
 	}
@@ -88,7 +105,18 @@ public class ScoutingApp {
 				matchHub.setVisible(false);
 			}
 			teamHub.setVisible(true);
+			teamHub.updateTeamTable();
 		}
+
+	}
+
+	public static void hideAllWindows() {
+
+		unshowAllMatches();
+		unshowAllTeams();
+
+		matchHub.setVisible(false);
+		teamHub.setVisible(false);
 
 	}
 
@@ -127,6 +155,17 @@ public class ScoutingApp {
 			matchesShown.get(matchID).dispose();
 
 			matchesShown.remove(matchID);
+
+		}
+
+	}
+
+	public static void unshowAllMatches() {
+
+		for (int i : matchesShown.keySet()) {
+
+			matchesShown.get(i).dispose();
+			matchesShown.remove(i);
 
 		}
 
@@ -172,6 +211,17 @@ public class ScoutingApp {
 
 	}
 
+	public static void unshowAllTeams() {
+
+		for (int i : teamsShown.keySet()) {
+
+			teamsShown.get(i).dispose();
+			teamsShown.remove(i);
+
+		}
+
+	}
+
 	public static void updateMatchHubTable() {
 
 		matchHub.updateMatchTable();
@@ -181,6 +231,134 @@ public class ScoutingApp {
 	public static void updateTeamHubTable() {
 
 		teamHub.updateTeamTable();
+
+	}
+
+	public static void setCollectionName(String name) {
+
+		regionalCollection.fileName = name;
+
+	}
+
+	public static void saveCollection() {
+
+		if (regionalCollection.fileName.equals("")) {
+
+			try {
+				CollectionName frame = new CollectionName();
+				frame.setVisible(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			try {
+
+				new File("collections").mkdirs();
+
+				SaveFile save = new SaveFile();
+
+				save.saveFile(regionalCollection, "collections/" + regionalCollection.fileName, FILE_EXTENSION);
+
+				saved = true;
+
+			} catch (IOException ex) {
+
+				ex.printStackTrace();
+
+			}
+		}
+
+	}
+
+	private static void changeCollection(RegionalCollection collection) {
+
+		hideAllWindows();
+
+		regionalCollection = collection;
+
+		teamHub.updateTeamTable();
+		matchHub.updateMatchTable();
+
+		showMatchHub();
+
+	}
+
+	/**
+	 * <h1><b>Danger</b></h1> <b>Warning!</b> - might erase saved data if called!
+	 */
+	public static void setSaved() {
+		saved = true;
+	}
+
+	public static void newCollection() {
+
+		if (saved == false) {
+
+			try {
+				SaveConfirm frame = new SaveConfirm(false);
+				frame.setVisible(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			changeCollection(new RegionalCollection());
+
+		}
+
+	}
+
+	public static void openCollection(String fileName) {
+
+		if (saved == false) {
+
+			try {
+				SaveConfirm frame = new SaveConfirm(true);
+				frame.setVisible(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			ReadFile readFile = new ReadFile();
+
+			changeCollection((RegionalCollection) readFile.readFile("collections/" + fileName + "." + FILE_EXTENSION));
+
+		}
+
+	}
+
+	public static void openCollection() {
+
+		if (saved == false) {
+
+			try {
+				SaveConfirm frame = new SaveConfirm(true);
+				frame.setVisible(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			try {
+				
+				ViewDirectories frame = new ViewDirectories();
+				frame.setVisible(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
 
 	}
 

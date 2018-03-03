@@ -52,10 +52,10 @@ public class TeamPerformanceWindow extends JFrame {
 
 		try {
 
-			if (!ScoutingApp.regionalCollection.teamExists(teamNumber)) {
-				ScoutingApp.regionalCollection.createTeam(teamNumber);
+			if (!ScoutingApp.regionalCollection().teamExists(teamNumber)) {
+				ScoutingApp.regionalCollection().createTeam(teamNumber);
 			}
-			ScoutingApp.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
+			ScoutingApp.regionalCollection().addTeamPerformance(teamNumber, matchID, this);
 			
 			JOptionPane.showMessageDialog(null, "Saved Changes.");
 		} catch (NumberFormatException e) {
@@ -73,11 +73,11 @@ public class TeamPerformanceWindow extends JFrame {
 
 		try {
 
-			if (!ScoutingApp.regionalCollection.teamExists(teamNumber)) {
-				ScoutingApp.regionalCollection.createTeam(teamNumber);
+			if (!ScoutingApp.regionalCollection().teamExists(teamNumber)) {
+				ScoutingApp.regionalCollection().createTeam(teamNumber);
 			}
-			ScoutingApp.regionalCollection.removeTeamPerformance(teamNumber, matchID);
-			ScoutingApp.regionalCollection.addTeamPerformance(teamNumber, matchID, this);
+			ScoutingApp.regionalCollection().removeTeamPerformance(teamNumber, matchID);
+			ScoutingApp.regionalCollection().addTeamPerformance(teamNumber, matchID, this);
 			
 			JOptionPane.showMessageDialog(null, "Saved Changes.");
 

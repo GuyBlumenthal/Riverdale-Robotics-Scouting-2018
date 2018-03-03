@@ -45,12 +45,12 @@ public class MatchHub extends JFrame {
 	public MatchHub() {
 
 		try {
-			ScoutingApp.regionalCollection.createTeam(new Team(1001, "The Testers"));
-			ScoutingApp.regionalCollection.createTeam(new Team(1002, "The Ranoutofideas"));
-			ScoutingApp.regionalCollection.createTeam(new Team(1003, "The Slumdogmillionaires"));
-			ScoutingApp.regionalCollection.createTeam(new Team(1004, "Bang blasters"));
-			ScoutingApp.regionalCollection.createTeam(new Team(1005, "Spencini81"));
-			ScoutingApp.regionalCollection.createTeam(new Team(1006, "Spoincer"));
+			ScoutingApp.regionalCollection().createTeam(new Team(1001, "The Testers"));
+			ScoutingApp.regionalCollection().createTeam(new Team(1002, "The Ranoutofideas"));
+			ScoutingApp.regionalCollection().createTeam(new Team(1003, "The Slumdogmillionaires"));
+			ScoutingApp.regionalCollection().createTeam(new Team(1004, "Bang blasters"));
+			ScoutingApp.regionalCollection().createTeam(new Team(1005, "Spencini81"));
+			ScoutingApp.regionalCollection().createTeam(new Team(1006, "Spoincer"));
 		} catch (Exception e) {
 
 		}
@@ -67,21 +67,21 @@ public class MatchHub extends JFrame {
 
 	public void updateMatchTable() {
 
-		Object[][] arrayValues = new Object[ScoutingApp.regionalCollection.getMatchIDList().length][8];
+		Object[][] arrayValues = new Object[ScoutingApp.regionalCollection().getMatchIDList().length][8];
 
-		int[] matchIDList = ScoutingApp.regionalCollection.getMatchIDList();
+		int[] matchIDList = ScoutingApp.regionalCollection().getMatchIDList();
 
 		for (int i = 0; i < arrayValues.length; i++) {
 
-			arrayValues[i][0] = ScoutingApp.regionalCollection.getMatch(matchIDList[i]).getMatchID();
+			arrayValues[i][0] = ScoutingApp.regionalCollection().getMatch(matchIDList[i]).getMatchID();
 
 			for (int j = 0; j < 3; j++) {
-				arrayValues[i][j + 1] = ScoutingApp.regionalCollection.getMatch(matchIDList[i]).getBlueTeams()[j]
+				arrayValues[i][j + 1] = ScoutingApp.regionalCollection().getMatch(matchIDList[i]).getBlueTeams()[j]
 						.getTeamNumber();
 			}
 
 			for (int j = 0; j < 3; j++) {
-				arrayValues[i][j + 4] = ScoutingApp.regionalCollection.getMatch(matchIDList[i]).getRedTeams()[j]
+				arrayValues[i][j + 4] = ScoutingApp.regionalCollection().getMatch(matchIDList[i]).getRedTeams()[j]
 						.getTeamNumber();
 			}
 
@@ -118,10 +118,34 @@ public class MatchHub extends JFrame {
 		menuBar.add(mnFile);
 
 		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				ScoutingApp.saveCollection();
+				
+			}
+		});
 		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mnFile.add(mntmSave);
+		
+		JMenuItem mntmOpen = new JMenuItem("Open");
+		mntmOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ScoutingApp.openCollection();
+				
+			}
+		});
+		mnFile.add(mntmOpen);
 
 		JMenuItem mntmNew = new JMenuItem("New");
+		mntmNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ScoutingApp.newCollection();
+				
+			}
+		});
 		mnFile.add(mntmNew);
 
 		JMenu mnEdit = new JMenu("Edit");
@@ -151,11 +175,11 @@ public class MatchHub extends JFrame {
 					int[] selectedMatchIDs = tblMatches.getSelectedRows();
 
 					for (int i : selectedMatchIDs) {
-						ScoutingApp.regionalCollection.removeMatch((int) tblMatches.getValueAt(i, 0));
+						ScoutingApp.regionalCollection().removeMatch((int) tblMatches.getValueAt(i, 0));
 					}
 				} else if (tblMatches.getSelectedRowCount() == 1) {
 
-					ScoutingApp.regionalCollection.removeMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
+					ScoutingApp.regionalCollection().removeMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
 
 				}
 

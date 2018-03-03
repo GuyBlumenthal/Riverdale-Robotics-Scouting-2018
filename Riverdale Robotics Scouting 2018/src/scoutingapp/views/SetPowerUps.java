@@ -109,8 +109,8 @@ public class SetPowerUps extends JDialog {
 		chckbxLevitatedRed.setBounds(83, 151, 97, 23);
 		pnlRed.add(chckbxLevitatedRed);
 		
-		int[] bluePowers = ScoutingApp.regionalCollection.getMatch(matchID).getBluePowerups();
-		int[] redPowers = ScoutingApp.regionalCollection.getMatch(matchID).getRedPowerups();
+		int[] bluePowers = ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups();
+		int[] redPowers = ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerups();
 		
 		System.out.println(bluePowers[0]);
 		
@@ -147,8 +147,8 @@ public class SetPowerUps extends JDialog {
 						int[] bluePowerups = {standardToSeconds(txtBoostBlue.getText()), standardToSeconds(txtForceBlue.getText()),
 								(chckbxLevitatedBlue.isSelected() ? 1 : 0)};
 						
-						ScoutingApp.regionalCollection.setPowerUps(matchID, redPowerups, true);
-						ScoutingApp.regionalCollection.setPowerUps(matchID, bluePowerups, false);
+						ScoutingApp.regionalCollection().setPowerUps(matchID, redPowerups, true);
+						ScoutingApp.regionalCollection().setPowerUps(matchID, bluePowerups, false);
 						
 						parent.updatePowers();
 						me.dispose();

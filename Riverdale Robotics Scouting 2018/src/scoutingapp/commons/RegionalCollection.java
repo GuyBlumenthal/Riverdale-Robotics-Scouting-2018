@@ -1,17 +1,27 @@
 package scoutingapp.commons;
 
 import java.awt.EventQueue;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.TeamPerformanceWindow;
 
-public class RegionalCollection {
+public class RegionalCollection implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -81214186242167416L;
+	
+	public String fileName;
+	
 	HashMap<Integer, Team> teams;
 	HashMap<Integer, Match> matches;
 
 	public RegionalCollection() {
+		
+		fileName = "";
 
 		teams = new HashMap<Integer, Team>();
 		matches = new HashMap<Integer, Match>();

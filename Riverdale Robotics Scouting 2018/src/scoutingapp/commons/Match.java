@@ -1,8 +1,15 @@
 package scoutingapp.commons;
 
+import java.io.Serializable;
+
 import scoutingapp.commons.team.Team;
 
-public class Match {
+public class Match implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1229491223808886225L;
 
 	int redScore, blueScore, matchID;
 
@@ -27,7 +34,7 @@ public class Match {
 			bluePowerUps[i] = -1;
 
 		}
-		
+
 		this.redPowerUps = redPowerUps;
 		this.bluePowerUps = bluePowerUps;
 
@@ -58,7 +65,7 @@ public class Match {
 			bluePowerUps[i] = -1;
 
 		}
-		
+
 		this.bluePowerUps = bluePowerUps;
 		this.redPowerUps = redPowerUps;
 
@@ -67,11 +74,11 @@ public class Match {
 	public int getMatchID() {
 		return this.matchID;
 	}
-	
+
 	public int[] getBluePowerups() {
 		return bluePowerUps;
 	}
-	
+
 	public int[] getRedPowerups() {
 		return redPowerUps;
 	}
@@ -81,7 +88,7 @@ public class Match {
 		Team[] teams = new Team[this.blueTeams.length];
 
 		for (int i = 0; i < teams.length; i++) {
-			teams[i] = ScoutingApp.regionalCollection.getTeam(this.blueTeams[i]);
+			teams[i] = ScoutingApp.regionalCollection().getTeam(this.blueTeams[i]);
 		}
 
 		return teams;
@@ -92,7 +99,7 @@ public class Match {
 		Team[] teams = new Team[this.redTeams.length];
 
 		for (int i = 0; i < teams.length; i++) {
-			teams[i] = ScoutingApp.regionalCollection.getTeam(this.redTeams[i]);
+			teams[i] = ScoutingApp.regionalCollection().getTeam(this.redTeams[i]);
 		}
 
 		return teams;

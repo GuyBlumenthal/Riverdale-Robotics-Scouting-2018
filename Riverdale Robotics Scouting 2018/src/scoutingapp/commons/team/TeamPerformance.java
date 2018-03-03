@@ -1,13 +1,18 @@
 package scoutingapp.commons.team;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.table.TableModel;
 
 import scoutingapp.views.TeamPerformanceWindow;
 
-public class TeamPerformance {
+public class TeamPerformance implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 386764827887862297L;
 	// teleop
 	public ArrayList<Integer> cubesOnAllianceSwitchTeleop;
 	public ArrayList<Integer> cubesOnOpponentSwitchTeleop;

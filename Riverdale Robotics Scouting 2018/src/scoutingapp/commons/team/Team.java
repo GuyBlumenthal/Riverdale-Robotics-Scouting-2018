@@ -87,7 +87,7 @@ public class Team implements Serializable {
 	}
 
 	public Match getMatch(int matchID) {
-		return ScoutingApp.regionalCollection.getMatch(matchID);
+		return ScoutingApp.regionalCollection().getMatch(matchID);
 	}
 
 	/*

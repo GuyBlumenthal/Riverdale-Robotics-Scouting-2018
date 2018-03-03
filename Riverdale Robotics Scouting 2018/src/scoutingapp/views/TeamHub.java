@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +31,7 @@ public class TeamHub extends JFrame {
 	private JTable tblTeams;
 	private JPanel contentPane;
 
-	Object[][] arrayValues = new Object[ScoutingApp.regionalCollection.getTeamList().length][3];
+	Object[][] arrayValues = new Object[ScoutingApp.regionalCollection().getTeamList().length][3];
 
 	public TeamHub() {
 		initInterface();
@@ -37,10 +40,9 @@ public class TeamHub extends JFrame {
 
 	public void initInterface() {
 		setTitle("Scouting - Team Hub");
-		setSize(new Dimension(1024, 600));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 787, 530);
+		setBounds(100, 100, 515, 444);
 		contentPane = new JPanel();
 		contentPane.setSize(new Dimension(1024, 600));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -48,12 +50,29 @@ public class TeamHub extends JFrame {
 		getContentPane().setLayout(null);
 
 		JScrollPane scrollPaneTeams = new JScrollPane();
-		scrollPaneTeams.setBounds(63, 61, 633, 354);
+		scrollPaneTeams.setBounds(22, 22, 461, 354);
 		getContentPane().add(scrollPaneTeams);
 
 		tblTeams = new JTable();
-		tblTeams.setModel(new DefaultTableModel(new Object[][] { { null, null, null }, },
-				new String[] { "Rank", "Team Number", "Team Name" }));
+		tblTeams.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null},
+			},
+			new String[] {
+				"Rank", "Team Number", "Team Name"
+			}
+		));
+		
+		tblTeams.getColumnModel().getColumn(0).setResizable(false);
+		tblTeams.getColumnModel().getColumn(0).setMinWidth(75);
+		tblTeams.getColumnModel().getColumn(0).setMaxWidth(75);
+		tblTeams.getColumnModel().getColumn(1).setResizable(false);
+		tblTeams.getColumnModel().getColumn(1).setPreferredWidth(125);
+		tblTeams.getColumnModel().getColumn(1).setMinWidth(125);
+		tblTeams.getColumnModel().getColumn(1).setMaxWidth(125);
+		tblTeams.getColumnModel().getColumn(2).setResizable(false);
+		
+		tblTeams.getTableHeader().setReorderingAllowed(false);
 		scrollPaneTeams.setViewportView(tblTeams);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -62,11 +81,36 @@ public class TeamHub extends JFrame {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 
-		JMenuItem mntmSaveData = new JMenuItem("Save Data ...");
-		mnFile.add(mntmSaveData);
-
 		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				ScoutingApp.saveCollection();
+
+			}
+		});
+		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mnFile.add(mntmSave);
+
+		JMenuItem mntmOpen = new JMenuItem("Open");
+		mntmOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				ScoutingApp.openCollection();
+
+			}
+		});
+		mnFile.add(mntmOpen);
+
+		JMenuItem mntmNew = new JMenuItem("New");
+		mntmNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				ScoutingApp.newCollection();
+
+			}
+		});
+		mnFile.add(mntmNew);
 
 		JMenu mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);
@@ -114,8 +158,10 @@ public class TeamHub extends JFrame {
 		tblTeams.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if (tblTeams.isRowSelected(tblTeams.getSelectedRow())) {
+				if (tblTeams.getSelectedRowCount() > 0) {
 					mntmRemoveTeam.setEnabled(true);
+				} else {
+					mntmRemoveTeam.setEnabled(false);
 				}
 			}
 
@@ -144,12 +190,14 @@ public class TeamHub extends JFrame {
 	}
 
 	public void updateTeamTable() {
-		int[] teamList = ScoutingApp.regionalCollection.getTeamList();
+
+		arrayValues = new Object[ScoutingApp.regionalCollection().getTeamList().length][3];
+		int[] teamList = ScoutingApp.regionalCollection().getTeamList();
 
 		for (int i = 0; i < arrayValues.length; i++) {
 			arrayValues[i][0] = i + 1;
 			arrayValues[i][1] = teamList[i];
-			arrayValues[i][2] = ScoutingApp.regionalCollection.getTeam(teamList[i]).getTeamName();
+			arrayValues[i][2] = ScoutingApp.regionalCollection().getTeam(teamList[i]).getTeamName();
 		}
 
 		DefaultTableModel tableModel = new DefaultTableModel(arrayValues,
