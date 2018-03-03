@@ -90,23 +90,43 @@ public class Team implements Serializable {
 		return ScoutingApp.regionalCollection().getMatch(matchID);
 	}
 
-	/*
-	 * scenarios 0: switch auto 1: scale auto 2: scale teleop 3: vault auto 4: vault
-	 * teleop
+	/**
+	 * @param scenario
+	 *            <br />
+	 *            <b>0</b> - switch auto <br />
+	 *            <b>1</b> - scale auto <br />
+	 *            <b>2</b> - scale teleop <br />
+	 *            <b>3</b> - vault auto <br />
+	 *            <b>4</b> - vault teleop <br />
+	 *            <b>5</b> - Alliance Switch Tele-Op <br />
+	 *            <b>6</b> - Opponent Switch Tele-Op
+	 * 
 	 */
 	public double calcAverage(int scenario) {
 
 		double sum = 0;
 		int total = teamPerformances.size();
-		
+
 		for (TeamPerformance performance : teamPerformances.values()) {
 			ArrayList<Integer> data = getData(scenario, performance);
-			
+
 			sum += data.size();
 		}
 		return sum / (total > 0 ? total : 1);
 	}
 
+	/**
+	 * @param scenario
+	 *            <br />
+	 *            <b>0</b> - switch auto <br />
+	 *            <b>1</b> - scale auto <br />
+	 *            <b>2</b> - scale teleop <br />
+	 *            <b>3</b> - vault auto <br />
+	 *            <b>4</b> - vault teleop <br />
+	 *            <b>5</b> - Alliance Switch Tele-Op <br />
+	 *            <b>6</b> - Opponent Switch Tele-Op
+	 * 
+	 */
 	public double calcConsistency(int scenario) {
 		double average = calcAverage(scenario);
 		int numAboveAverage = 0;
@@ -120,6 +140,10 @@ public class Team implements Serializable {
 		}
 
 		return numAboveAverage * 1.0 / (total > 0 ? total : 1) * 100;
+	}
+
+	public double calcAutoCubesAverage() {
+		return (calcAverage(0) + calcAverage(1)) / 2;
 	}
 
 	public double calcTeleopNumCubesOnSwitchAverage() {
@@ -159,6 +183,11 @@ public class Team implements Serializable {
 		return calcBooleanAverage(scenario) * 100;
 	}
 
+	/**
+	 * @param scenario
+	 *            set to <code>true</code> for baseline and <code>false</code> for
+	 *            climb
+	 */
 	public int calcSum(boolean scenario) {
 		int sum = 0;
 
@@ -201,6 +230,20 @@ public class Team implements Serializable {
 	// TODO: Calculate Average Climb Time
 	// TODO: Convert Time into seconds (game time into real time)
 
+	/**
+	 * @param scenario
+	 *            <br />
+	 *            <b>0</b> - switch auto <br />
+	 *            <b>1</b> - scale auto <br />
+	 *            <b>2</b> - scale teleop <br />
+	 *            <b>3</b> - vault auto <br />
+	 *            <b>4</b> - vault teleop <br />
+	 *            <b>5</b> - Alliance Switch Tele-Op <br />
+	 *            <b>6</b> - Opponent Switch Tele-Op
+	 * 
+	 * @param performance
+	 *            is the team performance from which the data is being extracted
+	 */
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
 		ArrayList<Integer> data = performance.cubesOnSwitchAuto;
 		switch (scenario) {
