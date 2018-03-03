@@ -173,7 +173,6 @@ public class TeamHub extends JFrame {
 							public void run() {
 								try {
 
-									setVisible(false);
 									ScoutingApp.showTeam((int) tblTeams.getValueAt(tblTeams.getSelectedRow(), 1));
 
 								} catch (Exception e) {
