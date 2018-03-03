@@ -96,27 +96,6 @@ public class MatchOverview extends JFrame {
 			}
 		});
 		mnEdit.add(mntmSetPowerUp);
-
-		JMenu mnViews = new JMenu("Views");
-		menuBar.add(mnViews);
-
-		JMenuItem mntmMatchHub = new JMenuItem("Match Hub");
-		mntmMatchHub.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ScoutingApp.showMatchHub();
-				ScoutingApp.unshowMatch(matchID);
-			}
-		});
-		mnViews.add(mntmMatchHub);
-
-		JMenuItem mntmTeamHub = new JMenuItem("Team Hub");
-		mntmTeamHub.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ScoutingApp.showTeamHub();
-				ScoutingApp.unshowMatch(matchID);
-			}
-		});
-		mnViews.add(mntmTeamHub);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

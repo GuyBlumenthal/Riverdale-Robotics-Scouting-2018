@@ -1,6 +1,7 @@
 package scoutingapp.views;
 
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,8 @@ import javax.swing.table.DefaultTableModel;
 import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.creation.CreateMatch;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MatchHub extends JFrame {
 
@@ -120,20 +123,20 @@ public class MatchHub extends JFrame {
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				ScoutingApp.saveCollection();
-				
+
 			}
 		});
 		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mnFile.add(mntmSave);
-		
+
 		JMenuItem mntmOpen = new JMenuItem("Open");
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				ScoutingApp.openCollection();
-				
+
 			}
 		});
 		mnFile.add(mntmOpen);
@@ -141,9 +144,9 @@ public class MatchHub extends JFrame {
 		JMenuItem mntmNew = new JMenuItem("New");
 		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				ScoutingApp.newCollection();
-				
+
 			}
 		});
 		mnFile.add(mntmNew);
@@ -179,7 +182,8 @@ public class MatchHub extends JFrame {
 					}
 				} else if (tblMatches.getSelectedRowCount() == 1) {
 
-					ScoutingApp.regionalCollection().removeMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
+					ScoutingApp.regionalCollection()
+							.removeMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
 
 				}
 
@@ -192,7 +196,7 @@ public class MatchHub extends JFrame {
 		mntmViewMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (tblMatches.getSelectedRowCount() == 1) {
-					ScoutingApp.showMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));					
+					ScoutingApp.showMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
 				}
 			}
 		});
@@ -229,6 +233,28 @@ public class MatchHub extends JFrame {
 	void createMatchTable() {
 
 		tblMatches = new JTable();
+		tblMatches.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+					if (tblMatches.getSelectedRowCount() == 1) {
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								try {
+
+									ScoutingApp.showMatch((int) tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
+
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						});
+					}
+				}
+			}
+		});
+
 		tblMatches.setModel(new DefaultTableModel(
 				new Object[][] {
 						{ new Integer(0), new Integer(0), new Integer(0), new Integer(1), new Integer(0),
