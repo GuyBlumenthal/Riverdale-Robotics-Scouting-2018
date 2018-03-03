@@ -165,6 +165,9 @@ public class RegionalCollection {
 				}
 
 			}
+			
+			ScoutingApp.unshowMatch(matchID);
+			ScoutingApp.updateMatchHubTable();
 
 		}
 

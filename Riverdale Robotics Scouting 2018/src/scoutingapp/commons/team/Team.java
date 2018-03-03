@@ -23,8 +23,8 @@ public class Team implements Serializable {
 	private HashMap<Integer, TeamPerformance> teamPerformances;
 
 	/**
-	 * matches map: given the nth match, a corresponding qualification match
-	 * number can be found
+	 * matches map: given the nth match, a corresponding qualification match number
+	 * can be found
 	 */
 	private HashMap<Integer, Integer> matches;
 
@@ -46,7 +46,7 @@ public class Team implements Serializable {
 	}
 
 	public int getMatchesPlayed() {
-		
+
 		return teamPerformances.size();
 	}
 
@@ -93,20 +93,20 @@ public class Team implements Serializable {
 	}
 
 	/*
-	 * scenarios 0: switch auto 1: scale auto 2: scale teleop 3: vault auto 4:
-	 * vault teleop
+	 * scenarios 0: switch auto 1: scale auto 2: scale teleop 3: vault auto 4: vault
+	 * teleop
 	 */
 	public double calcAverage(int scenario) {
 
 		double sum = 0;
 		int total = teamPerformances.size();
-
+		
 		for (TeamPerformance performance : teamPerformances.values()) {
 			ArrayList<Integer> data = getData(scenario, performance);
+			
 			sum += data.size();
 		}
-
-		return sum * 1.0 / (total > 0 ? total : 1);
+		return sum / (total > 0 ? total : 1);
 	}
 
 	public double calcConsistency(int scenario) {
@@ -125,7 +125,7 @@ public class Team implements Serializable {
 	}
 
 	public double calcTeleopNumCubesOnSwitchAverage() {
-		return (calcAverage(5) + calcAverage(6))/2;
+		return (calcAverage(5) + calcAverage(6)) / 2;
 	}
 
 	public double calcTeleopNumCubesOnSwitchConsistency() {
@@ -143,13 +143,21 @@ public class Team implements Serializable {
 		return numAboveAverage * 1.0 / (total > 0 ? total : 1) * 100;
 	}
 
-	public double calcBooleanAverage(boolean scenario) { 	// true = baseline,
-															// false = climb
+	/**
+	 * @param scenario
+	 *            set to <code>true</code> for baseline and <code>false</code> for
+	 *            climb
+	 */
+	public double calcBooleanAverage(boolean scenario) {
 		return calcSum(scenario) * 1.0 / (teamPerformances.size() > 0 ? teamPerformances.size() : 1);
 	}
 
-	public double calcBooleanConsistency(boolean scenario) { 	// true = baseline,
-																// false = climb
+	/**
+	 * @param scenario
+	 *            set to <code>true</code> for baseline and <code>false</code> for
+	 *            climb
+	 */
+	public double calcBooleanConsistency(boolean scenario) {
 		return calcBooleanAverage(scenario) * 100;
 	}
 
@@ -179,8 +187,8 @@ public class Team implements Serializable {
 
 		for (TeamPerformance performances : teamPerformances.values()) {
 			ArrayList<Integer> data = getData(scenario, performances);
-			for (Integer i : teamPerformances.keySet()) {
-				sum += data.get(i);
+			for (Integer i : data) {
+				sum += i;
 			}
 			total += data.size();
 		}
@@ -188,14 +196,13 @@ public class Team implements Serializable {
 		return sum / (total > 0 ? total : 1);
 	}
 
-
-	public int calcAverageSwitchTimeTeleop(){
-		return (calcAverageTime(5) + calcAverageTime(6))/2;
+	public int calcAverageSwitchTimeTeleop() {
+		return (calcAverageTime(5) + calcAverageTime(6)) / 2;
 	}
-	
-	//TODO: Calculate Average Climb Time
-	//TODO: Convert Time into seconds (game time into real time)
-	
+
+	// TODO: Calculate Average Climb Time
+	// TODO: Convert Time into seconds (game time into real time)
+
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
 		ArrayList<Integer> data = performance.cubesOnSwitchAuto;
 		switch (scenario) {

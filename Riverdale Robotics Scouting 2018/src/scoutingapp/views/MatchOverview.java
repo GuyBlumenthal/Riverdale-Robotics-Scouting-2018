@@ -92,8 +92,6 @@ public class MatchOverview extends JFrame {
 
 				ScoutingApp.regionalCollection.removeMatch(matchID);
 
-				dispose();
-
 			}
 		});
 		mnEdit.add(mntmDeleteMatch);
@@ -116,22 +114,8 @@ public class MatchOverview extends JFrame {
 		JMenuItem mntmMatchHub = new JMenuItem("Match Hub");
 		mntmMatchHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (Throwable e) {
-					e.printStackTrace();
-				}
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							MatchHub frame = new MatchHub();
-							frame.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-				dispose();
+				ScoutingApp.showMatchHub();
+				ScoutingApp.unshowMatch(matchID);
 			}
 		});
 		mnViews.add(mntmMatchHub);
@@ -139,22 +123,8 @@ public class MatchOverview extends JFrame {
 		JMenuItem mntmTeamHub = new JMenuItem("Team Hub");
 		mntmTeamHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (Throwable e2) {
-					e2.printStackTrace();
-				}
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							ScoutingApp frame = new ScoutingApp();
-							setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-				dispose();
+				ScoutingApp.showTeamHub();
+				ScoutingApp.unshowMatch(matchID);
 			}
 		});
 		mnViews.add(mntmTeamHub);

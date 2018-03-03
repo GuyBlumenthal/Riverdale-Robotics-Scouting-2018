@@ -66,7 +66,7 @@ public class TeamDetail extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(47, 73, 903, 176);
 		getContentPane().add(scrollPane);
-System.out.println(team);
+
 		tblMatches = new JTable();
 		tblMatches.setEnabled(false);
 		tblMatches.setModel(new DefaultTableModel(new String[] { "Match Number", "Performance", "Comments" },
@@ -122,7 +122,8 @@ System.out.println(team);
 						ScoutingApp.regionalCollection.getTeam(team).calcBooleanConsistency(true), null, null, null,
 						null },
 
-				{ "Climb", ScoutingApp.regionalCollection.getTeam(team).calcBooleanAverage(false), ScoutingApp.regionalCollection.getTeam(team).calcBooleanConsistency(false), null, null, null,
+				{ "Climb", ScoutingApp.regionalCollection.getTeam(team).calcBooleanAverage(false),
+						ScoutingApp.regionalCollection.getTeam(team).calcBooleanConsistency(false), null, null, null,
 						null } },
 				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Auto Average Time",
 						"Teleop Average", "Teleop Consistency", "Teleop Average Time" }));
