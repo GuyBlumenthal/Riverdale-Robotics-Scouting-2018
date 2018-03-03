@@ -71,14 +71,13 @@ public class SaveConfirm extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 
 						ScoutingApp.setSaved();
+						dispose();
 
 						if (open) {
 							ScoutingApp.openCollection();
 						} else {
 							ScoutingApp.newCollection();
 						}
-
-						dispose();
 
 					}
 				});
