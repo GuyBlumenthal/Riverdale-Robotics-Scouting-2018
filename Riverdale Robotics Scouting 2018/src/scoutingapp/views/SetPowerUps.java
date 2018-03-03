@@ -34,14 +34,6 @@ public class SetPowerUps extends JDialog {
 	 * Create the dialog.
 	 */
 	
-	private int standardToSeconds(String time) {
-		return Integer.parseInt(time.split(":")[0]) * 60 + Integer.parseInt(time.split(":")[1]);
-	}
-	
-	private String secondsToStandard(int time) {
-		return Math.floorDiv(time, 60) + ":" + time % 60;
-	}
-	
 	public SetPowerUps(int matchID, MatchOverview parent) {
 		
 		this.parent = parent;
@@ -125,12 +117,12 @@ public class SetPowerUps extends JDialog {
 		
 		if (worked) {
 			
-			txtBoostBlue.setText(secondsToStandard(bluePowers[0]));
-			txtForceBlue.setText(secondsToStandard(bluePowers[1]));
+			txtBoostBlue.setText(ScoutingApp.regionalCollection().secondsToStandard(bluePowers[0]));
+			txtForceBlue.setText(ScoutingApp.regionalCollection().secondsToStandard(bluePowers[1]));
 			chckbxLevitatedBlue.setSelected(bluePowers[2] == 1);
 			
-			txtBoostRed.setText(secondsToStandard(redPowers[0]));
-			txtForceRed.setText(secondsToStandard(redPowers[1]));
+			txtBoostRed.setText(ScoutingApp.regionalCollection().secondsToStandard(redPowers[0]));
+			txtForceRed.setText(ScoutingApp.regionalCollection().secondsToStandard(redPowers[1]));
 			chckbxLevitatedRed.setSelected(redPowers[2] == 1);
 		}
 		
@@ -142,9 +134,9 @@ public class SetPowerUps extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						int[] redPowerups = {standardToSeconds(txtBoostRed.getText()), standardToSeconds(txtForceRed.getText()),
+						int[] redPowerups = {ScoutingApp.regionalCollection().standardToSeconds(txtBoostRed.getText()), ScoutingApp.regionalCollection().standardToSeconds(txtForceRed.getText()),
 								(chckbxLevitatedRed.isSelected() ? 1 : 0)};
-						int[] bluePowerups = {standardToSeconds(txtBoostBlue.getText()), standardToSeconds(txtForceBlue.getText()),
+						int[] bluePowerups = {ScoutingApp.regionalCollection().standardToSeconds(txtBoostBlue.getText()), ScoutingApp.regionalCollection().standardToSeconds(txtForceBlue.getText()),
 								(chckbxLevitatedBlue.isSelected() ? 1 : 0)};
 						
 						ScoutingApp.regionalCollection().setPowerUps(matchID, redPowerups, true);

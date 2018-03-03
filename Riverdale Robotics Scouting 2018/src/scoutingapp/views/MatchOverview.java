@@ -39,23 +39,15 @@ public class MatchOverview extends JFrame {
 	 * Create the frame.
 	 */
 	
-	private int standardToSeconds(String time) {
-		return Integer.parseInt(time.split(":")[0]) * 60 + Integer.parseInt(time.split(":")[1]);
-	}
-	
-	private String secondsToStandard(int time) {
-		return Math.floorDiv(time, 60) + ":" + time % 60;
-	}
-	
 	public void updatePowers() {
 		Match k = ScoutingApp.regionalCollection().getMatch(matchID);
 		
-		blueBoost.setText(secondsToStandard(k.getBluePowerups()[0]));
-		forceBlue.setText(secondsToStandard(k.getBluePowerups()[1]));
+		blueBoost.setText((k.getBluePowerups()[0] == -1) ? "0:00" : ScoutingApp.regionalCollection().secondsToStandard(k.getBluePowerups()[0]));
+		forceBlue.setText((k.getBluePowerups()[1] == -1) ? "0:00" : ScoutingApp.regionalCollection().secondsToStandard(k.getBluePowerups()[1]));
 		blueLev.setSelected(k.getBluePowerups()[2] == 1);
 		
-		redBoost.setText(secondsToStandard(k.getRedPowerups()[0]));
-		redForce.setText(secondsToStandard(k.getRedPowerups()[1]));
+		redBoost.setText((k.getRedPowerups()[0] == -1) ? "0:00" : ScoutingApp.regionalCollection().secondsToStandard(k.getRedPowerups()[0]));
+		redForce.setText((k.getRedPowerups()[1] == -1) ? "0:00" : ScoutingApp.regionalCollection().secondsToStandard(k.getRedPowerups()[1]));
 		redLev.setSelected(k.getRedPowerups()[2] == 1);
 		
 	}

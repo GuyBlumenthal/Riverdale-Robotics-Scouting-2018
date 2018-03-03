@@ -27,6 +27,14 @@ public class RegionalCollection implements Serializable {
 		matches = new HashMap<Integer, Match>();
 
 	}
+	
+	public String secondsToStandard(int time) {
+		return Math.floorDiv(time, 60) + ":" + ((time % 60 < 10) ? "0" + time % 60 : time % 60);
+	}
+	
+	public int standardToSeconds(String time) {
+		return Integer.parseInt(time.split(":")[0]) * 60 + Integer.parseInt(time.split(":")[1]);
+	}
 
 	public HashMap<Integer, Team> getTeams() {
 		return teams;

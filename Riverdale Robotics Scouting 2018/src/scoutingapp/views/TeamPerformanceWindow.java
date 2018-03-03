@@ -167,7 +167,7 @@ public class TeamPerformanceWindow extends JFrame {
 
 		txtClimb = new JTextField();
 		txtClimb.setBounds(435, 85, 68, 20);
-		txtClimb.setText(secondsToStandard(teamPerformance.climb));
+		txtClimb.setText(ScoutingApp.regionalCollection().secondsToStandard(teamPerformance.climb));
 		txtClimb.setEnabled(editable);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
