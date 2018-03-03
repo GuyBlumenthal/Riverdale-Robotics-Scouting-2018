@@ -98,23 +98,27 @@ public class ViewDirectories extends JDialog {
 	public void updateCollectionList() {
 
 		File folder = new File("collections");
+		folder.mkdir();
+
 		File[] listOfFiles = folder.listFiles();
 
 		DefaultListModel<String> validFiles = new DefaultListModel<String>();
 
-		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile()) {
+		if (listOfFiles.length > 0) {
+			for (int i = 0; i < listOfFiles.length; i++) {
+				if (listOfFiles[i].isFile()) {
 
-				String name = listOfFiles[i].getName();
+					String name = listOfFiles[i].getName();
 
-				if (name.substring(name.length() - 4, name.length()).equals("." + ScoutingApp.FILE_EXTENSION)) {
+					if (name.substring(name.length() - 4, name.length()).equals("." + ScoutingApp.FILE_EXTENSION)) {
 
-					validFiles.addElement(name.substring(0, name.length() - 4));
+						validFiles.addElement(name.substring(0, name.length() - 4));
 
+					}
+
+				} else if (listOfFiles[i].isDirectory()) {
+					System.out.println("Directory " + listOfFiles[i].getName());
 				}
-
-			} else if (listOfFiles[i].isDirectory()) {
-				System.out.println("Directory " + listOfFiles[i].getName());
 			}
 		}
 

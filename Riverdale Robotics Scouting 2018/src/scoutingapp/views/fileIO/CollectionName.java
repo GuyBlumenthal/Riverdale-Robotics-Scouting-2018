@@ -25,7 +25,7 @@ public class CollectionName extends JDialog {
 	 */
 	public CollectionName() {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 244, 115);
+		setBounds(100, 100, 304, 121);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
