@@ -120,10 +120,12 @@ public class Team implements Serializable {
 		int numAboveAverage = 0;
 		int total = teamPerformances.size();
 
-		for (TeamPerformance performance : teamPerformances.values()) {
-			ArrayList<Integer> data = getData(scenario, performance);
-			if (data.size() >= average) {
-				numAboveAverage++;
+		if(average > 0){
+			for (TeamPerformance performance : teamPerformances.values()) {
+				ArrayList<Integer> data = getData(scenario, performance);
+				if (data.size() >= average) {
+					numAboveAverage++;
+				}
 			}
 		}
 
@@ -206,7 +208,7 @@ public class Team implements Serializable {
 	}
 
 	public int calcAverageSwitchTimeTeleop() {
-		return (calcAverageTime(5) + calcAverageTime(6)) / 2;
+		return (calcAverageTime(5) + calcAverageTime(6));
 	}
 
 	public int calcAverageClimbTime(){
