@@ -1,6 +1,7 @@
 package scoutingapp.views;
 
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.ArrayList;
 
@@ -12,11 +13,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
 import scoutingapp.commons.team.TeamPerformance;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TeamDetail extends JFrame {
 	/**
@@ -62,9 +66,18 @@ public class TeamDetail extends JFrame {
 
 		tblMatches = new JTable();
 		tblMatches.setEnabled(false);
+		
+		Object[][] arrayValues = new Object[currentTeam.teamPerformances.size()][3];
+		
+		int x = 0;
+		for (Integer i : currentTeam.teamPerformances.keySet()){
+			arrayValues[x][0] = i;
+			arrayValues[x][1] = "performance details";
+			arrayValues[x][2] = "comments";
+			x++;
+		}
 		tblMatches.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
+			new Object[][] {arrayValues},
 			new String[] {
 				"Match Number", "Performance", "Comments"
 			}
@@ -136,6 +149,40 @@ public class TeamDetail extends JFrame {
 				}
 			}
 		}
+		
+		mntmShowTeamHub.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							TeamHub frame = new TeamHub();
+							frame.setVisible(true);
+							dispose();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		
+		mntmShowMatchHub.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							MatchHub frame = new MatchHub();
+							frame.setVisible(true);
+							dispose();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
 
 	}
 }

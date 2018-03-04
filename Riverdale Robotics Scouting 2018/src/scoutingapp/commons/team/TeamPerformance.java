@@ -117,18 +117,20 @@ public class TeamPerformance implements Serializable{
 		for(int i = 3; i <= 6; i++){
 			allTimes.addAll(getData(i));
 		}
-		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop);
-		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop);
-		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop);
-		cubesInVaultTeleop = calcCycleTime(cubesInVaultTeleop);
+		Collections.sort(allTimes);
+		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop, false);
+		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop, false);
+		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop, false);
+		cubesInVaultTeleop = calcCycleTime(cubesInVaultTeleop, false);
 
 		allTimes.clear();
 		for(int i = 0; i <= 3; i++){
 			allTimes.addAll(getData(i));
 		}
-		cubesOnSwitchAuto = calcCycleTime(cubesOnSwitchAuto);
-		cubesOnScaleAuto = calcCycleTime(cubesOnScaleAuto);
-		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto);
+		Collections.sort(allTimes);
+		cubesOnSwitchAuto = calcCycleTime(cubesOnSwitchAuto, true);
+		cubesOnScaleAuto = calcCycleTime(cubesOnScaleAuto, true);
+		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto, true);
 	}
 
 	public TeamPerformanceWindow createWindow(int teamNumber, int matchID, boolean editable) {
@@ -146,18 +148,26 @@ public class TeamPerformance implements Serializable{
 
 	}
 
-	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
+	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times, boolean isAuto) {
 
 		ArrayList<Integer> data = new ArrayList<Integer>(times.size());
 		
+		Collections.sort(times);
+		int max;
+		if(isAuto){ max = 15; }else{ max = 135;}	
+			
 		if(times.size() > 1){
 			for (int i = 0; i < times.size(); i++) {
 	
+				if(times.get(i) == allTimes.get(allTimes.size() - 1)){
+					data.add(max - times.get(i));
+					break;
+				}
 				int lowest = Integer.MAX_VALUE;
 	
 				for (int j = 0; j < allTimes.size(); j++) {
 					int diff = Math.abs(times.get(i) - allTimes.get(j));
-					if (diff <= lowest && diff > 0) {
+					if (diff < lowest && times.get(i) != allTimes.get(j)) {
 						lowest = diff;
 					}
 				}
