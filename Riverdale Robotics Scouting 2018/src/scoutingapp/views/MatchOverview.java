@@ -129,14 +129,29 @@ public class MatchOverview extends JFrame {
 		panel_1.add(lblRedTeam3);
 
 		JButton btnRedMatchTeam1 = new JButton("...");
+		btnRedMatchTeam1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[0].getTeamNumber());
+			}
+		});
 		btnRedMatchTeam1.setBounds(163, 165, 68, 23);
 		panel_1.add(btnRedMatchTeam1);
 
 		JButton btnRedMatchTeam2 = new JButton("...");
+		btnRedMatchTeam2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[1].getTeamNumber());
+			}
+		});
 		btnRedMatchTeam2.setBounds(163, 211, 68, 23);
 		panel_1.add(btnRedMatchTeam2);
 
 		JButton btnRedMatchTeam3 = new JButton("...");
+		btnRedMatchTeam3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[2].getTeamNumber());
+			}
+		});
 		btnRedMatchTeam3.setBounds(163, 257, 68, 23);
 		panel_1.add(btnRedMatchTeam3);
 
@@ -208,14 +223,29 @@ public class MatchOverview extends JFrame {
 		panel.add(lblBlueTeam3);
 
 		JButton btnBlueMatchTeam1 = new JButton("...");
+		btnBlueMatchTeam1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[0].getTeamNumber());
+			}
+		});
 		btnBlueMatchTeam1.setBounds(163, 165, 68, 23);
 		panel.add(btnBlueMatchTeam1);
 
 		JButton btnBlueMatchTeam2 = new JButton("...");
+		btnBlueMatchTeam2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[1].getTeamNumber());
+			}
+		});
 		btnBlueMatchTeam2.setBounds(163, 211, 68, 23);
 		panel.add(btnBlueMatchTeam2);
 
 		JButton btnBlueMatchTeam3 = new JButton("...");
+		btnBlueMatchTeam3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[2].getTeamNumber());
+			}
+		});
 		btnBlueMatchTeam3.setBounds(163, 257, 68, 23);
 		panel.add(btnBlueMatchTeam3);
 

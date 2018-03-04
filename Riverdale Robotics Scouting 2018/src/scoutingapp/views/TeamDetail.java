@@ -50,10 +50,10 @@ public class TeamDetail extends JFrame {
 		mnView.add(mntmExit);
 		getContentPane().setLayout(null);
 
-		JLabel lblTeamNumber = new JLabel(Integer.toString(team));
+		JLabel lblTeamNumber = new JLabel(Integer.toString(team) + " - " + currentTeam.getTeamName());
 		lblTeamNumber.setFont(new Font("Courier New", Font.PLAIN, 15));
 		lblTeamNumber.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTeamNumber.setBounds(10, 11, 155, 51);
+		lblTeamNumber.setBounds(47, 11, 346, 51);
 		getContentPane().add(lblTeamNumber);
 
 		JScrollPane scrollPane = new JScrollPane();
