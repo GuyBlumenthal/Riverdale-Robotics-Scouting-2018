@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import scoutingapp.commons.ScoutingApp;
 import scoutingapp.views.creation.CreateTeam;
 
+@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 public class TeamHub extends JFrame {
 
 	private static final long serialVersionUID = 6184145860176117808L;
@@ -42,7 +43,7 @@ public class TeamHub extends JFrame {
 		setTitle("Scouting - Team Hub");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 515, 444);
+		setBounds(100, 100, 595, 444);
 		contentPane = new JPanel();
 		contentPane.setSize(new Dimension(1024, 600));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -50,19 +51,19 @@ public class TeamHub extends JFrame {
 		getContentPane().setLayout(null);
 
 		JScrollPane scrollPaneTeams = new JScrollPane();
-		scrollPaneTeams.setBounds(22, 22, 461, 354);
+		scrollPaneTeams.setBounds(22, 22, 543, 354);
 		getContentPane().add(scrollPaneTeams);
 
 		tblTeams = new JTable();
-		tblTeams.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-			},
-			new String[] {
-				"Rank", "Team Number", "Team Name"
+		tblTeams.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null }, },
+				new String[] { "Rank", "Team Number", "Team Name", "Auto Cubes" }) {
+
+			Class[] columnTypes = new Class[] { Integer.class, Integer.class, String.class, Double.class };
+
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
 			}
-		));
-		
+		});
 		tblTeams.getColumnModel().getColumn(0).setResizable(false);
 		tblTeams.getColumnModel().getColumn(0).setMinWidth(75);
 		tblTeams.getColumnModel().getColumn(0).setMaxWidth(75);
@@ -71,7 +72,10 @@ public class TeamHub extends JFrame {
 		tblTeams.getColumnModel().getColumn(1).setMinWidth(125);
 		tblTeams.getColumnModel().getColumn(1).setMaxWidth(125);
 		tblTeams.getColumnModel().getColumn(2).setResizable(false);
-		
+		tblTeams.getColumnModel().getColumn(3).setResizable(false);
+		tblTeams.getColumnModel().getColumn(3).setMinWidth(75);
+		tblTeams.getColumnModel().getColumn(3).setMaxWidth(75);
+
 		tblTeams.getTableHeader().setReorderingAllowed(false);
 		scrollPaneTeams.setViewportView(tblTeams);
 
@@ -128,7 +132,6 @@ public class TeamHub extends JFrame {
 		JMenuItem mntmViewMatchhub = new JMenuItem("View MatchHub ...");
 		mnView.add(mntmViewMatchhub);
 
-		TeamHub Temp = this;
 		mntmAddNewTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
@@ -190,25 +193,41 @@ public class TeamHub extends JFrame {
 
 	public void updateTeamTable() {
 
-		arrayValues = new Object[ScoutingApp.regionalCollection().getTeamList().length][3];
+		arrayValues = new Object[ScoutingApp.regionalCollection().getTeamList().length][4];
 		int[] teamList = ScoutingApp.regionalCollection().getTeamList();
 
 		for (int i = 0; i < arrayValues.length; i++) {
 			arrayValues[i][0] = i + 1;
 			arrayValues[i][1] = teamList[i];
 			arrayValues[i][2] = ScoutingApp.regionalCollection().getTeam(teamList[i]).getTeamName();
+			arrayValues[i][3] = ScoutingApp.regionalCollection().getTeam(teamList[i]).calcAutoCubesAverage();
 		}
 
 		DefaultTableModel tableModel = new DefaultTableModel(arrayValues,
-				new String[] { "Rank", "Team Number", "Team Name" }) {
+				new String[] { "Rank", "Team Number", "Team Name", "Auto Cubes" }) {
 			private static final long serialVersionUID = -6261637160294735163L;
-			boolean[] columnEditables = new boolean[] { false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
+				return false;
 			}
+
 		};
+
 		tblTeams.setModel(tableModel);
+
+		tblTeams.getColumnModel().getColumn(0).setResizable(false);
+		tblTeams.getColumnModel().getColumn(0).setMinWidth(75);
+		tblTeams.getColumnModel().getColumn(0).setMaxWidth(75);
+		tblTeams.getColumnModel().getColumn(1).setResizable(false);
+		tblTeams.getColumnModel().getColumn(1).setPreferredWidth(125);
+		tblTeams.getColumnModel().getColumn(1).setMinWidth(125);
+		tblTeams.getColumnModel().getColumn(1).setMaxWidth(125);
+		tblTeams.getColumnModel().getColumn(2).setResizable(false);
+		tblTeams.getColumnModel().getColumn(3).setResizable(false);
+		tblTeams.getColumnModel().getColumn(3).setMinWidth(75);
+		tblTeams.getColumnModel().getColumn(3).setMaxWidth(75);
+
+		tblTeams.getTableHeader().setReorderingAllowed(false);
 	}
 
 }

@@ -2,6 +2,7 @@ package scoutingapp.commons;
 
 import java.awt.EventQueue;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import scoutingapp.commons.team.Team;
@@ -206,6 +207,8 @@ public class RegionalCollection implements Serializable {
 			teamList[i] = (int) teamObjects[i];
 		}
 
+		Arrays.sort(teamList);
+		
 		return teamList;
 
 	}
