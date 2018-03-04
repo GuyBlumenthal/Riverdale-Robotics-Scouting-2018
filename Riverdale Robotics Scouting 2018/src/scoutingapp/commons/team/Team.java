@@ -221,52 +221,26 @@ public class Team implements Serializable {
 		return sum / (total > 0 ? total : 1);
 	}
 
-	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
-
-		ArrayList<Integer> data = new ArrayList<Integer>(times.size());
-
-		Collections.sort(times);
-		
-		if(times.size() > 1){
-			for (int i = 0; i < times.size() - 1; i++) {
-	
-				int lowest = Math.abs(data.get(i + 1) - data.get(i));
-	
-				for (int j = 0; j < times.size(); j++) {
-					int diff = Math.abs(times.get(i) - times.get(j));
-					if (diff <= lowest && i != j) {
-						lowest = diff;
-					}
-				}
-	
-				data.add(lowest);
-			}
-		}else if(times.size() == 1){
-			data.add(times.get(0));
-		}
-		return data;
-	}
 	
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
-		ArrayList<Integer> data = performance.cubesOnSwitchAuto;
 		switch (scenario) {
 		case 0:
-			data = performance.cubesOnSwitchAuto;
+			return performance.cubesOnSwitchAuto;
 		case 1:
-			data = performance.cubesOnScaleAuto;
+			return performance.cubesOnScaleAuto;
 		case 2:
-			data = performance.cubesOnScaleTeleop;
+			return performance.cubesOnScaleTeleop;
 		case 3:
-			data = performance.cubesInVaultAuto;
+			return performance.cubesInVaultAuto;
 		case 4:
-			data = performance.cubesInVaultTeleop;
+			return performance.cubesInVaultTeleop;
 		case 5:
-			data = performance.cubesOnAllianceSwitchTeleop;
+			return performance.cubesOnAllianceSwitchTeleop;
 		case 6:
-			data = performance.cubesOnOpponentSwitchTeleop;
+			return performance.cubesOnOpponentSwitchTeleop;
+		default:
+			return performance.cubesOnSwitchAuto;
 		}
-
-		return data;
 	}
 
 }

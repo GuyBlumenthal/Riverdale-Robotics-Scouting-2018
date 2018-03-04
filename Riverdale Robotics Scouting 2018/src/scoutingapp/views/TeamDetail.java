@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -16,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ScoutingApp;
+import scoutingapp.commons.team.Team;
 import scoutingapp.commons.team.TeamPerformance;
 
 public class TeamDetail extends JFrame {
@@ -25,9 +25,11 @@ public class TeamDetail extends JFrame {
 	private static final long serialVersionUID = 4828606662028786474L;
 	private JTable tblMatches;
 	private JTable tblOverview;
-
+	
+	private Team currentTeam;
+	
 	public TeamDetail(int team) {
-
+		currentTeam = ScoutingApp.regionalCollection().getTeam(team);
 		setResizable(false);
 
 		setSize(new Dimension(1024, 600));
@@ -54,29 +56,19 @@ public class TeamDetail extends JFrame {
 		lblTeamNumber.setBounds(10, 11, 155, 51);
 		getContentPane().add(lblTeamNumber);
 
-		JButton btnNewButton = new JButton("Edit");
-		btnNewButton.setBounds(175, 39, 89, 23);
-		getContentPane().add(btnNewButton);
-
-		JButton btnAdd = new JButton("Add");
-		btnAdd.setBounds(293, 39, 89, 23);
-		getContentPane().add(btnAdd);
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(47, 73, 903, 176);
 		getContentPane().add(scrollPane);
 
 		tblMatches = new JTable();
 		tblMatches.setEnabled(false);
-		tblMatches.setModel(new DefaultTableModel(new String[] { "Match Number", "Performance", "Comments" },
-				ScoutingApp.regionalCollection().getTeam(team).getMatchesPlayed()) {
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false, false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
+		tblMatches.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Match Number", "Performance", "Comments"
 			}
-		});
+		));
 
 		tblMatches.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(tblMatches);
@@ -96,35 +88,35 @@ public class TeamDetail extends JFrame {
 
 		tblOverview.setModel(new DefaultTableModel(new Object[][] {
 
-				{ "Cube on Switch", ScoutingApp.regionalCollection().getTeam(team).calcAverage(0),
-						ScoutingApp.regionalCollection().getTeam(team).calcConsistency(0),
-						ScoutingApp.regionalCollection().getTeam(team).calcAverageTime(0),
-						ScoutingApp.regionalCollection().getTeam(team).calcTeleopNumCubesOnSwitchAverage(),
-						ScoutingApp.regionalCollection().getTeam(team).calcTeleopNumCubesOnSwitchConsistency(),
-						ScoutingApp.regionalCollection().getTeam(team).calcAverageSwitchTimeTeleop() },
+				{ "Cube on Switch", currentTeam.calcAverage(0),
+						currentTeam.calcConsistency(0),
+						currentTeam.calcAverageTime(0),
+						currentTeam.calcTeleopNumCubesOnSwitchAverage(),
+						currentTeam.calcTeleopNumCubesOnSwitchConsistency(),
+						currentTeam.calcAverageSwitchTimeTeleop() },
 
-				{ "Cube on Scale", ScoutingApp.regionalCollection().getTeam(team).calcAverage(1),
-						ScoutingApp.regionalCollection().getTeam(team).calcConsistency(1),
-						ScoutingApp.regionalCollection().getTeam(team).calcAverageTime(1),
-						ScoutingApp.regionalCollection().getTeam(team).calcAverage(2),
-						ScoutingApp.regionalCollection().getTeam(team).calcConsistency(2),
-						ScoutingApp.regionalCollection().getTeam(team).calcAverageTime(2) },
+				{ "Cube on Scale", currentTeam.calcAverage(1),
+						currentTeam.calcConsistency(1),
+						currentTeam.calcAverageTime(1),
+						currentTeam.calcAverage(2),
+						currentTeam.calcConsistency(2),
+						currentTeam.calcAverageTime(2) },
 
-				{ "Cube in Vault", ScoutingApp.regionalCollection().getTeam(team).calcAverage(3),
-						ScoutingApp.regionalCollection().getTeam(team).calcConsistency(3),
-						ScoutingApp.regionalCollection().getTeam(team).calcAverageTime(3),
-						ScoutingApp.regionalCollection().getTeam(team).calcAverage(4),
-						ScoutingApp.regionalCollection().getTeam(team).calcConsistency(4),
-						ScoutingApp.regionalCollection().getTeam(team).calcAverageTime(4) },
+				{ "Cube in Vault", currentTeam.calcAverage(3),
+						currentTeam.calcConsistency(3),
+						currentTeam.calcAverageTime(3),
+						currentTeam.calcAverage(4),
+						currentTeam.calcConsistency(4),
+						currentTeam.calcAverageTime(4) },
 
-				{ "Baseline", ScoutingApp.regionalCollection().getTeam(team).calcBooleanAverage(true),
-						ScoutingApp.regionalCollection().getTeam(team).calcBooleanConsistency(true), null, null, null,
+				{ "Baseline", currentTeam.calcBooleanAverage(true),
+						currentTeam.calcBooleanConsistency(true), null, null, null,
 						null },
 
 				{ "Climb", null, null, null, 	
-						ScoutingApp.regionalCollection().getTeam(team).calcBooleanAverage(false),
-						ScoutingApp.regionalCollection().getTeam(team).calcBooleanConsistency(false),
-						ScoutingApp.regionalCollection().getTeam(team).calcAverageClimbTime()} },
+						currentTeam.calcBooleanAverage(false),
+						currentTeam.calcBooleanConsistency(false),
+						currentTeam.calcAverageClimbTime()} },
 				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Auto Average Time",
 						"Teleop Average", "Teleop Consistency", "Teleop Average Time" }));
 
@@ -132,15 +124,11 @@ public class TeamDetail extends JFrame {
 		tblOverview.getTableHeader().setReorderingAllowed(false);
 		
 		scrollPane_1.setViewportView(tblOverview);
-
-		JButton btnTeamDetail = new JButton("Team Detail");
-		btnTeamDetail.setBounds(392, 39, 89, 23);
-		getContentPane().add(btnTeamDetail);
 		tblOverview.getTableHeader().setReorderingAllowed(false);
 		
-		for (TeamPerformance performance : ScoutingApp.regionalCollection().getTeam(team).teamPerformances.values()) {
+		for (TeamPerformance performance : currentTeam.teamPerformances.values()) {
 			for(int i = 0; i <= 6; i++){	
-				ArrayList<Integer> data = ScoutingApp.regionalCollection().getTeam(team).getData(i, performance);
+				ArrayList<Integer> data = currentTeam.getData(i, performance);
 				System.out.println(i);
 				System.out.println(data.size());
 				for(int j = 0; j < data.size(); j++){

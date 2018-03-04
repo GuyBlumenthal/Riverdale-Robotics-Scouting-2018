@@ -35,6 +35,8 @@ public class TeamPerformance implements Serializable{
 
 	public boolean crossedBaseLine;
 
+	private ArrayList<Integer> allTimes = new ArrayList<Integer>();
+	
 	public TeamPerformance(TeamPerformanceWindow teamPerformanceWindow) {
 
 		initDetail();
@@ -111,12 +113,19 @@ public class TeamPerformance implements Serializable{
 		crossedBaseLine = teamPerformanceWindow.chkBaseline.isSelected();
 
 		// adjust times
-		
+		allTimes.clear();
+		for(int i = 3; i <= 6; i++){
+			allTimes.addAll(getData(i));
+		}
 		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop);
 		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop);
 		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop);
 		cubesInVaultTeleop = calcCycleTime(cubesInVaultTeleop);
 
+		allTimes.clear();
+		for(int i = 0; i <= 3; i++){
+			allTimes.addAll(getData(i));
+		}
 		cubesOnSwitchAuto = calcCycleTime(cubesOnSwitchAuto);
 		cubesOnScaleAuto = calcCycleTime(cubesOnScaleAuto);
 		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto);
@@ -140,27 +149,46 @@ public class TeamPerformance implements Serializable{
 	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
 
 		ArrayList<Integer> data = new ArrayList<Integer>(times.size());
-
-		Collections.sort(times);
 		
 		if(times.size() > 1){
-			for (int i = 0; i < times.size() - 1; i++) {
+			for (int i = 0; i < times.size(); i++) {
 	
-				int lowest = Math.abs(data.get(i + 1) - data.get(i));
+				int lowest = Integer.MAX_VALUE;
 	
-				for (int j = 0; j < times.size(); j++) {
-					int diff = Math.abs(times.get(i) - times.get(j));
-					if (diff <= lowest && i != j) {
+				for (int j = 0; j < allTimes.size(); j++) {
+					int diff = Math.abs(times.get(i) - allTimes.get(j));
+					if (diff <= lowest && diff > 0) {
 						lowest = diff;
 					}
 				}
-	
+				
 				data.add(lowest);
 			}
+			
 		}else if(times.size() == 1){
 			data.add(times.get(0));
 		}
 		return data;
 	}
 
+	public ArrayList<Integer> getData(int scenario) {
+		switch (scenario) {
+		case 0:
+			return cubesOnSwitchAuto;
+		case 1:
+			return cubesOnScaleAuto;
+		case 2:
+			return cubesInVaultAuto;
+		case 3:
+			return cubesOnScaleTeleop;
+		case 4:
+			return cubesInVaultTeleop;
+		case 5:
+			return cubesOnAllianceSwitchTeleop;
+		case 6:
+			return cubesOnOpponentSwitchTeleop;
+		default:
+			return cubesOnSwitchAuto;
+		}
+	}
 }
