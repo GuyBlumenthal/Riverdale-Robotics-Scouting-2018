@@ -91,21 +91,6 @@ public class Team implements Serializable {
 		return ScoutingApp.regionalCollection().getMatch(matchID);
 	}
 
-<<<<<<< HEAD
-=======
-	/**
-	 * @param scenario
-	 *            <br />
-	 *            <b>0</b> - switch auto <br />
-	 *            <b>1</b> - scale auto <br />
-	 *            <b>2</b> - scale teleop <br />
-	 *            <b>3</b> - vault auto <br />
-	 *            <b>4</b> - vault teleop <br />
-	 *            <b>5</b> - Alliance Switch Tele-Op <br />
-	 *            <b>6</b> - Opponent Switch Tele-Op
-	 * 
-	 */
->>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 	public double calcAverage(int scenario) {
 		double sum = 0;
 		int total = teamPerformances.size();
@@ -142,15 +127,11 @@ public class Team implements Serializable {
 			}
 		}
 
-<<<<<<< HEAD
-		return (numAboveAverage * 1.0 / (total > 0 ? total : 1)) * 100;
-=======
 		return numAboveAverage * 1.0 / (total > 0 ? total : 1) * 100;
 	}
 
 	public double calcAutoCubesAverage() {
 		return (calcAverage(0) + calcAverage(1)) / 2;
->>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 	}
 
 	public double calcTeleopNumCubesOnSwitchAverage() {
@@ -240,7 +221,6 @@ public class Team implements Serializable {
 		return sum / (total > 0 ? total : 1);
 	}
 
-<<<<<<< HEAD
 	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
 
 		ArrayList<Integer> data = new ArrayList<Integer>(times.size());
@@ -267,22 +247,6 @@ public class Team implements Serializable {
 		return data;
 	}
 	
-=======
-	/**
-	 * @param scenario
-	 *            <br />
-	 *            <b>0</b> - switch auto <br />
-	 *            <b>1</b> - scale auto <br />
-	 *            <b>2</b> - scale teleop <br />
-	 *            <b>3</b> - vault auto <br />
-	 *            <b>4</b> - vault teleop <br />
-	 *            <b>5</b> - Alliance Switch Tele-Op <br />
-	 *            <b>6</b> - Opponent Switch Tele-Op
-	 * 
-	 * @param performance
-	 *            is the team performance from which the data is being extracted
-	 */
->>>>>>> branch 'master' of https://github.com/GuyBlumenthal/Riverdale-Robotics-Scouting-2018.git
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
 		ArrayList<Integer> data = performance.cubesOnSwitchAuto;
 		switch (scenario) {
