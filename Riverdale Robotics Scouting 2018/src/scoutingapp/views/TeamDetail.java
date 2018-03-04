@@ -2,6 +2,7 @@ package scoutingapp.views;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import scoutingapp.commons.ScoutingApp;
+import scoutingapp.commons.team.TeamPerformance;
 
 public class TeamDetail extends JFrame {
 	/**
@@ -29,7 +31,7 @@ public class TeamDetail extends JFrame {
 		setResizable(false);
 
 		setSize(new Dimension(1024, 600));
-
+		setTitle("Scouting - Team Detail");
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -119,9 +121,10 @@ public class TeamDetail extends JFrame {
 						ScoutingApp.regionalCollection().getTeam(team).calcBooleanConsistency(true), null, null, null,
 						null },
 
-				{ "Climb", ScoutingApp.regionalCollection().getTeam(team).calcBooleanAverage(false),
-						ScoutingApp.regionalCollection().getTeam(team).calcBooleanConsistency(false), null, null, null,
-						null } },
+				{ "Climb", null, null, null, 	
+						ScoutingApp.regionalCollection().getTeam(team).calcBooleanAverage(false),
+						ScoutingApp.regionalCollection().getTeam(team).calcBooleanConsistency(false),
+						ScoutingApp.regionalCollection().getTeam(team).calcAverageClimbTime()} },
 				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Auto Average Time",
 						"Teleop Average", "Teleop Consistency", "Teleop Average Time" }));
 
@@ -134,6 +137,17 @@ public class TeamDetail extends JFrame {
 		btnTeamDetail.setBounds(392, 39, 89, 23);
 		getContentPane().add(btnTeamDetail);
 		tblOverview.getTableHeader().setReorderingAllowed(false);
+		
+		for (TeamPerformance performance : ScoutingApp.regionalCollection().getTeam(team).teamPerformances.values()) {
+			for(int i = 0; i <= 6; i++){	
+				ArrayList<Integer> data = ScoutingApp.regionalCollection().getTeam(team).getData(i, performance);
+				System.out.println(i);
+				System.out.println(data.size());
+				for(int j = 0; j < data.size(); j++){
+					System.out.println(data.get(j));
+				}
+			}
+		}
 
 	}
 }

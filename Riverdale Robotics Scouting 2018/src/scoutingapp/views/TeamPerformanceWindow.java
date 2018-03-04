@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.ScoutingApp;
@@ -59,6 +60,8 @@ public class TeamPerformanceWindow extends JFrame {
 			
 			JOptionPane.showMessageDialog(null, "Saved Changes.");
 		} catch (NumberFormatException e) {
+			
+			System.out.println(e);
 
 			JOptionPane.showMessageDialog(null, "Please fill in the match detail page properly.",
 					"Incomplete Match Detail", JOptionPane.OK_OPTION);
@@ -264,7 +267,6 @@ public class TeamPerformanceWindow extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(231, 140, 147, 147);
 		contentPane.add(scrollPane);
-
 	}
 
 	/**
@@ -278,7 +280,7 @@ public class TeamPerformanceWindow extends JFrame {
 		this.matchID = matchID;
 
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 675, 360);
+		setBounds(100, 100, 627, 393);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -334,23 +336,30 @@ public class TeamPerformanceWindow extends JFrame {
 		JLabel lblSwitch = new JLabel("Switch");
 		lblSwitch.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSwitch.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSwitch.setBounds(86, 116, 47, 24);
+		lblSwitch.setBounds(29, 140, 47, 24);
 		contentPane.add(lblSwitch);
 
 		JScrollPane scrollPaneSwitch = new JScrollPane();
-		scrollPaneSwitch.setBounds(10, 140, 199, 147);
+		scrollPaneSwitch.setBounds(10, 175, 199, 147);
 		contentPane.add(scrollPaneSwitch);
 
 		tblSwitch = new JTable(data, columns);
-		tblSwitch.setModel(new DefaultTableModel(
-				new Object[][] { { false, false, "0:00" }, { false, false, "0:00" }, { false, false, "0:00" }, },
-				new String[] { "Auto", "Offense", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, String.class };
-
+		DefaultTableModel mdlSwitch = new DefaultTableModel(
+			new Object[][] {
+				{Boolean.FALSE, Boolean.FALSE, ""},
+			},
+			new String[] {
+				"Auto", "Offense", "Time"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Boolean.class, Boolean.class, String.class
+			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-		});
+		};
+		tblSwitch.setModel(mdlSwitch);
 		scrollPaneSwitch.setViewportView(tblSwitch);
 
 		JButton btnSaveData = new JButton("Save Data");
@@ -360,45 +369,59 @@ public class TeamPerformanceWindow extends JFrame {
 		JLabel label = new JLabel("Scale");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label.setBounds(294, 116, 47, 24);
+		label.setBounds(230, 140, 47, 24);
 		contentPane.add(label);
 
 		JScrollPane scrollPaneScale = new JScrollPane();
-		scrollPaneScale.setBounds(231, 140, 179, 147);
+		scrollPaneScale.setBounds(230, 175, 179, 147);
 		contentPane.add(scrollPaneScale);
 
 		tblScale = new JTable();
-		tblScale.setModel(new DefaultTableModel(
-				new Object[][] { { false, false, "0:00" }, { false, false, "0:00" }, { false, false, "0:00" }, },
-				new String[] { "In Auto", "Defense", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, String.class };
-
+		DefaultTableModel mdlScale = new DefaultTableModel(
+			new Object[][] {
+				{Boolean.FALSE, ""},
+			},
+			new String[] {
+				"In Auto", "Time"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Boolean.class, String.class
+			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-		});
+		};
+		tblScale.setModel(mdlScale);
 		scrollPaneScale.setViewportView(tblScale);
 
 		JScrollPane scrollPaneVault = new JScrollPane();
-		scrollPaneVault.setBounds(431, 140, 163, 147);
+		scrollPaneVault.setBounds(438, 175, 163, 147);
 		contentPane.add(scrollPaneVault);
 
 		tblVault = new JTable();
-		tblVault.setModel(
-				new DefaultTableModel(new Object[][] { { false, "0:00" }, { false, "0:00" }, { false, "0:00" }, },
-						new String[] { "In Auto", "Time" }) {
-					Class[] columnTypes = new Class[] { Boolean.class, String.class };
-
-					public Class getColumnClass(int columnIndex) {
-						return columnTypes[columnIndex];
-					}
-				});
+		DefaultTableModel mdlVault = new DefaultTableModel(
+			new Object[][] {
+				{Boolean.FALSE, null},
+			},
+			new String[] {
+				"In Auto", "Time"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Boolean.class, Object.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		};
+		tblVault.setModel(mdlVault);
 		scrollPaneVault.setViewportView(tblVault);
 
 		JLabel label_1 = new JLabel("Power Cubes In Vault");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_1.setBounds(447, 116, 129, 24);
+		label_1.setBounds(445, 114, 129, 24);
 		contentPane.add(label_1);
 
 		btnSaveData.addMouseListener(new MouseAdapter() {
@@ -411,10 +434,6 @@ public class TeamPerformanceWindow extends JFrame {
 		});
 		contentPane.add(btnSaveData);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(231, 140, 147, 147);
-		contentPane.add(scrollPane);
-
 		txtClimb = new JTextField();
 		txtClimb.setBounds(435, 85, 68, 20);
 		contentPane.add(txtClimb);
@@ -423,5 +442,71 @@ public class TeamPerformanceWindow extends JFrame {
 		JLabel lblStartClimbTime = new JLabel("Start Climb Time");
 		lblStartClimbTime.setBounds(343, 88, 82, 14);
 		contentPane.add(lblStartClimbTime);
+		
+		JButton btnAddSwitch = new JButton("Add");
+		btnAddSwitch.setBounds(86, 142, 57, 22);
+		contentPane.add(btnAddSwitch);
+		
+		JButton btnAddScale = new JButton("Add");
+		btnAddScale.setBounds(287, 142, 57, 22);
+		contentPane.add(btnAddScale);
+		
+		JButton btnAddVault = new JButton("Add");
+		btnAddVault.setBounds(446, 142, 57, 22);
+		contentPane.add(btnAddVault);
+		
+		JButton btnDeleteSwitch = new JButton("Del");
+		btnDeleteSwitch.setBounds(152, 142, 57, 22);
+		contentPane.add(btnDeleteSwitch);
+		
+		JButton btnDeleteScale = new JButton("Del");
+		btnDeleteScale.setBounds(354, 142, 57, 22);
+		contentPane.add(btnDeleteScale);
+		
+		JButton btnDeleteVault = new JButton("Del");
+		btnDeleteVault.setBounds(517, 142, 57, 22);
+		contentPane.add(btnDeleteVault);
+		
+		btnAddSwitch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlSwitch.addRow(new Object[] {false, false, ""});
+			}
+		});
+		
+		btnAddScale.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlScale.addRow(new Object[] {false, ""});
+			}
+		});
+		
+		btnAddVault.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlVault.addRow(new Object[] {false, ""});
+			}
+		});
+		
+		btnDeleteSwitch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlSwitch.removeRow(tblSwitch.getSelectedRow());
+			}
+		});
+		
+		btnDeleteScale.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlScale.removeRow(tblScale.getSelectedRow());
+			}
+		});
+		
+		btnDeleteVault.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlVault.removeRow(tblVault.getSelectedRow());
+			}
+		});
 	}
 }

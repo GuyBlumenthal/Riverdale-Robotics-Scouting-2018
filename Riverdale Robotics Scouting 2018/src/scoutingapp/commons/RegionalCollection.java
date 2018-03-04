@@ -87,7 +87,6 @@ public class RegionalCollection implements Serializable {
 
 	public void addTeamPerformance(int teamNumber, int matchID, TeamPerformanceWindow window) {
 		teams.get(teamNumber).addTeamPerformance(matchID, window);
-
 	}
 
 	public boolean hasTeamPerformance(int matchID, int teamNumber) {

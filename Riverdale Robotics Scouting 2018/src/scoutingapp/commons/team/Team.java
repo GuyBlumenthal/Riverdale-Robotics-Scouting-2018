@@ -2,6 +2,7 @@ package scoutingapp.commons.team;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import scoutingapp.commons.Match;
@@ -18,7 +19,7 @@ public class Team implements Serializable {
 	private int teamNumber;
 	private String teamName;
 
-	private HashMap<Integer, TeamPerformance> teamPerformances;
+	public HashMap<Integer, TeamPerformance> teamPerformances;
 
 	/**
 	 * matches map: given the nth match, a corresponding qualification match number
@@ -90,12 +91,7 @@ public class Team implements Serializable {
 		return ScoutingApp.regionalCollection().getMatch(matchID);
 	}
 
-	/*
-	 * scenarios 0: switch auto 1: scale auto 2: scale teleop 3: vault auto 4: vault
-	 * teleop
-	 */
 	public double calcAverage(int scenario) {
-
 		double sum = 0;
 		int total = teamPerformances.size();
 		
@@ -114,16 +110,16 @@ public class Team implements Serializable {
 
 		for (TeamPerformance performance : teamPerformances.values()) {
 			ArrayList<Integer> data = getData(scenario, performance);
-			if (data.size() > average) {
+			if (data.size() >= average) {
 				numAboveAverage++;
 			}
 		}
 
-		return numAboveAverage * 1.0 / (total > 0 ? total : 1) * 100;
+		return (numAboveAverage * 1.0 / (total > 0 ? total : 1)) * 100;
 	}
 
 	public double calcTeleopNumCubesOnSwitchAverage() {
-		return (calcAverage(5) + calcAverage(6)) / 2;
+		return (calcAverage(5) + calcAverage(6));
 	}
 
 	public double calcTeleopNumCubesOnSwitchConsistency() {
@@ -132,13 +128,13 @@ public class Team implements Serializable {
 		int total = teamPerformances.size();
 
 		for (TeamPerformance performance : teamPerformances.values()) {
-			if (performance.cubesOnAllianceSwitchTeleop.size() > average
-					|| performance.cubesOnOpponentSwitchTeleop.size() > average) {
+			if (performance.cubesOnAllianceSwitchTeleop.size() >= average
+					|| performance.cubesOnOpponentSwitchTeleop.size() >= average) {
 				numAboveAverage++;
 			}
 		}
 
-		return numAboveAverage * 1.0 / (total > 0 ? total : 1) * 100;
+		return (numAboveAverage * 1.0 / (total > 0 ? total : 1)) * 100;
 	}
 
 	/**
@@ -163,12 +159,10 @@ public class Team implements Serializable {
 		int sum = 0;
 
 		for (TeamPerformance performances : teamPerformances.values()) {
-			if (scenario && performances.climb > -1) {
+			if (!scenario && performances.climb > -1) {
 				sum++;
-			} else {
-				if (performances.crossedBaseLine) {
-					sum++;
-				}
+			} else if (performances.crossedBaseLine) {
+				sum++;
 			}
 		}
 
@@ -178,10 +172,6 @@ public class Team implements Serializable {
 	public int calcAverageTime(int scenario) {
 		int sum = 0;
 		int total = 0;
-
-		if (scenario < 5) {
-			scenario = 5;
-		}
 
 		for (TeamPerformance performances : teamPerformances.values()) {
 			ArrayList<Integer> data = getData(scenario, performances);
@@ -198,9 +188,44 @@ public class Team implements Serializable {
 		return (calcAverageTime(5) + calcAverageTime(6)) / 2;
 	}
 
-	// TODO: Calculate Average Climb Time
-	// TODO: Convert Time into seconds (game time into real time)
+	public int calcAverageClimbTime(){
+		int sum = 0;
+		int total = teamPerformances.size();
+		
+		for (TeamPerformance performances : teamPerformances.values()) {
+			if(performances.climb != -1){
+				sum += performances.climb;
+			}
+		}
+		return sum / (total > 0 ? total : 1);
+	}
 
+	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
+
+		ArrayList<Integer> data = new ArrayList<Integer>(times.size());
+
+		Collections.sort(times);
+		
+		if(times.size() > 1){
+			for (int i = 0; i < times.size() - 1; i++) {
+	
+				int lowest = Math.abs(data.get(i + 1) - data.get(i));
+	
+				for (int j = 0; j < times.size(); j++) {
+					int diff = Math.abs(times.get(i) - times.get(j));
+					if (diff <= lowest && i != j) {
+						lowest = diff;
+					}
+				}
+	
+				data.add(lowest);
+			}
+		}else if(times.size() == 1){
+			data.add(times.get(0));
+		}
+		return data;
+	}
+	
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
 		ArrayList<Integer> data = performance.cubesOnSwitchAuto;
 		switch (scenario) {

@@ -2,6 +2,7 @@ package scoutingapp.commons.team;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.table.TableModel;
 
@@ -63,50 +64,54 @@ public class TeamPerformance implements Serializable{
 		rawSwitchTable = teamPerformanceWindow.tblSwitch.getModel();
 
 		for (int i = 0; i < rawSwitchTable.getRowCount(); i++) {
-
-			if (((boolean) rawSwitchTable.getValueAt(i, 0)) == false) {
-				if (((boolean) rawSwitchTable.getValueAt(i, 1)) == false) {
-					cubesOnAllianceSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
+			//if(rawSwitchTable.getValueAt(i, 2) != null){
+				if (((boolean) rawSwitchTable.getValueAt(i, 0)) == false) {
+					if (((boolean) rawSwitchTable.getValueAt(i, 1)) == false) {
+						cubesOnAllianceSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
+					} else {
+						cubesOnOpponentSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
+					}
+	
 				} else {
-					cubesOnOpponentSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
+	
+					cubesOnSwitchAuto.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
+	
 				}
-
-			} else {
-
-				cubesOnSwitchAuto.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
-
-			}
+			//}
 		}
 
 		rawScaleTable = teamPerformanceWindow.tblScale.getModel();
 
-		for (
-
-		int i = 0; i < rawScaleTable.getRowCount(); i++) {
-
-			if (((boolean) rawScaleTable.getValueAt(i, 0)) == false) {
-				cubesOnScaleTeleop.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 2)));
-			} else {
-				cubesOnScaleAuto.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 2)));
-			}
+		for (int i = 0; i < rawScaleTable.getRowCount(); i++) {
+			//if(rawScaleTable.getValueAt(i, 1)  != null){
+				if (((boolean) rawScaleTable.getValueAt(i, 0)) == false) {
+						cubesOnScaleTeleop.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 1)));
+				} else {
+						cubesOnScaleAuto.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 1)));
+				}
+			//}
 		}
 
 		rawVaultTable = teamPerformanceWindow.tblVault.getModel();
 
 		for (int i = 0; i < rawVaultTable.getRowCount(); i++) {
-
-			if (((boolean) rawVaultTable.getValueAt(i, 0)) == false) {
-				cubesInVaultTeleop.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
-			} else {
-				cubesInVaultAuto.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
-			}
-
+			//if(rawVaultTable.getValueAt(i, 1) != null){
+				if (((boolean) rawVaultTable.getValueAt(i, 0)) == false) {
+					cubesInVaultTeleop.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
+				} else {
+					cubesInVaultAuto.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
+				}
+			//}
 		}
 
-		climb = timeInSeconds(teamPerformanceWindow.txtClimb.getText());
+		if(!teamPerformanceWindow.txtClimb.getText().trim().equals("")){
+			climb = timeInSeconds(teamPerformanceWindow.txtClimb.getText());
+		}
+		
 		crossedBaseLine = teamPerformanceWindow.chkBaseline.isSelected();
 
 		// adjust times
+		
 		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop);
 		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop);
 		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop);
@@ -134,26 +139,27 @@ public class TeamPerformance implements Serializable{
 
 	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
 
-		ArrayList<Integer> data = new ArrayList<Integer>();
+		ArrayList<Integer> data = new ArrayList<Integer>(times.size());
+
+		Collections.sort(times);
 		
-		for (int q = 0; q < times.size(); q++) {
-			data.add(times.get(q));
-		}
-
-		for (int i = 0; i < times.size(); i++) {
-
-			int lowest = Integer.MAX_VALUE;
-
-			for (int j = 0; j < times.size(); j++) {
-				int diff = Math.abs(times.get(i) - times.get(j));
-				if (diff <= lowest && i != j) {
-					lowest = diff;
+		if(times.size() > 1){
+			for (int i = 0; i < times.size() - 1; i++) {
+	
+				int lowest = Math.abs(data.get(i + 1) - data.get(i));
+	
+				for (int j = 0; j < times.size(); j++) {
+					int diff = Math.abs(times.get(i) - times.get(j));
+					if (diff <= lowest && i != j) {
+						lowest = diff;
+					}
 				}
+	
+				data.add(lowest);
 			}
-
-			data.add(lowest);
+		}else if(times.size() == 1){
+			data.add(times.get(0));
 		}
-
 		return data;
 	}
 
