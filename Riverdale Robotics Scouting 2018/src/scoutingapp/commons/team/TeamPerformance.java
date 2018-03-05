@@ -34,6 +34,8 @@ public class TeamPerformance implements Serializable{
 	public int climb;
 
 	public boolean crossedBaseLine;
+	
+	public String comments;
 
 	private ArrayList<Integer> allTimes = new ArrayList<Integer>();
 	
@@ -58,7 +60,7 @@ public class TeamPerformance implements Serializable{
 
 		climb = -1;
 		crossedBaseLine = false;
-
+		comments = "";
 	}
 
 	private void parsePerformanceWindow(TeamPerformanceWindow teamPerformanceWindow) {
@@ -106,11 +108,13 @@ public class TeamPerformance implements Serializable{
 			//}
 		}
 
-		if(!teamPerformanceWindow.txtClimb.getText().trim().equals("")){
+		if(!teamPerformanceWindow.txtClimb.getText().trim().equals(null)){
 			climb = timeInSeconds(teamPerformanceWindow.txtClimb.getText());
 		}
 		
 		crossedBaseLine = teamPerformanceWindow.chkBaseline.isSelected();
+		
+		comments = teamPerformanceWindow.txtComments.getText();
 
 		// adjust times
 		allTimes.clear();
@@ -163,6 +167,7 @@ public class TeamPerformance implements Serializable{
 					data.add(max - times.get(i));
 					break;
 				}
+				
 				int lowest = Integer.MAX_VALUE;
 	
 				for (int j = 0; j < allTimes.size(); j++) {

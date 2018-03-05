@@ -21,6 +21,8 @@ import scoutingapp.commons.team.Team;
 import scoutingapp.commons.team.TeamPerformance;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TeamDetail extends JFrame {
 	/**
@@ -33,6 +35,11 @@ public class TeamDetail extends JFrame {
 	private Team currentTeam;
 	
 	public TeamDetail(int team) {
+		initInterface(team);
+		createMatchTable();
+	}
+	
+	private void initInterface(int team) {
 		currentTeam = ScoutingApp.regionalCollection().getTeam(team);
 		setResizable(false);
 
@@ -65,19 +72,9 @@ public class TeamDetail extends JFrame {
 		getContentPane().add(scrollPane);
 
 		tblMatches = new JTable();
-		tblMatches.setEnabled(false);
-		
-		Object[][] arrayValues = new Object[currentTeam.teamPerformances.size()][3];
-		
-		int x = 0;
-		for (Integer i : currentTeam.teamPerformances.keySet()){
-			arrayValues[x][0] = i;
-			arrayValues[x][1] = "performance details";
-			arrayValues[x][2] = "comments";
-			x++;
-		}
+		tblMatches.setEnabled(false);		
 		tblMatches.setModel(new DefaultTableModel(
-			new Object[][] {arrayValues},
+			new Object[][] {{ null, null, null},},
 			new String[] {
 				"Match Number", "Performance", "Comments"
 			}
@@ -183,6 +180,57 @@ public class TeamDetail extends JFrame {
 				});
 			}
 		});
+		
+		mntmExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+			}
+		});
+		
+	}
 
+	public void createMatchTable(){
+		Object[][] arrayValues = new Object[currentTeam.teamPerformances.size()][3];
+		
+		int x = 0;
+		for(Integer matchID : currentTeam.teamPerformances.keySet()){
+			arrayValues[x][0] = matchID;
+			x++;
+		}
+		
+		x = 0;
+		for (TeamPerformance performances : currentTeam.teamPerformances.values()){
+			String performance = "";
+			for(int j = 0; j <= 6; j++){
+				String ability = "";
+				switch (j) {
+					case 0:	ability = "cubes on Switch in Auto: ";
+					case 1:	ability = "cubes on Scale in Auto: ";
+					case 2:	ability = "cubes on Vault in Auto: ";
+					case 3:	ability = "cubes on Scale in Teleop: ";
+					case 4:	ability = "cubes in Vault Teleop: ";
+					case 5:	ability = "cubes on Alliance's Switch Teleop: ";
+					case 6:	ability = "cubes on Opponent's Switch Teleop: ";
+				}
+				/*TODO: FIX FORMATTING*/
+				performance += ability + Integer.toString(performances.getData(j).size()) + "\n";
+			}
+			arrayValues[x][1] = performance;
+			arrayValues[x][2] = performances.comments;
+			x++;
+		}
+		
+		DefaultTableModel tableModel = new DefaultTableModel(arrayValues,
+				new String[] { "Match Number", "Performance", "Comments"}) {
+			private static final long serialVersionUID = -6261637160294735163L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+
+		};
+		
+		tblMatches.setModel(tableModel);
 	}
 }

@@ -42,6 +42,7 @@ public class TeamPerformanceWindow extends JFrame {
 	private JTextField txtForce;
 	private JTextField txtBoost;
 	public JCheckBox chkBaseline;
+	public JTextField txtComments;
 
 	private int teamNumber, matchID;
 	public JTextField txtClimb;
@@ -280,7 +281,7 @@ public class TeamPerformanceWindow extends JFrame {
 		this.matchID = matchID;
 
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 627, 393);
+		setBounds(100, 100, 627, 495);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -289,9 +290,35 @@ public class TeamPerformanceWindow extends JFrame {
 		menuBar.add(mnView);
 
 		JMenuItem mntmTeams = new JMenuItem("Teams");
+		mntmTeams.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							ScoutingApp.showTeamHub();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
 		mnView.add(mntmTeams);
 
 		JMenuItem mntmMatches = new JMenuItem("Matches");
+		mntmMatches.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							ScoutingApp.showMatchHub();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
 		mnView.add(mntmMatches);
 		
 
@@ -466,6 +493,16 @@ public class TeamPerformanceWindow extends JFrame {
 		JButton btnDeleteVault = new JButton("Del");
 		btnDeleteVault.setBounds(517, 142, 57, 22);
 		contentPane.add(btnDeleteVault);
+		
+		txtComments = new JTextField();
+		txtComments.setBounds(10, 358, 591, 66);
+		contentPane.add(txtComments);
+		txtComments.setColumns(10);
+		
+		JLabel lblComments = new JLabel("Comments");
+		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblComments.setBounds(10, 333, 95, 24);
+		contentPane.add(lblComments);
 		
 		btnAddSwitch.addMouseListener(new MouseAdapter() {
 			@Override

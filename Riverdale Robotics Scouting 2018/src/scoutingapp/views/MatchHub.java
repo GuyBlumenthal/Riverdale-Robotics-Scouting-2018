@@ -204,6 +204,12 @@ public class MatchHub extends JFrame {
 		mnEdit.add(mntmRemoveMatch);
 
 		JMenuItem mntmRefreshMatchTable = new JMenuItem("Refresh Match Table");
+		mntmRefreshMatchTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				updateMatchTable();
+			}
+		});
 		mnEdit.add(mntmRefreshMatchTable);
 
 		JMenu mnView = new JMenu("View");
@@ -228,6 +234,7 @@ public class MatchHub extends JFrame {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(22, 22, 673, 388);
 		contentPane.add(scrollPane);
+		
 	}
 
 	void createMatchTable() {

@@ -19,6 +19,7 @@ public class Match implements Serializable {
 	int[] blueTeams;
 	int[] redTeams;
 
+	
 	public Match(int matchID, int[] blueTeams, int[] redTeams) {
 
 		this.blueTeams = blueTeams;

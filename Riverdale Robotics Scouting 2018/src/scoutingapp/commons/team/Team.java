@@ -137,7 +137,15 @@ public class Team implements Serializable {
 	}
 
 	public double calcTeleopNumCubesOnSwitchAverage() {
-		return (calcAverage(5) + calcAverage(6));
+		if(calcAverage(5) > 0 && calcAverage(6) > 0){
+			return (calcAverage(5) + calcAverage(6))/2;
+		}else if(calcAverage(5) > 0 && calcAverage(6) <= 0){
+			return calcAverage(5);
+		}else if(calcAverage(5) <= 0 && calcAverage(6) > 0){
+			return calcAverage(6);
+		}else{
+			return 0;
+		}
 	}
 
 	public double calcTeleopNumCubesOnSwitchConsistency() {
@@ -145,10 +153,12 @@ public class Team implements Serializable {
 		int numAboveAverage = 0;
 		int total = teamPerformances.size();
 
-		for (TeamPerformance performance : teamPerformances.values()) {
-			if (performance.cubesOnAllianceSwitchTeleop.size() >= average
-					|| performance.cubesOnOpponentSwitchTeleop.size() >= average) {
-				numAboveAverage++;
+		if(average > 0){
+			for (TeamPerformance performance : teamPerformances.values()) {
+				if (performance.cubesOnAllianceSwitchTeleop.size() >= average
+						|| performance.cubesOnOpponentSwitchTeleop.size() >= average) {
+					numAboveAverage++;
+				}
 			}
 		}
 
@@ -208,7 +218,15 @@ public class Team implements Serializable {
 	}
 
 	public int calcAverageSwitchTimeTeleop() {
-		return (calcAverageTime(5) + calcAverageTime(6));
+		if(calcAverageTime(5) > 0 && calcAverageTime(6) > 0){
+			return (calcAverageTime(5) + calcAverageTime(6))/2;
+		}else if(calcAverageTime(5) > 0 && calcAverageTime(6) <= 0){
+			return calcAverageTime(5);
+		}else if(calcAverageTime(5) <= 0 && calcAverageTime(6) > 0){
+			return calcAverageTime(6);
+		}else{
+			return 0;
+		}
 	}
 
 	public int calcAverageClimbTime(){
