@@ -15,15 +15,15 @@ public class TeamPerformance implements Serializable{
 	 */
 	private static final long serialVersionUID = 386764827887862297L;
 	// teleop
-	public ArrayList<Integer> cubesOnAllianceSwitchTeleop;
-	public ArrayList<Integer> cubesOnOpponentSwitchTeleop;
-	public ArrayList<Integer> cubesOnScaleTeleop;
-	public ArrayList<Integer> cubesInVaultTeleop;
+	public ArrayList<Integer> cubesOnAllianceSwitchTeleop = new ArrayList<Integer>();
+	public ArrayList<Integer> cubesOnOpponentSwitchTeleop = new ArrayList<Integer>();
+	public ArrayList<Integer> cubesOnScaleTeleop = new ArrayList<Integer>();
+	public ArrayList<Integer> cubesInVaultTeleop = new ArrayList<Integer>();
 
 	// auto
-	public ArrayList<Integer> cubesOnSwitchAuto;
-	public ArrayList<Integer> cubesOnScaleAuto;
-	public ArrayList<Integer> cubesInVaultAuto;
+	public ArrayList<Integer> cubesOnSwitchAuto = new ArrayList<Integer>();
+	public ArrayList<Integer> cubesOnScaleAuto = new ArrayList<Integer>();
+	public ArrayList<Integer> cubesInVaultAuto = new ArrayList<Integer>();
 
 	// Tables
 

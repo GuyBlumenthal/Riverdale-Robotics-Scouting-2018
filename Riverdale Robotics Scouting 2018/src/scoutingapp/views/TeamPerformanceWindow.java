@@ -59,6 +59,9 @@ public class TeamPerformanceWindow extends JFrame {
 			ScoutingApp.regionalCollection().addTeamPerformance(teamNumber, matchID, this);
 
 			JOptionPane.showMessageDialog(null, "Saved Changes.");
+			
+			ScoutingApp.updateMatchOverview();
+			
 		} catch (NumberFormatException e) {
 
 			System.out.println(e);
@@ -83,6 +86,8 @@ public class TeamPerformanceWindow extends JFrame {
 			ScoutingApp.regionalCollection().addTeamPerformance(teamNumber, matchID, this);
 
 			JOptionPane.showMessageDialog(null, "Saved Changes.");
+			
+			ScoutingApp.updateMatchOverview();
 
 		} catch (NumberFormatException e) {
 

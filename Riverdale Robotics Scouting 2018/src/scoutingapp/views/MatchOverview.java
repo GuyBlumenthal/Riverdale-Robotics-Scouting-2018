@@ -15,6 +15,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -22,6 +24,10 @@ import javax.swing.border.TitledBorder;
 import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.Match;
 import scoutingapp.commons.ScoutingApp;
+import scoutingapp.commons.team.Team;
+
+import javax.swing.JTextArea;
+import javax.swing.JScrollBar;
 
 @SuppressWarnings("serial")
 public class MatchOverview extends JFrame {
@@ -29,43 +35,49 @@ public class MatchOverview extends JFrame {
 	private JPanel contentPane;
 
 	private int matchID;
-	
-	JLabel blueBoost = new JLabel("0:00"), redBoost = new JLabel("0:00"), forceBlue = new JLabel("0:00"), redForce = new JLabel("0:00");
+
+	JLabel blueBoost = new JLabel("0:00"), redBoost = new JLabel("0:00"), forceBlue = new JLabel("0:00"),
+			redForce = new JLabel("0:00");
 	JCheckBox blueLev = new JCheckBox("Levitated"), redLev = new JCheckBox();
-	
+
 	MatchOverview me = this;
+	private JTextArea txtaBlueSummary;
+	private JTextArea txtaRedSummary;
 
 	/**
 	 * Create the frame.
 	 */
-	
+
 	public void updatePowers() {
 		Match k = ScoutingApp.regionalCollection().getMatch(matchID);
-		
-		blueBoost.setText((k.getBluePowerups()[0] == -1) ? "0:00" : ScoutingApp.regionalCollection().secondsToStandard(k.getBluePowerups()[0]));
-		forceBlue.setText((k.getBluePowerups()[1] == -1) ? "0:00" : ScoutingApp.regionalCollection().secondsToStandard(k.getBluePowerups()[1]));
+
+		blueBoost.setText((k.getBluePowerups()[0] == -1) ? "0:00"
+				: ScoutingApp.regionalCollection().secondsToStandard(k.getBluePowerups()[0]));
+		forceBlue.setText((k.getBluePowerups()[1] == -1) ? "0:00"
+				: ScoutingApp.regionalCollection().secondsToStandard(k.getBluePowerups()[1]));
 		blueLev.setSelected(k.getBluePowerups()[2] == 1);
-		
-		redBoost.setText((k.getRedPowerups()[0] == -1) ? "0:00" : ScoutingApp.regionalCollection().secondsToStandard(k.getRedPowerups()[0]));
-		redForce.setText((k.getRedPowerups()[1] == -1) ? "0:00" : ScoutingApp.regionalCollection().secondsToStandard(k.getRedPowerups()[1]));
+
+		redBoost.setText((k.getRedPowerups()[0] == -1) ? "0:00"
+				: ScoutingApp.regionalCollection().secondsToStandard(k.getRedPowerups()[0]));
+		redForce.setText((k.getRedPowerups()[1] == -1) ? "0:00"
+				: ScoutingApp.regionalCollection().secondsToStandard(k.getRedPowerups()[1]));
 		redLev.setSelected(k.getRedPowerups()[2] == 1);
-		
+
 	}
-	
+
 	public MatchOverview(int matchID) {
 		addWindowListener(new WindowAdapter() {
-		    @Override
+			@Override
 			public void windowClosing(WindowEvent e) {
-		    	ScoutingApp.unshowMatch(matchID);
+				ScoutingApp.unshowMatch(matchID);
 			}
 		});
 
 		this.matchID = matchID;
-		
+
 		updatePowers();
 
 		setResizable(false);
-		
 
 		setBounds(100, 100, 666, 420);
 
@@ -89,10 +101,9 @@ public class MatchOverview extends JFrame {
 		mntmSetPowerUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-			
 				SetPowerUps spu = new SetPowerUps(matchID, me);
 				spu.setVisible(true);
-				
+
 			}
 		});
 		mnEdit.add(mntmSetPowerUp);
@@ -131,7 +142,8 @@ public class MatchOverview extends JFrame {
 		JButton btnRedMatchTeam1 = new JButton("Details");
 		btnRedMatchTeam1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[0].getTeamNumber());
+				ScoutingApp
+						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[0].getTeamNumber());
 			}
 		});
 		btnRedMatchTeam1.setBounds(100, 165, 68, 23);
@@ -140,7 +152,8 @@ public class MatchOverview extends JFrame {
 		JButton btnRedMatchTeam2 = new JButton("Details");
 		btnRedMatchTeam2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[1].getTeamNumber());
+				ScoutingApp
+						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[1].getTeamNumber());
 			}
 		});
 		btnRedMatchTeam2.setBounds(100, 211, 68, 23);
@@ -149,7 +162,8 @@ public class MatchOverview extends JFrame {
 		JButton btnRedMatchTeam3 = new JButton("Details");
 		btnRedMatchTeam3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[2].getTeamNumber());
+				ScoutingApp
+						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[2].getTeamNumber());
 			}
 		});
 		btnRedMatchTeam3.setBounds(100, 257, 68, 23);
@@ -182,24 +196,28 @@ public class MatchOverview extends JFrame {
 		btnRedTeamDetail3.setBounds(178, 257, 130, 23);
 		panel_1.add(btnRedTeamDetail3);
 		redLev.setEnabled(false);
-		
+
 		redLev.setText("Levitated");
 		redLev.setBounds(215, 115, 97, 23);
 		panel_1.add(redLev);
-		
+
 		redForce.setBounds(163, 119, 46, 14);
 		panel_1.add(redForce);
 
 		JLabel label_1 = new JLabel("Force:");
 		label_1.setBounds(119, 119, 46, 14);
 		panel_1.add(label_1);
-		
+
 		redBoost.setBounds(50, 119, 46, 14);
 		panel_1.add(redBoost);
 
 		JLabel label_5 = new JLabel("Boost:");
 		label_5.setBounds(10, 119, 46, 14);
 		panel_1.add(label_5);
+
+		txtaRedSummary = new JTextArea();
+		txtaRedSummary.setBounds(10, 21, 298, 87);
+		panel_1.add(txtaRedSummary);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Blue Alliance", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -225,7 +243,8 @@ public class MatchOverview extends JFrame {
 		JButton btnBlueMatchTeam1 = new JButton("Details");
 		btnBlueMatchTeam1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[0].getTeamNumber());
+				ScoutingApp
+						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[0].getTeamNumber());
 			}
 		});
 		btnBlueMatchTeam1.setBounds(97, 163, 68, 23);
@@ -234,7 +253,8 @@ public class MatchOverview extends JFrame {
 		JButton btnBlueMatchTeam2 = new JButton("Details");
 		btnBlueMatchTeam2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[1].getTeamNumber());
+				ScoutingApp
+						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[1].getTeamNumber());
 			}
 		});
 		btnBlueMatchTeam2.setBounds(97, 217, 68, 23);
@@ -243,7 +263,8 @@ public class MatchOverview extends JFrame {
 		JButton btnBlueMatchTeam3 = new JButton("Details");
 		btnBlueMatchTeam3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScoutingApp.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[2].getTeamNumber());
+				ScoutingApp
+						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[2].getTeamNumber());
 			}
 		});
 		btnBlueMatchTeam3.setBounds(97, 266, 68, 23);
@@ -283,16 +304,118 @@ public class MatchOverview extends JFrame {
 		JLabel blueForceTitle = new JLabel("Force:");
 		blueForceTitle.setBounds(119, 119, 46, 14);
 		panel.add(blueForceTitle);
-		
+
 		blueBoost.setBounds(50, 119, 46, 14);
 		panel.add(blueBoost);
-		
+
 		forceBlue.setBounds(163, 119, 46, 14);
 		panel.add(forceBlue);
 		blueLev.setEnabled(false);
 
 		blueLev.setBounds(215, 115, 83, 23);
 		panel.add(blueLev);
+
+		txtaBlueSummary = new JTextArea();
+		txtaBlueSummary.setText((String) null);
+		txtaBlueSummary.setBounds(10, 21, 298, 87);
+		panel.add(txtaBlueSummary);
+
+	}
+
+	public void updateMatchOverview() {
+
+		txtaRedSummary
+				.setText(generateAllianceHighlight(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()));
+		txtaBlueSummary
+				.setText(generateAllianceHighlight(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()));
+
+	}
+
+	public String generateAllianceHighlight(Team[] k) {
+
+		int[] allianceTeams = new int[k.length];
+
+		int A_switch = 0;
+		int A_scale = 0;
+		int A_vault = 0;
+
+		int T_allianceSwitchCubes = 0;
+		int T_opponentSwitchCubes = 0;
+		int T_scaleCubes = 0;
+		int T_vault = 0;
+
+		int climbs = 0;
+
+		for (int i = 0; i < k.length; i++) {
+			allianceTeams[i] = k[i].getTeamNumber();
+		}
+
+		for (int i = 0; i < allianceTeams.length; i++) {
+
+			if (ScoutingApp.regionalCollection().getTeam(allianceTeams[i]).hasTeamPerformance(matchID)) {
+
+				A_switch += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
+						.getTeamPerformance(matchID).cubesOnSwitchAuto.size();
+
+				A_scale += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
+						.getTeamPerformance(matchID).cubesOnScaleAuto.size();
+
+				A_vault += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
+						.getTeamPerformance(matchID).cubesInVaultAuto.size();
+
+				T_allianceSwitchCubes += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
+						.getTeamPerformance(matchID).cubesOnAllianceSwitchTeleop.size();
+
+				T_opponentSwitchCubes += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
+						.getTeamPerformance(matchID).cubesOnOpponentSwitchTeleop.size();
+
+				T_scaleCubes += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
+						.getTeamPerformance(matchID).cubesOnScaleTeleop.size();
+
+				T_vault += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
+						.getTeamPerformance(matchID).cubesInVaultTeleop.size();
+
+			}
+
+		}
+
+		StringBuilder highlight = new StringBuilder();
+
+		highlight.append("Cubes on Switch in Auto: ");
+		highlight.append(A_switch);
+
+		highlight.append("\n");
+
+		highlight.append("Cubes on Scale in Auto: ");
+		highlight.append(A_scale);
+
+		highlight.append("\n");
+
+		highlight.append("Cubes on Vault in Auto: ");
+		highlight.append(A_vault);
+
+		highlight.append("\n");
+
+		highlight.append("Cubes on Alliance Switch in Tele-Op: ");
+		highlight.append(T_allianceSwitchCubes);
+
+		highlight.append("\n");
+
+		highlight.append("Cubes on Opponnent Switch in Tele-Op: ");
+		highlight.append(T_opponentSwitchCubes);
+
+		highlight.append("\n");
+
+		highlight.append("Cubes on Scale in Tele-Op: ");
+		highlight.append(T_opponentSwitchCubes);
+
+		highlight.append("\n");
+
+		highlight.append("Cubes on Opponnent Switch in Tele-Op: ");
+		highlight.append(T_opponentSwitchCubes);
+
+		return highlight.toString();
+
 	}
 
 	public void openTeamDetail(int team, boolean isRed) {

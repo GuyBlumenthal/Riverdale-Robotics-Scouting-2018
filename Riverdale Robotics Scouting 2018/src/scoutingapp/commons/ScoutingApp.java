@@ -15,6 +15,7 @@ import scoutingapp.views.MatchHub;
 import scoutingapp.views.MatchOverview;
 import scoutingapp.views.TeamDetail;
 import scoutingapp.views.TeamHub;
+import scoutingapp.views.TeamPerformanceWindow;
 import scoutingapp.views.fileIO.CollectionName;
 import scoutingapp.views.fileIO.SaveConfirm;
 import scoutingapp.views.fileIO.ViewDirectories;
@@ -234,6 +235,16 @@ public class ScoutingApp {
 
 	}
 
+	public static void updateMatchOverview() {
+
+		for (MatchOverview matchOverview : matchesShown.values()) {
+
+			matchOverview.updateMatchOverview();
+
+		}
+
+	}
+
 	public static void setCollectionName(String name) {
 
 		regionalCollection.fileName = name;
@@ -287,7 +298,8 @@ public class ScoutingApp {
 	}
 
 	/**
-	 * <h1><b>Danger</b></h1> <b>Warning!</b> - might erase saved data if called!
+	 * <h1><b>Danger</b></h1> <b>Warning!</b> - might erase saved data if
+	 * called!
 	 */
 	public static void setSaved() {
 		saved = true;
@@ -350,7 +362,7 @@ public class ScoutingApp {
 		} else {
 
 			try {
-				
+
 				ViewDirectories frame = new ViewDirectories();
 				frame.setVisible(true);
 
