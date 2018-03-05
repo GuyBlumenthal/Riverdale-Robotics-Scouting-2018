@@ -191,7 +191,7 @@ public class TeamDetail extends JFrame {
 	}
 
 	public void createMatchTable(){
-		Object[][] arrayValues = new Object[currentTeam.teamPerformances.size()][3];
+		Object[][] arrayValues = new Object[currentTeam.teamPerformances.size()][2];
 		
 		int x = 0;
 		for(Integer matchID : currentTeam.teamPerformances.keySet()){
@@ -201,23 +201,7 @@ public class TeamDetail extends JFrame {
 		
 		x = 0;
 		for (TeamPerformance performances : currentTeam.teamPerformances.values()){
-			String performance = "";
-			for(int j = 0; j <= 6; j++){
-				String ability = "";
-				switch (j) {
-					case 0:	ability = "cubes on Switch in Auto: ";
-					case 1:	ability = "cubes on Scale in Auto: ";
-					case 2:	ability = "cubes on Vault in Auto: ";
-					case 3:	ability = "cubes on Scale in Teleop: ";
-					case 4:	ability = "cubes in Vault Teleop: ";
-					case 5:	ability = "cubes on Alliance's Switch Teleop: ";
-					case 6:	ability = "cubes on Opponent's Switch Teleop: ";
-				}
-				/*TODO: FIX FORMATTING*/
-				performance += ability + Integer.toString(performances.getData(j).size()) + "\n";
-			}
-			arrayValues[x][1] = performance;
-			arrayValues[x][2] = performances.comments;
+			arrayValues[x][1] = performances.comments;
 			x++;
 		}
 		

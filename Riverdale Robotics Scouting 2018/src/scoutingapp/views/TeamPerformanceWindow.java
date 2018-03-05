@@ -58,10 +58,10 @@ public class TeamPerformanceWindow extends JFrame {
 				ScoutingApp.regionalCollection().createTeam(teamNumber);
 			}
 			ScoutingApp.regionalCollection().addTeamPerformance(teamNumber, matchID, this);
-			
+
 			JOptionPane.showMessageDialog(null, "Saved Changes.");
 		} catch (NumberFormatException e) {
-			
+
 			System.out.println(e);
 
 			JOptionPane.showMessageDialog(null, "Please fill in the match detail page properly.",
@@ -72,7 +72,7 @@ public class TeamPerformanceWindow extends JFrame {
 		}
 
 	}
-	
+
 	public void replaceData() {
 
 		try {
@@ -82,7 +82,7 @@ public class TeamPerformanceWindow extends JFrame {
 			}
 			ScoutingApp.regionalCollection().removeTeamPerformance(teamNumber, matchID);
 			ScoutingApp.regionalCollection().addTeamPerformance(teamNumber, matchID, this);
-			
+
 			JOptionPane.showMessageDialog(null, "Saved Changes.");
 
 		} catch (NumberFormatException e) {
@@ -95,9 +95,9 @@ public class TeamPerformanceWindow extends JFrame {
 		}
 
 	}
-	
+
 	public String secondsToStandard(int time) {
-		return Math.floorDiv(time, 60) + ":" + time%60;
+		return Math.floorDiv(time, 60) + ":" + time % 60;
 	}
 
 	/**
@@ -138,12 +138,12 @@ public class TeamPerformanceWindow extends JFrame {
 
 		lblTeam.setBounds(134, 42, 95, 24);
 		contentPane.add(lblTeam);
-		
+
 		if (editable) {
 			JButton btnSaveData = new JButton("Save Data");
 			btnSaveData.setBounds(250, 44, 110, 23);
 			contentPane.add(btnSaveData);
-			
+
 			btnSaveData.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -218,36 +218,37 @@ public class TeamPerformanceWindow extends JFrame {
 		tblScale.setModel(teamPerformance.rawScaleTable);
 		tblScale.setEnabled(editable);
 		scrollPaneScale.setViewportView(tblScale);
-		
+
 		if (!editable) {
-		
+
 			JMenu mnEdit = new JMenu("Edit");
 			menuBar.add(mnEdit);
-			
+
 			if (!editable) {
-			
-			JMenuItem mntmEditPerformanceWindow = new JMenuItem("Edit Performance Window");
-			mntmEditPerformanceWindow.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							try {
-								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-								TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID, teamPerformance, true);
-								frame.setVisible(true);
-								me.dispose();
-							} catch (Exception e) {
-								e.printStackTrace();
+
+				JMenuItem mntmEditPerformanceWindow = new JMenuItem("Edit Performance Window");
+				mntmEditPerformanceWindow.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+									TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID,
+											teamPerformance, true);
+									frame.setVisible(true);
+									me.dispose();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							}
-						}
-					});
-				}
-			});
-		
-			mnEdit.add(mntmEditPerformanceWindow);
-			
+						});
+					}
+				});
+
+				mnEdit.add(mntmEditPerformanceWindow);
+
 			}
-		
+
 		}
 
 		JScrollPane scrollPaneVault = new JScrollPane();
@@ -268,6 +269,14 @@ public class TeamPerformanceWindow extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(231, 140, 147, 147);
 		contentPane.add(scrollPane);
+
+		JLabel lblComments = new JLabel("Comments");
+		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblComments.setBounds(10, 333, 95, 24);
+		lblComments.setText(teamPerformance.comments);
+		lblComments.setEnabled(editable);
+		contentPane.add(lblComments);
+
 	}
 
 	/**
@@ -320,7 +329,6 @@ public class TeamPerformanceWindow extends JFrame {
 			}
 		});
 		mnView.add(mntmMatches);
-		
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -371,17 +379,10 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneSwitch);
 
 		tblSwitch = new JTable(data, columns);
-		DefaultTableModel mdlSwitch = new DefaultTableModel(
-			new Object[][] {
-				{Boolean.FALSE, Boolean.FALSE, ""},
-			},
-			new String[] {
-				"Auto", "Offense", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, Boolean.class, String.class
-			};
+		DefaultTableModel mdlSwitch = new DefaultTableModel(new Object[][] { { Boolean.FALSE, Boolean.FALSE, "" }, },
+				new String[] { "Auto", "Offense", "Time" }) {
+			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, String.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -404,17 +405,10 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneScale);
 
 		tblScale = new JTable();
-		DefaultTableModel mdlScale = new DefaultTableModel(
-			new Object[][] {
-				{Boolean.FALSE, ""},
-			},
-			new String[] {
-				"In Auto", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, String.class
-			};
+		DefaultTableModel mdlScale = new DefaultTableModel(new Object[][] { { Boolean.FALSE, "" }, },
+				new String[] { "In Auto", "Time" }) {
+			Class[] columnTypes = new Class[] { Boolean.class, String.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -427,17 +421,10 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneVault);
 
 		tblVault = new JTable();
-		DefaultTableModel mdlVault = new DefaultTableModel(
-			new Object[][] {
-				{Boolean.FALSE, null},
-			},
-			new String[] {
-				"In Auto", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, Object.class
-			};
+		DefaultTableModel mdlVault = new DefaultTableModel(new Object[][] { { Boolean.FALSE, null }, },
+				new String[] { "In Auto", "Time" }) {
+			Class[] columnTypes = new Class[] { Boolean.class, Object.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -469,76 +456,76 @@ public class TeamPerformanceWindow extends JFrame {
 		JLabel lblStartClimbTime = new JLabel("Start Climb Time");
 		lblStartClimbTime.setBounds(343, 88, 82, 14);
 		contentPane.add(lblStartClimbTime);
-		
+
 		JButton btnAddSwitch = new JButton("Add");
 		btnAddSwitch.setBounds(86, 142, 57, 22);
 		contentPane.add(btnAddSwitch);
-		
+
 		JButton btnAddScale = new JButton("Add");
 		btnAddScale.setBounds(287, 142, 57, 22);
 		contentPane.add(btnAddScale);
-		
+
 		JButton btnAddVault = new JButton("Add");
 		btnAddVault.setBounds(446, 142, 57, 22);
 		contentPane.add(btnAddVault);
-		
+
 		JButton btnDeleteSwitch = new JButton("Del");
 		btnDeleteSwitch.setBounds(152, 142, 57, 22);
 		contentPane.add(btnDeleteSwitch);
-		
+
 		JButton btnDeleteScale = new JButton("Del");
 		btnDeleteScale.setBounds(354, 142, 57, 22);
 		contentPane.add(btnDeleteScale);
-		
+
 		JButton btnDeleteVault = new JButton("Del");
 		btnDeleteVault.setBounds(517, 142, 57, 22);
 		contentPane.add(btnDeleteVault);
-		
+
 		txtComments = new JTextField();
 		txtComments.setBounds(10, 358, 591, 66);
 		contentPane.add(txtComments);
 		txtComments.setColumns(10);
-		
+
 		JLabel lblComments = new JLabel("Comments");
 		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblComments.setBounds(10, 333, 95, 24);
 		contentPane.add(lblComments);
-		
+
 		btnAddSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mdlSwitch.addRow(new Object[] {false, false, ""});
+				mdlSwitch.addRow(new Object[] { false, false, "" });
 			}
 		});
-		
+
 		btnAddScale.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mdlScale.addRow(new Object[] {false, ""});
+				mdlScale.addRow(new Object[] { false, "" });
 			}
 		});
-		
+
 		btnAddVault.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mdlVault.addRow(new Object[] {false, ""});
+				mdlVault.addRow(new Object[] { false, "" });
 			}
 		});
-		
+
 		btnDeleteSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				mdlSwitch.removeRow(tblSwitch.getSelectedRow());
 			}
 		});
-		
+
 		btnDeleteScale.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				mdlScale.removeRow(tblScale.getSelectedRow());
 			}
 		});
-		
+
 		btnDeleteVault.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
