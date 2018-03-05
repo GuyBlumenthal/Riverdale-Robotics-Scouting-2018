@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JRadioButton;
+import javax.swing.JComboBox;
 
 public class SetPowerUps extends JDialog {
 
@@ -29,12 +31,27 @@ public class SetPowerUps extends JDialog {
 	
 	MatchOverview parent;
 	SetPowerUps me = this;
+	
+	JComboBox<Integer> cmbBlueBoost = new JComboBox<Integer>();
+	JComboBox<Integer> cmbBlueForce = new JComboBox<Integer>();
+	
+	JComboBox<Integer> cmbBoostRed = new JComboBox<Integer>();
+	JComboBox<Integer> cmbRedForce = new JComboBox<Integer>();
 
 	/**
 	 * Create the dialog.
 	 */
 	
 	public SetPowerUps(int matchID, MatchOverview parent) {
+		setResizable(false);
+		
+		for (int i = 1; i < 4; i++) {
+			cmbBlueBoost.addItem(i);
+			cmbBlueForce.addItem(i);
+			
+			cmbBoostRed.addItem(i);
+			cmbRedForce.addItem(i);
+		}
 		
 		this.parent = parent;
 		this.matchID = matchID;
@@ -70,7 +87,7 @@ public class SetPowerUps extends JDialog {
 		txtForceBlue.setColumns(10);
 		
 		JCheckBox chckbxLevitatedBlue = new JCheckBox("Levitated");
-		chckbxLevitatedBlue.setBounds(87, 154, 97, 23);
+		chckbxLevitatedBlue.setBounds(87, 176, 97, 23);
 		pnlBlue.add(chckbxLevitatedBlue);
 		
 		JPanel pnlRed = new JPanel();
@@ -98,7 +115,7 @@ public class SetPowerUps extends JDialog {
 		txtForceRed.setColumns(10);
 		
 		JCheckBox chckbxLevitatedRed = new JCheckBox("Levitated");
-		chckbxLevitatedRed.setBounds(83, 151, 97, 23);
+		chckbxLevitatedRed.setBounds(83, 176, 97, 23);
 		pnlRed.add(chckbxLevitatedRed);
 		
 		int[] bluePowers = ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups();
@@ -108,10 +125,38 @@ public class SetPowerUps extends JDialog {
 		txtBoostBlue.setText((bluePowers[0] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(bluePowers[0]));
 		txtForceBlue.setText((bluePowers[1] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(bluePowers[1]));
 		chckbxLevitatedBlue.setSelected(bluePowers[2] == 1);
+		
+		cmbBlueBoost.setBounds(87, 56, 46, 20);
+		pnlBlue.add(cmbBlueBoost);
+		
+		cmbBlueForce.setBounds(87, 132, 46, 20);
+		pnlBlue.add(cmbBlueForce);
+		
+		JLabel lblCubes = new JLabel("Cubes:");
+		lblCubes.setBounds(10, 59, 46, 14);
+		pnlBlue.add(lblCubes);
+		
+		JLabel label = new JLabel("Cubes:");
+		label.setBounds(10, 135, 46, 14);
+		pnlBlue.add(label);
 			
 		txtBoostRed.setText((redPowers[0] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(redPowers[0]));
 		txtForceRed.setText((redPowers[1] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(redPowers[1]));
 		chckbxLevitatedRed.setSelected(redPowers[2] == 1);
+		
+		cmbBoostRed.setBounds(83, 54, 46, 20);
+		pnlRed.add(cmbBoostRed);
+		
+		cmbRedForce.setBounds(83, 130, 46, 20);
+		pnlRed.add(cmbRedForce);
+		
+		JLabel label_1 = new JLabel("Cubes:");
+		label_1.setBounds(10, 57, 46, 14);
+		pnlRed.add(label_1);
+		
+		JLabel label_2 = new JLabel("Cubes:");
+		label_2.setBounds(10, 133, 46, 14);
+		pnlRed.add(label_2);
 		
 		{
 			JPanel buttonPane = new JPanel();
