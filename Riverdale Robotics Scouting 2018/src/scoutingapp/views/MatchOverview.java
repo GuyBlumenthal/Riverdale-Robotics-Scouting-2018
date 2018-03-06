@@ -15,8 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -25,9 +24,6 @@ import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.Match;
 import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
-
-import javax.swing.JTextArea;
-import javax.swing.JScrollBar;
 
 @SuppressWarnings("serial")
 public class MatchOverview extends JFrame {

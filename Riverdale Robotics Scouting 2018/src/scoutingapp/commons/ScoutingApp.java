@@ -267,11 +267,13 @@ public class ScoutingApp {
 
 			try {
 
-				new File("collections").mkdirs();
+				File folder = new File("collections");
+
+				folder.mkdirs();
 
 				SaveFile save = new SaveFile();
 
-				save.saveFile(regionalCollection, "collections/" + regionalCollection.fileName, FILE_EXTENSION);
+				save.saveFile(regionalCollection, folder.getName() + "/" + regionalCollection.fileName, FILE_EXTENSION);
 
 				saved = true;
 
