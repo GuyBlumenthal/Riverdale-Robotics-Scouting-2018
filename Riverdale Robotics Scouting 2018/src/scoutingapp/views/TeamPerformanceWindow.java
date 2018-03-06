@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -41,13 +42,14 @@ public class TeamPerformanceWindow extends JFrame {
 	private JTextField txtForce;
 	private JTextField txtBoost;
 	public JCheckBox chkBaseline;
-	public JTextField txtComments;
+	public JTextArea txtaComments;
 
 	private int teamNumber, matchID;
 	public JTextField txtClimb;
 
 	TeamPerformance teamPerformance;
 	TeamPerformanceWindow me = this;
+	private JTextField textField;
 
 	public void saveData() {
 
@@ -59,9 +61,13 @@ public class TeamPerformanceWindow extends JFrame {
 			ScoutingApp.regionalCollection().addTeamPerformance(teamNumber, matchID, this);
 
 			JOptionPane.showMessageDialog(null, "Saved Changes.");
-			
+
 			ScoutingApp.updateMatchOverview();
-			
+
+			dispose();
+
+			ScoutingApp.setUnsaved();
+
 		} catch (NumberFormatException e) {
 
 			System.out.println(e);
@@ -86,8 +92,12 @@ public class TeamPerformanceWindow extends JFrame {
 			ScoutingApp.regionalCollection().addTeamPerformance(teamNumber, matchID, this);
 
 			JOptionPane.showMessageDialog(null, "Saved Changes.");
-			
+
 			ScoutingApp.updateMatchOverview();
+
+			dispose();
+
+			ScoutingApp.setUnsaved();
 
 		} catch (NumberFormatException e) {
 
@@ -275,11 +285,29 @@ public class TeamPerformanceWindow extends JFrame {
 		scrollPane.setBounds(231, 140, 147, 147);
 		contentPane.add(scrollPane);
 
+		JLabel lblScouterName = new JLabel("Scouter Name:");
+		lblScouterName.setBounds(450, 17, 77, 14);
+
+		lblScouterName.setEnabled(editable);
+		contentPane.add(lblScouterName);
+
 		JLabel lblComments = new JLabel("Comments");
 		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblComments.setBounds(10, 333, 95, 24);
 		lblComments.setText(teamPerformance.comments);
 		lblComments.setEnabled(editable);
+		contentPane.add(lblComments);
+
+		txtaComments = new JTextArea();
+		txtaComments.setBounds(10, 358, 591, 66);
+		txtaComments.setText(teamPerformance.comments);
+		txtaComments.setEnabled(editable);
+		txtaComments.setColumns(10);
+		contentPane.add(txtaComments);
+
+		lblComments = new JLabel("Comments");
+		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblComments.setBounds(10, 333, 95, 24);
 		contentPane.add(lblComments);
 
 	}
@@ -487,15 +515,24 @@ public class TeamPerformanceWindow extends JFrame {
 		btnDeleteVault.setBounds(517, 142, 57, 22);
 		contentPane.add(btnDeleteVault);
 
-		txtComments = new JTextField();
-		txtComments.setBounds(10, 358, 591, 66);
-		contentPane.add(txtComments);
-		txtComments.setColumns(10);
+		txtaComments = new JTextArea();
+		txtaComments.setBounds(10, 358, 591, 66);
+		contentPane.add(txtaComments);
+		txtaComments.setColumns(10);
 
 		JLabel lblComments = new JLabel("Comments");
 		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblComments.setBounds(10, 333, 95, 24);
 		contentPane.add(lblComments);
+
+		textField = new JTextField();
+		textField.setBounds(525, 14, 86, 20);
+		contentPane.add(textField);
+		textField.setColumns(10);
+
+		JLabel lblScouterName = new JLabel("Scouter Name:");
+		lblScouterName.setBounds(450, 17, 77, 14);
+		contentPane.add(lblScouterName);
 
 		btnAddSwitch.addMouseListener(new MouseAdapter() {
 			@Override

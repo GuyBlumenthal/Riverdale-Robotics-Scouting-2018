@@ -307,6 +307,10 @@ public class ScoutingApp {
 		saved = true;
 	}
 
+	public static void setUnsaved() {
+
+	}
+
 	public static void newCollection() {
 
 		if (saved == false) {

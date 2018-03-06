@@ -36,7 +36,8 @@ public class TeamPerformance implements Serializable{
 	public boolean crossedBaseLine;
 	
 	public String comments;
-
+	public String scouterName;
+	
 	private ArrayList<Integer> allTimes = new ArrayList<Integer>();
 	
 	public TeamPerformance(TeamPerformanceWindow teamPerformanceWindow) {
@@ -114,7 +115,7 @@ public class TeamPerformance implements Serializable{
 		
 		crossedBaseLine = teamPerformanceWindow.chkBaseline.isSelected();
 		
-		comments = teamPerformanceWindow.txtComments.getText();
+		comments = teamPerformanceWindow.txtaComments.getText();
 
 		// adjust times
 		allTimes.clear();
