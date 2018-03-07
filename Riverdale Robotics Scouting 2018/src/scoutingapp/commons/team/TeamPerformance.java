@@ -159,8 +159,7 @@ public class TeamPerformance implements Serializable{
 			
 		if(times.size() > 1){
 			for (int i = 0; i < times.size() - 1; i++) {
-				
-				data.add(allTimes.indexOf(times.get(i + 1)));
+				data.add(allTimes.get(allTimes.indexOf(times.get(i + 1))) - allTimes.get(allTimes.indexOf(times.get(i))));
 			}
 			
 		}else if(times.size() == 1){

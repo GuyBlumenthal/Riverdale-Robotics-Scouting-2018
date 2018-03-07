@@ -97,7 +97,6 @@ public class Team implements Serializable {
 
 		for (TeamPerformance performance : teamPerformances.values()) {
 			ArrayList<Integer> data = getData(scenario, performance);
-
 			sum += data.size();
 		}
 		return sum / (total > 0 ? total : 1);
@@ -137,15 +136,7 @@ public class Team implements Serializable {
 	}
 
 	public double calcTeleopNumCubesOnSwitchAverage() {
-		if(calcAverage(5) > 0 && calcAverage(6) > 0){
-			return (calcAverage(5) + calcAverage(6))/2;
-		}else if(calcAverage(5) > 0 && calcAverage(6) <= 0){
-			return calcAverage(5);
-		}else if(calcAverage(5) <= 0 && calcAverage(6) > 0){
-			return calcAverage(6);
-		}else{
-			return 0;
-		}
+		return (calcAverage(5) + calcAverage(6))/2;
 	}
 
 	public double calcTeleopNumCubesOnSwitchConsistency() {
@@ -218,15 +209,7 @@ public class Team implements Serializable {
 	}
 
 	public int calcAverageSwitchTimeTeleop() {
-		if(calcAverageTime(5) > 0 && calcAverageTime(6) > 0){
-			return (calcAverageTime(5) + calcAverageTime(6))/2;
-		}else if(calcAverageTime(5) > 0 && calcAverageTime(6) <= 0){
-			return calcAverageTime(5);
-		}else if(calcAverageTime(5) <= 0 && calcAverageTime(6) > 0){
-			return calcAverageTime(6);
-		}else{
-			return 0;
-		}
+		return (calcAverageTime(5) + calcAverageTime(6))/2;
 	}
 
 	public int calcAverageClimbTime(){
