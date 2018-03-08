@@ -330,7 +330,14 @@ public class ScoutingApp {
 		}
 
 	}
-
+	
+	public static void setPowerUps (int matchID, int[] redPowerUps, int[] bluePowerUps) {
+		
+		regionalCollection().setPowerUps(matchID, redPowerUps, true);
+		regionalCollection().setPowerUps(matchID, bluePowerUps, false);
+		
+	}
+	
 	public static void openCollection(String fileName) {
 
 		if (saved == false) {

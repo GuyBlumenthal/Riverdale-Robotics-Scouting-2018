@@ -29,9 +29,6 @@ public class SetPowerUps extends JDialog {
 	private JTextField txtBoostRed;
 	private JTextField txtForceRed;
 	
-	MatchOverview parent;
-	SetPowerUps me = this;
-	
 	JComboBox<Integer> cmbBlueBoost = new JComboBox<Integer>();
 	JComboBox<Integer> cmbBlueForce = new JComboBox<Integer>();
 	
@@ -42,8 +39,10 @@ public class SetPowerUps extends JDialog {
 	 * Create the dialog.
 	 */
 	
-	public SetPowerUps(int matchID, MatchOverview parent) {
+	public SetPowerUps(int matchID) {
+		
 		setResizable(false);
+		setModal(true);
 		
 		for (int i = 1; i < 4; i++) {
 			cmbBlueBoost.addItem(i);
@@ -52,9 +51,6 @@ public class SetPowerUps extends JDialog {
 			cmbBoostRed.addItem(i);
 			cmbRedForce.addItem(i);
 		}
-		
-		this.parent = parent;
-		this.matchID = matchID;
 		
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -171,11 +167,10 @@ public class SetPowerUps extends JDialog {
 						int[] bluePowerups = {(txtBoostBlue.getText().equals("")) ? -1 : ScoutingApp.regionalCollection().standardToSeconds(txtBoostBlue.getText()), (txtForceBlue.getText().equals("")) ? -1 : ScoutingApp.regionalCollection().standardToSeconds(txtForceBlue.getText()),
 								(chckbxLevitatedBlue.isSelected() ? 1 : 0)};
 						
-						ScoutingApp.regionalCollection().setPowerUps(matchID, redPowerups, true);
-						ScoutingApp.regionalCollection().setPowerUps(matchID, bluePowerups, false);
+						ScoutingApp.setPowerUps(matchID, redPowerups, bluePowerups);
 						
-						parent.updatePowers();
-						me.dispose();
+						dispose();
+						
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -186,7 +181,7 @@ public class SetPowerUps extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						me.dispose();
+						dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
