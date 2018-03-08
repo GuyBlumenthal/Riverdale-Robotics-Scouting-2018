@@ -103,6 +103,9 @@ public class MatchOverview extends JFrame {
 			}
 		});
 		mnEdit.add(mntmSetPowerUp);
+		
+		JMenuItem mntmSetMatchPoints = new JMenuItem("Set Match Points");
+		mnEdit.add(mntmSetMatchPoints);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
