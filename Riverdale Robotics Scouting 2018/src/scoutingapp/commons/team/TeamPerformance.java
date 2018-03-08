@@ -123,19 +123,19 @@ public class TeamPerformance implements Serializable{
 			allTimes.addAll(getData(i));
 		}
 		Collections.sort(allTimes);
-		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop, false);
-		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop, false);
-		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop, false);
-		cubesInVaultTeleop = calcCycleTime(cubesInVaultTeleop, false);
+		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop);
+		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop);
+		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop);
+		cubesInVaultTeleop = calcCycleTime(cubesInVaultTeleop);
 
 		allTimes.clear();
 		for(int i = 0; i <= 3; i++){
 			allTimes.addAll(getData(i));
 		}
 		Collections.sort(allTimes);
-		cubesOnSwitchAuto = calcCycleTime(cubesOnSwitchAuto, true);
-		cubesOnScaleAuto = calcCycleTime(cubesOnScaleAuto, true);
-		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto, true);
+		cubesOnSwitchAuto = calcCycleTime(cubesOnSwitchAuto);
+		cubesOnScaleAuto = calcCycleTime(cubesOnScaleAuto);
+		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto);
 	}
 
 	public TeamPerformanceWindow createWindow(int teamNumber, int matchID, boolean editable) {
@@ -153,32 +153,13 @@ public class TeamPerformance implements Serializable{
 
 	}
 
-	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times, boolean isAuto) {
+	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
 
-		ArrayList<Integer> data = new ArrayList<Integer>(times.size());
-		
-		Collections.sort(times);
-		int max;
-		if(isAuto){ max = 15; }else{ max = 135;}	
+		ArrayList<Integer> data = new ArrayList<Integer>(times.size());	
 			
 		if(times.size() > 1){
-			for (int i = 0; i < times.size(); i++) {
-	
-				if(times.get(i) == allTimes.get(allTimes.size() - 1)){
-					data.add(max - times.get(i));
-					break;
-				}
-				
-				int lowest = Integer.MAX_VALUE;
-	
-				for (int j = 0; j < allTimes.size(); j++) {
-					int diff = Math.abs(times.get(i) - allTimes.get(j));
-					if (diff < lowest && times.get(i) != allTimes.get(j)) {
-						lowest = diff;
-					}
-				}
-				
-				data.add(lowest);
+			for (int i = 0; i < times.size() - 1; i++) {
+				data.add(allTimes.get(allTimes.indexOf(times.get(i + 1))) - allTimes.get(allTimes.indexOf(times.get(i))));
 			}
 			
 		}else if(times.size() == 1){

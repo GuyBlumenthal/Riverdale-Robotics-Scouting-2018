@@ -215,6 +215,7 @@ public class MatchOverview extends JFrame {
 		panel_1.add(label_5);
 
 		txtaRedSummary = new JTextArea();
+		txtaRedSummary.setEditable(false);
 		txtaRedSummary.setBounds(10, 21, 298, 87);
 		panel_1.add(txtaRedSummary);
 
@@ -315,6 +316,7 @@ public class MatchOverview extends JFrame {
 		panel.add(blueLev);
 
 		txtaBlueSummary = new JTextArea();
+		txtaBlueSummary.setEditable(false);
 		txtaBlueSummary.setText((String) null);
 		txtaBlueSummary.setBounds(10, 21, 298, 87);
 		panel.add(txtaBlueSummary);
