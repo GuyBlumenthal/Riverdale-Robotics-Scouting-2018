@@ -42,6 +42,7 @@ public class TeamPerformanceWindow extends JFrame {
 	private JTextField txtForce;
 	private JTextField txtBoost;
 	public JCheckBox chkBaseline;
+	public JCheckBox chkParked;
 	public JTextArea txtaComments;
 
 	private int teamNumber, matchID;
@@ -309,6 +310,80 @@ public class TeamPerformanceWindow extends JFrame {
 		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblComments.setBounds(10, 333, 95, 24);
 		contentPane.add(lblComments);
+		
+		chkParked = new JCheckBox("Parked");
+		chkParked.setBounds(436, 84, 97, 23);
+		contentPane.add(chkParked);
+		
+		JButton btnAddSwitch = new JButton("Add");
+		btnAddSwitch.setBounds(86, 142, 57, 22);
+		contentPane.add(btnAddSwitch);
+
+		JButton btnAddScale = new JButton("Add");
+		btnAddScale.setBounds(287, 142, 57, 22);
+		contentPane.add(btnAddScale);
+
+		JButton btnAddVault = new JButton("Add");
+		btnAddVault.setBounds(446, 142, 57, 22);
+		contentPane.add(btnAddVault);
+
+		JButton btnDeleteSwitch = new JButton("Del");
+		btnDeleteSwitch.setBounds(152, 142, 57, 22);
+		contentPane.add(btnDeleteSwitch);
+
+		JButton btnDeleteScale = new JButton("Del");
+		btnDeleteScale.setBounds(354, 142, 57, 22);
+		contentPane.add(btnDeleteScale);
+
+		JButton btnDeleteVault = new JButton("Del");
+		btnDeleteVault.setBounds(517, 142, 57, 22);
+		contentPane.add(btnDeleteVault);
+		
+		DefaultTableModel mdlSwitch = (DefaultTableModel) tblSwitch.getModel();
+		DefaultTableModel mdlScale = (DefaultTableModel) tblScale.getModel();
+		DefaultTableModel mdlVault = (DefaultTableModel) tblVault.getModel();
+		
+		btnAddSwitch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlSwitch.addRow(new Object[] { false, false, "" });
+			}
+		});
+
+		btnAddScale.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlScale.addRow(new Object[] { false, "" });
+			}
+		});
+
+		btnAddVault.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlVault.addRow(new Object[] { false, "" });
+			}
+		});
+
+		btnDeleteSwitch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlSwitch.removeRow(tblSwitch.getSelectedRow());
+			}
+		});
+
+		btnDeleteScale.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlScale.removeRow(tblScale.getSelectedRow());
+			}
+		});
+
+		btnDeleteVault.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mdlVault.removeRow(tblVault.getSelectedRow());
+			}
+		});
 
 	}
 
@@ -390,7 +465,7 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(separator);
 
 		chkBaseline = new JCheckBox("(Auto) Crossed Baseline");
-		chkBaseline.setBounds(138, 84, 154, 23);
+		chkBaseline.setBounds(97, 84, 154, 23);
 		contentPane.add(chkBaseline);
 
 		JSeparator separator_1 = new JSeparator();
@@ -483,12 +558,12 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(btnSaveData);
 
 		txtClimb = new JTextField();
-		txtClimb.setBounds(435, 85, 68, 20);
+		txtClimb.setBounds(349, 87, 68, 20);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
 
 		JLabel lblStartClimbTime = new JLabel("Start Climb Time");
-		lblStartClimbTime.setBounds(343, 88, 82, 14);
+		lblStartClimbTime.setBounds(257, 90, 82, 14);
 		contentPane.add(lblStartClimbTime);
 
 		JButton btnAddSwitch = new JButton("Add");
@@ -533,6 +608,10 @@ public class TeamPerformanceWindow extends JFrame {
 		JLabel lblScouterName = new JLabel("Scouter Name:");
 		lblScouterName.setBounds(450, 17, 77, 14);
 		contentPane.add(lblScouterName);
+		
+		chkParked = new JCheckBox("Parked");
+		chkParked.setBounds(436, 84, 97, 23);
+		contentPane.add(chkParked);
 
 		btnAddSwitch.addMouseListener(new MouseAdapter() {
 			@Override

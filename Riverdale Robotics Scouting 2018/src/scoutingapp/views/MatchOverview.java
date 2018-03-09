@@ -97,7 +97,7 @@ public class MatchOverview extends JFrame {
 		mntmSetPowerUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				SetPowerUps spu = new SetPowerUps(matchID, me);
+				SetPowerUps spu = new SetPowerUps(matchID);
 				spu.setVisible(true);
 
 			}

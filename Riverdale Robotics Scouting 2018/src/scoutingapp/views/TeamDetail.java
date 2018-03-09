@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -19,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import scoutingapp.commons.ScoutingApp;
 import scoutingapp.commons.team.Team;
 import scoutingapp.commons.team.TeamPerformance;
+import scoutingapp.views.creation.CreateTeam;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -67,21 +70,39 @@ public class TeamDetail extends JFrame {
 		lblTeamNumber.setBounds(47, 11, 346, 51);
 		getContentPane().add(lblTeamNumber);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(47, 73, 903, 176);
-		getContentPane().add(scrollPane);
+		JScrollPane scrollPaneMatches = new JScrollPane();
+		scrollPaneMatches.setBounds(47, 73, 903, 176);
+		getContentPane().add(scrollPaneMatches);
 
 		tblMatches = new JTable();
+		tblMatches.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							TeamPerformanceWindow teamPerformance = new TeamPerformanceWindow(currentTeam.getTeamNumber(), 
+									(Integer)tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
+							teamPerformance.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+							teamPerformance.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
 		tblMatches.setEnabled(false);		
 		tblMatches.setModel(new DefaultTableModel(
-			new Object[][] {{ null, null, null},},
+			new Object[][] {{ null, null},},
 			new String[] {
-				"Match Number", "Performance", "Comments"
+				"Match Number", "Comments"
 			}
 		));
 
 		tblMatches.getTableHeader().setReorderingAllowed(false);
-		scrollPane.setViewportView(tblMatches);
+		scrollPaneMatches.setViewportView(tblMatches);
 
 		JLabel lblOverview = new JLabel("Overview");
 		lblOverview.setHorizontalAlignment(SwingConstants.CENTER);
@@ -89,9 +110,9 @@ public class TeamDetail extends JFrame {
 		lblOverview.setBounds(10, 313, 140, 31);
 		getContentPane().add(lblOverview);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(47, 353, 903, 110);
-		getContentPane().add(scrollPane_1);
+		JScrollPane scrollPaneOverview = new JScrollPane();
+		scrollPaneOverview.setBounds(47, 353, 903, 125);
+		getContentPane().add(scrollPaneOverview);
 
 		tblOverview = new JTable();
 		tblOverview.setEnabled(false);
@@ -124,16 +145,21 @@ public class TeamDetail extends JFrame {
 						null },
 
 				{ "Climb", null, null, null, 	
-						currentTeam.calcBooleanAverage(false),
-						currentTeam.calcBooleanConsistency(false),
-						currentTeam.calcAverageClimbTime()} },
+						currentTeam.calcClimbAverage(),
+						currentTeam.calcClimbConsistency(),
+						currentTeam.calcAverageClimbTime() },
+				
+				{ "Parking", currentTeam.calcBooleanAverage(false),
+							 currentTeam.calcBooleanConsistency(false),
+							 null, null, null, null }
+				},
 				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Auto Average Time",
 						"Teleop Average", "Teleop Consistency", "Teleop Average Time" }));
 
 		
 		tblOverview.getTableHeader().setReorderingAllowed(false);
 		
-		scrollPane_1.setViewportView(tblOverview);
+		scrollPaneOverview.setViewportView(tblOverview);
 		tblOverview.getTableHeader().setReorderingAllowed(false);
 		
 		for (TeamPerformance performance : currentTeam.teamPerformances.values()) {

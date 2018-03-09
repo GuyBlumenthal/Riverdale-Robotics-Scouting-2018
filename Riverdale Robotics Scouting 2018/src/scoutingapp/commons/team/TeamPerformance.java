@@ -32,8 +32,8 @@ public class TeamPerformance implements Serializable{
 	public TableModel rawVaultTable;
 
 	public int climb;
-
 	public boolean crossedBaseLine;
+	public boolean parked;
 	
 	public String comments;
 	public String scouterName;
@@ -61,6 +61,7 @@ public class TeamPerformance implements Serializable{
 
 		climb = -1;
 		crossedBaseLine = false;
+		parked = false;
 		comments = "";
 	}
 
@@ -116,6 +117,8 @@ public class TeamPerformance implements Serializable{
 		crossedBaseLine = teamPerformanceWindow.chkBaseline.isSelected();
 		
 		comments = teamPerformanceWindow.txtaComments.getText();
+		
+		parked = teamPerformanceWindow.chkParked.isSelected();
 
 		// adjust times
 		allTimes.clear();

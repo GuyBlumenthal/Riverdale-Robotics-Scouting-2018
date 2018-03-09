@@ -132,11 +132,17 @@ public class Team implements Serializable {
 	}
 
 	public double calcAutoCubesAverage() {
+		     if	(calcAverage(0) > 0 && calcAverage(1) <= 0)	{	return calcAverage(0);	}
+		else if	(calcAverage(0) <= 0 && calcAverage(1) > 0)	{	return calcAverage(1); 	}
+		
 		return (calcAverage(0) + calcAverage(1)) / 2;
 	}
 
 	public double calcTeleopNumCubesOnSwitchAverage() {
-		return (calcAverage(5) + calcAverage(6))/2;
+		if	(calcAverage(5) > 0 && calcAverage(6) <= 0)	{	return calcAverage(5);	}
+		else if	(calcAverage(5) <= 0 && calcAverage(6) > 0)	{	return calcAverage(6); 	}
+		
+		return (calcAverage(5) + calcAverage(6)) / 2;
 	}
 
 	public double calcTeleopNumCubesOnSwitchConsistency() {
@@ -159,7 +165,7 @@ public class Team implements Serializable {
 	/**
 	 * @param scenario
 	 *            set to <code>true</code> for baseline and <code>false</code> for
-	 *            climb
+	 *            parked
 	 */
 	public double calcBooleanAverage(boolean scenario) {
 		return calcSum(scenario) * 1.0 / (teamPerformances.size() > 0 ? teamPerformances.size() : 1);
@@ -168,7 +174,7 @@ public class Team implements Serializable {
 	/**
 	 * @param scenario
 	 *            set to <code>true</code> for baseline and <code>false</code> for
-	 *            climb
+	 *            parked
 	 */
 	public double calcBooleanConsistency(boolean scenario) {
 		return calcBooleanAverage(scenario) * 100;
@@ -177,13 +183,13 @@ public class Team implements Serializable {
 	/**
 	 * @param scenario
 	 *            set to <code>true</code> for baseline and <code>false</code> for
-	 *            climb
+	 *            parked
 	 */
 	public int calcSum(boolean scenario) {
 		int sum = 0;
 
 		for (TeamPerformance performances : teamPerformances.values()) {
-			if (!scenario && performances.climb > -1) {
+			if (!scenario && performances.parked) {
 				sum++;
 			} else if (performances.crossedBaseLine) {
 				sum++;
@@ -209,9 +215,27 @@ public class Team implements Serializable {
 	}
 
 	public int calcAverageSwitchTimeTeleop() {
-		return (calcAverageTime(5) + calcAverageTime(6))/2;
+		if	(calcAverageTime(5) > 0 && calcAverageTime(6) <= 0)	{	return calcAverageTime(5);	}
+		else if	(calcAverageTime(5) <= 0 && calcAverageTime(6) > 0)	{	return calcAverageTime(6); 	}
+		
+		return (calcAverageTime(5) + calcAverageTime(6)) / 2;
 	}
 
+	public double calcClimbAverage(){
+		int sum = 0;
+		int total = teamPerformances.size();
+		
+		for (TeamPerformance performances : teamPerformances.values()) {
+			if(performances.climb != -1){
+				sum++;
+			}
+		}
+		
+		return sum / (total > 0 ? total : 1);
+	}
+	
+	public double calcClimbConsistency(){	return calcClimbAverage() * 100;	}
+	
 	public int calcAverageClimbTime(){
 		int sum = 0;
 		int total = teamPerformances.size();
