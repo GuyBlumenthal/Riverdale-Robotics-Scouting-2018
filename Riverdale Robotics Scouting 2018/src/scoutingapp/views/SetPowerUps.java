@@ -168,6 +168,7 @@ public class SetPowerUps extends JDialog {
 								(chckbxLevitatedBlue.isSelected() ? 1 : 0)};
 						
 						ScoutingApp.setPowerUps(matchID, redPowerups, bluePowerups);
+						ScoutingApp.updateMatchView(matchID);
 						
 						dispose();
 						

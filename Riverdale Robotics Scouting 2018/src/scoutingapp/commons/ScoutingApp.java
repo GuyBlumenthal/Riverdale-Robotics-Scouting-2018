@@ -161,6 +161,16 @@ public class ScoutingApp {
 
 	}
 
+	public static void updateMatchView (int matchID) {
+		
+		if (matchesShown.containsKey(matchID)) {
+
+			matchesShown.get(matchID).updateMatchOverview();
+
+		}
+		
+	}
+	
 	public static void unshowAllMatches() {
 
 		for (int i : matchesShown.keySet()) {
