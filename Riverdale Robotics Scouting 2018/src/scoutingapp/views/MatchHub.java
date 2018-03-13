@@ -150,6 +150,16 @@ public class MatchHub extends JFrame {
 			}
 		});
 		mnFile.add(mntmNew);
+		
+		JMenuItem mntmMerge = new JMenuItem("Merge");
+		mntmMerge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				ScoutingApp.mergeCollection();
+				
+			}
+		});
+		mnFile.add(mntmMerge);
 
 		JMenu mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);

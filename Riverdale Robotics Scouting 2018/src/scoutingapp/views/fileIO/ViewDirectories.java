@@ -27,7 +27,7 @@ public class ViewDirectories extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ViewDirectories() {
+	public ViewDirectories(DirectoryAction action) {
 		setBounds(100, 100, 285, 324);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
@@ -66,8 +66,12 @@ public class ViewDirectories extends JDialog {
 
 						} else {
 
-							ScoutingApp.openCollection((String) lstCollections.getSelectedValue());
-							dispose();
+							if (action == DirectoryAction.OPEN) {
+								ScoutingApp.openCollection((String) lstCollections.getSelectedValue());
+								dispose();
+							} else if (action == DirectoryAction.MERGE) {
+								ScoutingApp.mergeCollection((String) lstCollections.getSelectedValue());
+							}
 
 						}
 

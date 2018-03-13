@@ -236,15 +236,104 @@ public class RegionalCollection implements Serializable {
 
 	}
 
-	public void integrateCollection(RegionalCollection newCollection) throws ExistingException {
+	public void mergeCollection (RegionalCollection newCollection) throws ExistingException {
+		
+		for (Integer teamNumber : teams.keySet()) {
 
-		for (Integer matchID : matches.keySet()) {
-			
-			if (newCollection.matchExists(matchID)) {
-				throw new ExistingException(matchID, ExistingType.MATCH);
+			if (newCollection.matchExists(teamNumber)) {
+
+				throw new ExistingException(teamNumber, ExistingType.TEAM);
+
 			}
-			
+
 		}
 		
+		for (Integer matchID : matches.keySet()) {
+
+			if (newCollection.matchExists(matchID)) {
+
+				for (Team team : matches.get(matchID).getBlueTeams()) {
+
+					if (newCollection.hasTeamPerformance(matchID, team.getTeamNumber())) {
+
+						throw new ExistingException(matchID, ExistingType.TEAM_PERFORMANCE);
+
+					}
+
+				}
+
+				for (Team team : matches.get(matchID).getRedTeams()) {
+
+					if (newCollection.hasTeamPerformance(matchID, team.getTeamNumber())) {
+
+						throw new ExistingException(matchID, ExistingType.TEAM_PERFORMANCE);
+
+					}
+
+				}
+
+			}
+
+		}
+		
+		finalIntegrationOfCollection(newCollection);
+		
+	}
+	
+	private void finalIntegrationOfCollection (RegionalCollection newCollection) {
+		
+	}
+	
+	public String findDuplicates(RegionalCollection newCollection) {
+
+		StringBuilder duplicateTeams = new StringBuilder("Teams: " + "\n");
+
+		for (Integer teamNumber : teams.keySet()) {
+
+			if (newCollection.matchExists(teamNumber)) {
+
+				duplicateTeams.append("Team Number: " + teamNumber);
+				duplicateTeams.append("\n");
+
+			}
+
+		}
+
+		StringBuilder duplicateMatches = new StringBuilder("Matches: " + "\n");
+
+		for (Integer matchID : matches.keySet()) {
+
+			if (newCollection.matchExists(matchID)) {
+
+				for (Team team : matches.get(matchID).getBlueTeams()) {
+
+					if (newCollection.hasTeamPerformance(matchID, team.getTeamNumber())) {
+
+						duplicateMatches.append(
+								"Match " + matchID + " has duplicate performances for team " + team.getTeamNumber());
+						duplicateMatches.append("\n");
+
+					}
+
+				}
+
+				for (Team team : matches.get(matchID).getRedTeams()) {
+
+					if (newCollection.hasTeamPerformance(matchID, team.getTeamNumber())) {
+
+						duplicateMatches.append(
+								"Match " + matchID + " has duplicate performances for team " + team.getTeamNumber());
+						duplicateMatches.append("\n");
+
+					}
+
+				}
+
+			}
+
+		}
+
+		return duplicateTeams.toString() + "\n" + duplicateMatches.toString();
+
 	}
 }

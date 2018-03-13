@@ -29,7 +29,7 @@ public class SaveConfirm extends JDialog {
 	 *            collection
 	 * 
 	 */
-	public SaveConfirm(boolean open) {
+	public SaveConfirm(DirectoryAction action) {
 		setBounds(100, 100, 450, 105);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
@@ -52,10 +52,12 @@ public class SaveConfirm extends JDialog {
 
 						ScoutingApp.saveCollection();
 
-						if (open) {
+						if (action == DirectoryAction.OPEN) {
 							ScoutingApp.openCollection();
-						} else {
+						} else if (action == DirectoryAction.NEW) {
 							ScoutingApp.newCollection();
+						} else if (action == DirectoryAction.MERGE) {
+							ScoutingApp.mergeCollection();
 						}
 
 						dispose();
@@ -73,10 +75,12 @@ public class SaveConfirm extends JDialog {
 						ScoutingApp.setSaved();
 						dispose();
 
-						if (open) {
+						if (action == DirectoryAction.OPEN) {
 							ScoutingApp.openCollection();
-						} else {
+						} else if (action == DirectoryAction.NEW) {
 							ScoutingApp.newCollection();
+						} else if (action == DirectoryAction.MERGE) {
+							ScoutingApp.mergeCollection();
 						}
 
 					}

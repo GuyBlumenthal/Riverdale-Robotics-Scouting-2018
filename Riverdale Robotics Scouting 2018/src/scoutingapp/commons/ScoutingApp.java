@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import javax.swing.UIManager;
 
+import scoutingapp.commons.existing.ExistingException;
 import scoutingapp.commons.fileIO.ReadFile;
 import scoutingapp.commons.fileIO.SaveFile;
 import scoutingapp.commons.team.Team;
@@ -17,6 +18,7 @@ import scoutingapp.views.TeamDetail;
 import scoutingapp.views.TeamHub;
 import scoutingapp.views.TeamPerformanceWindow;
 import scoutingapp.views.fileIO.CollectionName;
+import scoutingapp.views.fileIO.DirectoryAction;
 import scoutingapp.views.fileIO.SaveConfirm;
 import scoutingapp.views.fileIO.ViewDirectories;
 
@@ -161,16 +163,16 @@ public class ScoutingApp {
 
 	}
 
-	public static void updateMatchView (int matchID) {
-		
+	public static void updateMatchView(int matchID) {
+
 		if (matchesShown.containsKey(matchID)) {
 
 			matchesShown.get(matchID).updateMatchOverview();
 
 		}
-		
+
 	}
-	
+
 	public static void unshowAllMatches() {
 
 		for (int i : matchesShown.keySet()) {
@@ -310,8 +312,7 @@ public class ScoutingApp {
 	}
 
 	/**
-	 * <h1><b>Danger</b></h1> <b>Warning!</b> - might erase saved data if
-	 * called!
+	 * <h1><b>Danger</b></h1> <b>Warning!</b> - might erase saved data if called!
 	 */
 	public static void setSaved() {
 		saved = true;
@@ -326,7 +327,7 @@ public class ScoutingApp {
 		if (saved == false) {
 
 			try {
-				SaveConfirm frame = new SaveConfirm(false);
+				SaveConfirm frame = new SaveConfirm(DirectoryAction.NEW);
 				frame.setVisible(true);
 
 			} catch (Exception e) {
@@ -340,20 +341,20 @@ public class ScoutingApp {
 		}
 
 	}
-	
-	public static void setPowerUps (int matchID, int[] redPowerUps, int[] bluePowerUps) {
-		
+
+	public static void setPowerUps(int matchID, int[] redPowerUps, int[] bluePowerUps) {
+
 		regionalCollection().setPowerUps(matchID, redPowerUps, true);
 		regionalCollection().setPowerUps(matchID, bluePowerUps, false);
-		
+
 	}
-	
+
 	public static void openCollection(String fileName) {
 
 		if (saved == false) {
 
 			try {
-				SaveConfirm frame = new SaveConfirm(true);
+				SaveConfirm frame = new SaveConfirm(DirectoryAction.OPEN);
 				frame.setVisible(true);
 
 			} catch (Exception e) {
@@ -375,7 +376,7 @@ public class ScoutingApp {
 		if (saved == false) {
 
 			try {
-				SaveConfirm frame = new SaveConfirm(true);
+				SaveConfirm frame = new SaveConfirm(DirectoryAction.OPEN);
 				frame.setVisible(true);
 
 			} catch (Exception e) {
@@ -386,13 +387,67 @@ public class ScoutingApp {
 
 			try {
 
-				ViewDirectories frame = new ViewDirectories();
+				ViewDirectories frame = new ViewDirectories(DirectoryAction.OPEN);
 				frame.setVisible(true);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
+		}
+
+	}
+
+	public static void mergeCollection() {
+
+		if (saved == false) {
+
+			try {
+				SaveConfirm frame = new SaveConfirm(DirectoryAction.MERGE);
+				frame.setVisible(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			try {
+
+				ViewDirectories frame = new ViewDirectories(DirectoryAction.MERGE);
+				frame.setVisible(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	public static void mergeCollection(String fileName) {
+
+		if (saved == false) {
+
+			try {
+				SaveConfirm frame = new SaveConfirm(DirectoryAction.MERGE);
+				frame.setVisible(true);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			ReadFile readFile = new ReadFile();
+			RegionalCollection newCollection = (RegionalCollection) readFile
+					.readFile("collections/" + fileName + "." + FILE_EXTENSION);
+
+			try {
+				regionalCollection().mergeCollection(newCollection);
+			} catch (ExistingException e) {
+				System.out.println(regionalCollection().findDuplicates(newCollection));
+			}
 		}
 
 	}
