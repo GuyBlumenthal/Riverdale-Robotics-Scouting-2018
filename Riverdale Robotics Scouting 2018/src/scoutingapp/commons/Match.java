@@ -38,6 +38,9 @@ public class Match implements Serializable {
 
 		this.redPowerUps = redPowerUps;
 		this.bluePowerUps = bluePowerUps;
+		
+		this.redScore = -1;
+		this.blueScore = -1;
 
 	}
 
@@ -70,6 +73,9 @@ public class Match implements Serializable {
 		this.bluePowerUps = bluePowerUps;
 		this.redPowerUps = redPowerUps;
 
+		this.redScore = -1;
+		this.blueScore = -1;
+		
 	}
 
 	public int getMatchID() {
@@ -82,6 +88,14 @@ public class Match implements Serializable {
 
 	public int[] getRedPowerups() {
 		return redPowerUps;
+	}
+	
+	public int getBlueScore () {
+		return this.blueScore;
+	}
+	
+	public int getRedScore () {
+		return this.redScore;
 	}
 
 	public Team[] getBlueTeams() {

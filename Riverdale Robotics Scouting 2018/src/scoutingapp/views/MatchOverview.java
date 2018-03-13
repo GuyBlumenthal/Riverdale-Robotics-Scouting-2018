@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
@@ -40,6 +41,8 @@ public class MatchOverview extends JFrame {
 	MatchOverview me = this;
 	private JTextArea txtaBlueSummary;
 	private JTextArea txtaRedSummary;
+	private JLabel lblRedScore;
+	private JLabel lblBlueScore;
 
 	/**
 	 * Create the frame.
@@ -107,6 +110,19 @@ public class MatchOverview extends JFrame {
 
 		JMenuItem mntmSetMatchPoints = new JMenuItem("Set Match Points");
 		mnEdit.add(mntmSetMatchPoints);
+
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+
+		JMenuItem mntmMissingInfo = new JMenuItem("Missing Info");
+		mntmMissingInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				JOptionPane.showMessageDialog(null, missingInfoInMatch(), "Missing Info", JOptionPane.OK_OPTION);
+
+			}
+		});
+		mnView.add(mntmMissingInfo);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -319,15 +335,25 @@ public class MatchOverview extends JFrame {
 		blueScrlPane.setViewportView(txtaBlueSummary);
 		txtaBlueSummary.setEditable(false);
 		txtaBlueSummary.setText((String) null);
-		
+
 		JScrollPane redScrlPane = new JScrollPane();
 		redScrlPane.setBounds(10, 21, 298, 87);
 		panel_1.add(redScrlPane);
-		
+
 		txtaRedSummary = new JTextArea();
 		redScrlPane.setViewportView(txtaRedSummary);
 		txtaRedSummary.setEditable(false);
 		txtaBlueSummary.setText((String) null);
+
+		lblBlueScore = new JLabel("Score:");
+		lblBlueScore.setBounds(133, 18, 46, 14);
+		contentPane.add(lblBlueScore);
+
+		lblRedScore = new JLabel("Score:");
+		lblRedScore.setBounds(470, 18, 46, 14);
+		contentPane.add(lblRedScore);
+
+		updateMatchOverview();
 
 	}
 
@@ -337,6 +363,18 @@ public class MatchOverview extends JFrame {
 				.setText(generateAllianceSummary(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()));
 		txtaBlueSummary
 				.setText(generateAllianceSummary(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()));
+
+		if (ScoutingApp.regionalCollection().getMatch(matchID).getBlueScore() != -1) {
+			lblBlueScore.setText("Score: " + ScoutingApp.regionalCollection().getMatch(matchID).getBlueScore());
+		} else {
+			lblBlueScore.setText("Score: 0");
+		}
+
+		if (ScoutingApp.regionalCollection().getMatch(matchID).getRedScore() != -1) {
+			lblRedScore.setText("Score: " + ScoutingApp.regionalCollection().getMatch(matchID).getRedScore());
+		} else {
+			lblRedScore.setText("Score: 0");
+		}
 
 		updatePowers();
 
@@ -379,7 +417,7 @@ public class MatchOverview extends JFrame {
 
 				T_opponentSwitchCubes += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
 						.getTeamPerformance(matchID).cubesOnOpponentSwitchTeleop.size();
-				
+
 				T_scaleCubes += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
 						.getTeamPerformance(matchID).cubesOnScaleTeleop.size();
 
@@ -425,6 +463,77 @@ public class MatchOverview extends JFrame {
 		highlight.append(T_vault);
 
 		return highlight.toString();
+
+	}
+
+	private String missingInfoInMatch() {
+
+		StringBuilder infoMissing = new StringBuilder("");
+
+		Team[] blueTeams = ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams();
+
+		for (int i = 0; i < 3; i++) {
+
+			if (blueTeams[i].hasTeamPerformance(matchID) == false) {
+
+				infoMissing.append("Team " + blueTeams[i].getTeamNumber() + " is missing a team performance");
+				infoMissing.append("\n");
+
+			}
+
+		}
+
+		Team[] redTeams = ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams();
+
+		for (int i = 0; i < 3; i++) {
+
+			if (redTeams[i].hasTeamPerformance(matchID) == false) {
+
+				infoMissing.append("Team " + redTeams[i].getTeamNumber() + " is missing a team performance");
+				infoMissing.append("\n");
+
+			}
+
+		}
+
+		int[] emptyPowerUps = new int[3];
+
+		for (int i = 0; i < 3; i++) {
+
+			if (ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups()[i] != -1) {
+				break;
+			}
+
+			if (i == 2) {
+				infoMissing.append("The blue power ups are missing");
+				infoMissing.append("\n");
+			}
+
+		}
+
+		for (int i = 0; i < 3; i++) {
+
+			if (ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerups()[i] != -1) {
+				break;
+			}
+
+			if (i == 2) {
+				infoMissing.append("The red power ups are missing");
+				infoMissing.append("\n");
+			}
+
+		}
+
+		if (ScoutingApp.regionalCollection().getMatch(matchID).getBlueScore() == -1) {
+			infoMissing.append("There is no score for the blue alliance!");
+			infoMissing.append("\n");
+		}
+
+		if (ScoutingApp.regionalCollection().getMatch(matchID).getRedScore() == -1) {
+			infoMissing.append("There is no score for the red alliance!");
+		}
+
+		return infoMissing.toString();
 
 	}
 
