@@ -495,9 +495,7 @@ public class MatchOverview extends JFrame {
 			}
 
 		}
-
-		int[] emptyPowerUps = new int[3];
-
+		
 		for (int i = 0; i < 3; i++) {
 
 			if (ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups()[i] != -1) {
