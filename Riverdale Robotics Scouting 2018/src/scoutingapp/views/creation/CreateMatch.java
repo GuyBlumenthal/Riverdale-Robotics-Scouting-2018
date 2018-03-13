@@ -18,8 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.ScoutingApp;
+import scoutingapp.commons.existing.ExistingException;
 import scoutingapp.commons.team.Team;
 
 public class CreateMatch {

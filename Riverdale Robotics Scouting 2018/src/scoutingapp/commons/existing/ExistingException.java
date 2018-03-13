@@ -1,4 +1,4 @@
-package scoutingapp.commons;
+package scoutingapp.commons.existing;
 
 public class ExistingException extends Exception {
 

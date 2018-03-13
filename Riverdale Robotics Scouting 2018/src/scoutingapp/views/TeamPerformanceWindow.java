@@ -27,8 +27,8 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.ScoutingApp;
+import scoutingapp.commons.existing.ExistingException;
 import scoutingapp.commons.team.TeamPerformance;
 
 @SuppressWarnings("serial")

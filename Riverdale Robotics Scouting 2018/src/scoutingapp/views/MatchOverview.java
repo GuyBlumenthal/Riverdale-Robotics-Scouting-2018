@@ -21,9 +21,9 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import scoutingapp.commons.ExistingException;
 import scoutingapp.commons.Match;
 import scoutingapp.commons.ScoutingApp;
+import scoutingapp.commons.existing.ExistingException;
 import scoutingapp.commons.team.Team;
 import javax.swing.JScrollPane;
 

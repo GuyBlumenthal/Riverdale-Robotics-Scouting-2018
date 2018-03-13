@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import scoutingapp.commons.existing.ExistingException;
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.TeamPerformanceWindow;
 
@@ -14,25 +15,25 @@ public class RegionalCollection implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -81214186242167416L;
-	
+
 	public String fileName;
-	
+
 	HashMap<Integer, Team> teams;
 	HashMap<Integer, Match> matches;
 
 	public RegionalCollection() {
-		
+
 		fileName = "";
 
 		teams = new HashMap<Integer, Team>();
 		matches = new HashMap<Integer, Match>();
 
 	}
-	
+
 	public String secondsToStandard(int time) {
 		return Math.floorDiv(time, 60) + ":" + ((time % 60 < 10) ? "0" + time % 60 : time % 60);
 	}
-	
+
 	public int standardToSeconds(String time) {
 		return Integer.parseInt(time.split(":")[0]) * 60 + Integer.parseInt(time.split(":")[1]);
 	}
@@ -117,15 +118,15 @@ public class RegionalCollection implements Serializable {
 		}
 
 	}
-	
+
 	public void setPowerUps(int matchID, int[] powerUps, boolean isRed) {
-		
+
 		if (isRed) {
 			getMatch(matchID).redPowerUps = powerUps;
 		} else {
 			getMatch(matchID).bluePowerUps = powerUps;
 		}
-		
+
 	}
 
 	public void removeTeamPerformance(int teamNumber, int matchID) {
@@ -183,7 +184,7 @@ public class RegionalCollection implements Serializable {
 				}
 
 			}
-			
+
 			ScoutingApp.unshowMatch(matchID);
 			ScoutingApp.updateMatchHubTable();
 
@@ -208,11 +209,11 @@ public class RegionalCollection implements Serializable {
 		}
 
 		Arrays.sort(teamList);
-		
+
 		return teamList;
 
 	}
-	
+
 	public int[] getMatchIDList() {
 		if (matches.size() == 0) {
 			return new int[0];
@@ -232,5 +233,17 @@ public class RegionalCollection implements Serializable {
 	public Match getMatch(int matchID) {
 		return matches.get(matchID);
 
+	}
+
+	public void integrateCollection(RegionalCollection newCollection) throws ExistingException {
+
+		for (Integer matchID : matches.keySet()) {
+			
+			if (newCollection.matchExists(matchID)) {
+				throw new ExistingException(matchID, Existing.MATCH);
+			}
+			
+		}
+		
 	}
 }
