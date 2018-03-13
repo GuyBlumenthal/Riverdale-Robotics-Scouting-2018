@@ -81,9 +81,10 @@ public class TeamDetail extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
+							int match = (Integer)tblMatches.getValueAt(tblMatches.getSelectedRow(), 0);
 							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							TeamPerformanceWindow teamPerformance = new TeamPerformanceWindow(currentTeam.getTeamNumber(), 
-									(Integer)tblMatches.getValueAt(tblMatches.getSelectedRow(), 0));
+							TeamPerformanceWindow teamPerformance = new TeamPerformanceWindow(
+									currentTeam.getTeamNumber(), match, currentTeam.getTeamPerformance(match),false);
 							teamPerformance.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 							teamPerformance.setVisible(true);
 						} catch (Exception e) {
@@ -93,14 +94,6 @@ public class TeamDetail extends JFrame {
 				});
 			}
 		});
-		tblMatches.setEnabled(false);		
-		tblMatches.setModel(new DefaultTableModel(
-			new Object[][] {{ null, null},},
-			new String[] {
-				"Match Number", "Comments"
-			}
-		));
-
 		tblMatches.getTableHeader().setReorderingAllowed(false);
 		scrollPaneMatches.setViewportView(tblMatches);
 
@@ -149,9 +142,10 @@ public class TeamDetail extends JFrame {
 						currentTeam.calcClimbConsistency(),
 						currentTeam.calcAverageClimbTime() },
 				
-				{ "Parking", currentTeam.calcBooleanAverage(false),
-							 currentTeam.calcBooleanConsistency(false),
-							 null, null, null, null }
+				{ "Parking", null, null, null, 
+						currentTeam.calcBooleanAverage(false),
+						currentTeam.calcBooleanConsistency(false),
+						null }
 				},
 				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Auto Average Time",
 						"Teleop Average", "Teleop Consistency", "Teleop Average Time" }));
@@ -162,16 +156,16 @@ public class TeamDetail extends JFrame {
 		scrollPaneOverview.setViewportView(tblOverview);
 		tblOverview.getTableHeader().setReorderingAllowed(false);
 		
-		for (TeamPerformance performance : currentTeam.teamPerformances.values()) {
-			for(int i = 0; i <= 6; i++){	
-				ArrayList<Integer> data = currentTeam.getData(i, performance);
-				System.out.println(i);
-				System.out.println(data.size());
-				for(int j = 0; j < data.size(); j++){
-					System.out.println(data.get(j));
-				}
-			}
-		}
+//		for (TeamPerformance performance : currentTeam.teamPerformances.values()) {
+//			for(int i = 0; i <= 6; i++){	
+//				ArrayList<Integer> data = currentTeam.getData(i, performance);
+//				System.out.println(i);
+//				System.out.println(data.size());
+//				for(int j = 0; j < data.size(); j++){
+//					System.out.println(data.get(j));
+//				}
+//			}
+//		}
 		
 		mntmShowTeamHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -217,7 +211,7 @@ public class TeamDetail extends JFrame {
 	}
 
 	public void createMatchTable(){
-		Object[][] arrayValues = new Object[currentTeam.teamPerformances.size()][2];
+		Object[][] arrayValues = new Object[currentTeam.teamPerformances.size()][3];
 		
 		int x = 0;
 		for(Integer matchID : currentTeam.teamPerformances.keySet()){
@@ -228,11 +222,13 @@ public class TeamDetail extends JFrame {
 		x = 0;
 		for (TeamPerformance performances : currentTeam.teamPerformances.values()){
 			arrayValues[x][1] = performances.comments;
+			arrayValues[x][2] = performances.scouterName;
 			x++;
 		}
+
 		
 		DefaultTableModel tableModel = new DefaultTableModel(arrayValues,
-				new String[] { "Match Number", "Performance", "Comments"}) {
+				new String[] { "Match Number", "Comments", "Scouter"}) {
 			private static final long serialVersionUID = -6261637160294735163L;
 
 			public boolean isCellEditable(int row, int column) {
