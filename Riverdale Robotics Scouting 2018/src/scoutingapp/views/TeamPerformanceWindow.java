@@ -47,10 +47,10 @@ public class TeamPerformanceWindow extends JFrame {
 
 	private int teamNumber, matchID;
 	public JTextField txtClimb;
+	public JTextField txtScouter;
 
 	TeamPerformance teamPerformance;
 	TeamPerformanceWindow me = this;
-	private JTextField textField;
 
 	public void saveData() {
 
@@ -600,10 +600,10 @@ public class TeamPerformanceWindow extends JFrame {
 		lblComments.setBounds(10, 333, 95, 24);
 		contentPane.add(lblComments);
 
-		textField = new JTextField();
-		textField.setBounds(525, 14, 86, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtScouter = new JTextField();
+		txtScouter.setBounds(525, 14, 86, 20);
+		contentPane.add(txtScouter);
+		txtScouter.setColumns(10);
 
 		JLabel lblScouterName = new JLabel("Scouter Name:");
 		lblScouterName.setBounds(450, 17, 77, 14);

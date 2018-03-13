@@ -63,6 +63,7 @@ public class TeamPerformance implements Serializable{
 		crossedBaseLine = false;
 		parked = false;
 		comments = "";
+		scouterName = "";
 	}
 
 	private void parsePerformanceWindow(TeamPerformanceWindow teamPerformanceWindow) {
@@ -119,13 +120,14 @@ public class TeamPerformance implements Serializable{
 		comments = teamPerformanceWindow.txtaComments.getText();
 		
 		parked = teamPerformanceWindow.chkParked.isSelected();
+		
+		scouterName = teamPerformanceWindow.txtScouter.getText();
 
 		// adjust times
 		allTimes.clear();
 		for(int i = 3; i <= 6; i++){
 			allTimes.addAll(getData(i));
 		}
-		Collections.sort(allTimes);
 		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop);
 		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop);
 		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop);
@@ -135,7 +137,6 @@ public class TeamPerformance implements Serializable{
 		for(int i = 0; i <= 3; i++){
 			allTimes.addAll(getData(i));
 		}
-		Collections.sort(allTimes);
 		cubesOnSwitchAuto = calcCycleTime(cubesOnSwitchAuto);
 		cubesOnScaleAuto = calcCycleTime(cubesOnScaleAuto);
 		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto);
@@ -158,16 +159,13 @@ public class TeamPerformance implements Serializable{
 
 	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
 
-		ArrayList<Integer> data = new ArrayList<Integer>(times.size());	
+		Collections.sort(allTimes);
+		ArrayList<Integer> data = new ArrayList<Integer>();	
 			
-		if(times.size() > 1){
-			for (int i = 0; i < times.size() - 1; i++) {
-				data.add(allTimes.get(allTimes.indexOf(times.get(i + 1))) - allTimes.get(allTimes.indexOf(times.get(i))));
-			}
-			
-		}else if(times.size() == 1){
-			data.add(times.get(0));
+		for (int i = 0; i < times.size() - 1; i++) {
+			data.add(Math.abs(allTimes.get(allTimes.indexOf(times.get(i + 1))) - allTimes.get(allTimes.indexOf(times.get(i)))));
 		}
+			
 		return data;
 	}
 
