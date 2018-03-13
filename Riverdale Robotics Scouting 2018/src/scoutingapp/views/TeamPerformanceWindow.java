@@ -77,7 +77,7 @@ public class TeamPerformanceWindow extends JFrame {
 					"Incomplete Match Detail", JOptionPane.OK_OPTION);
 
 		} catch (ExistingException e) {
-
+			e.printStackTrace();
 		}
 
 	}

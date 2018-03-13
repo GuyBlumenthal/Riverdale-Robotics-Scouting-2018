@@ -15,15 +15,15 @@ public class TeamPerformance implements Serializable{
 	 */
 	private static final long serialVersionUID = 386764827887862297L;
 	// teleop
-	public ArrayList<Integer> cubesOnAllianceSwitchTeleop = new ArrayList<Integer>();
-	public ArrayList<Integer> cubesOnOpponentSwitchTeleop = new ArrayList<Integer>();
-	public ArrayList<Integer> cubesOnScaleTeleop = new ArrayList<Integer>();
-	public ArrayList<Integer> cubesInVaultTeleop = new ArrayList<Integer>();
+	public ArrayList<Integer> cubesOnAllianceSwitchTeleop;
+	public ArrayList<Integer> cubesOnOpponentSwitchTeleop;
+	public ArrayList<Integer> cubesOnScaleTeleop;
+	public ArrayList<Integer> cubesInVaultTeleop;
 
 	// auto
-	public ArrayList<Integer> cubesOnSwitchAuto = new ArrayList<Integer>();
-	public ArrayList<Integer> cubesOnScaleAuto = new ArrayList<Integer>();
-	public ArrayList<Integer> cubesInVaultAuto = new ArrayList<Integer>();
+	public ArrayList<Integer> cubesOnSwitchAuto;
+	public ArrayList<Integer> cubesOnScaleAuto;
+	public ArrayList<Integer> cubesInVaultAuto;
 
 	// Tables
 
@@ -71,44 +71,38 @@ public class TeamPerformance implements Serializable{
 		rawSwitchTable = teamPerformanceWindow.tblSwitch.getModel();
 
 		for (int i = 0; i < rawSwitchTable.getRowCount(); i++) {
-			//if(rawSwitchTable.getValueAt(i, 2) != null){
-				if (((boolean) rawSwitchTable.getValueAt(i, 0)) == false) {
-					if (((boolean) rawSwitchTable.getValueAt(i, 1)) == false) {
-						cubesOnAllianceSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
-					} else {
-						cubesOnOpponentSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
-					}
-	
+			if (((boolean) rawSwitchTable.getValueAt(i, 0)) == false) {
+				if (((boolean) rawSwitchTable.getValueAt(i, 1)) == false) {
+					cubesOnAllianceSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
 				} else {
-	
-					cubesOnSwitchAuto.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
-	
+					cubesOnOpponentSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
 				}
-			//}
+
+			} else {
+
+				cubesOnSwitchAuto.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
+
+			}
 		}
 
 		rawScaleTable = teamPerformanceWindow.tblScale.getModel();
 
 		for (int i = 0; i < rawScaleTable.getRowCount(); i++) {
-			//if(rawScaleTable.getValueAt(i, 1)  != null){
-				if (((boolean) rawScaleTable.getValueAt(i, 0)) == false) {
-						cubesOnScaleTeleop.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 1)));
-				} else {
-						cubesOnScaleAuto.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 1)));
-				}
-			//}
+			if (((boolean) rawScaleTable.getValueAt(i, 0)) == false) {
+					cubesOnScaleTeleop.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 1)));
+			} else {
+					cubesOnScaleAuto.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 1)));
+			}
 		}
 
 		rawVaultTable = teamPerformanceWindow.tblVault.getModel();
 
 		for (int i = 0; i < rawVaultTable.getRowCount(); i++) {
-			//if(rawVaultTable.getValueAt(i, 1) != null){
-				if (((boolean) rawVaultTable.getValueAt(i, 0)) == false) {
-					cubesInVaultTeleop.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
-				} else {
-					cubesInVaultAuto.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
-				}
-			//}
+			if (((boolean) rawVaultTable.getValueAt(i, 0)) == false) {
+				cubesInVaultTeleop.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
+			} else {
+				cubesInVaultAuto.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
+			}
 		}
 
 		if(!teamPerformanceWindow.txtClimb.getText().trim().equals(null)){
@@ -128,18 +122,18 @@ public class TeamPerformance implements Serializable{
 		for(int i = 3; i <= 6; i++){
 			allTimes.addAll(getData(i));
 		}
-		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop);
-		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop);
-		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop);
-		cubesInVaultTeleop = calcCycleTime(cubesInVaultTeleop);
+		cubesOnAllianceSwitchTeleop = calcCycleTime(cubesOnAllianceSwitchTeleop, false);
+		cubesOnOpponentSwitchTeleop = calcCycleTime(cubesOnOpponentSwitchTeleop, false);
+		cubesOnScaleTeleop = calcCycleTime(cubesOnScaleTeleop, false);
+		cubesInVaultTeleop = calcCycleTime(cubesInVaultTeleop, false);
 
 		allTimes.clear();
 		for(int i = 0; i <= 3; i++){
 			allTimes.addAll(getData(i));
 		}
-		cubesOnSwitchAuto = calcCycleTime(cubesOnSwitchAuto);
-		cubesOnScaleAuto = calcCycleTime(cubesOnScaleAuto);
-		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto);
+		cubesOnSwitchAuto = calcCycleTime(cubesOnSwitchAuto, true);
+		cubesOnScaleAuto = calcCycleTime(cubesOnScaleAuto, true);
+		cubesInVaultAuto = calcCycleTime(cubesInVaultAuto, true);
 	}
 
 	public TeamPerformanceWindow createWindow(int teamNumber, int matchID, boolean editable) {
@@ -157,13 +151,27 @@ public class TeamPerformance implements Serializable{
 
 	}
 
-	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times) {
+	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times, boolean isAuto) {
 
 		Collections.sort(allTimes);
+		Collections.sort(times);
 		ArrayList<Integer> data = new ArrayList<Integer>();	
+		final int MAX_TIME = isAuto ? 15 : 135;
+		
+		int toMaxArrayIndex;
+		
+		if(times.size() >= 1){
 			
-		for (int i = 0; i < times.size() - 1; i++) {
-			data.add(Math.abs(allTimes.get(allTimes.indexOf(times.get(i + 1))) - allTimes.get(allTimes.indexOf(times.get(i)))));
+			if(times.get(times.size() - 1) == allTimes.get(allTimes.size() - 1)){
+				data.add(MAX_TIME - allTimes.get(allTimes.indexOf(times.get(times.size() - 1))));
+				toMaxArrayIndex = times.size() - 1;
+			}else{
+				toMaxArrayIndex = times.size();
+			}
+	
+			for (int i = 0; i < toMaxArrayIndex; i++) {
+				data.add(Math.abs(allTimes.get(allTimes.indexOf(times.get(i)) + 1) - allTimes.get(allTimes.indexOf(times.get(i)))));
+			}
 		}
 			
 		return data;
