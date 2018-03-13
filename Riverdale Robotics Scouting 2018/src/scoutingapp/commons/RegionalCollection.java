@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import scoutingapp.commons.existing.ExistingException;
+import scoutingapp.commons.existing.ExistingType;
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.TeamPerformanceWindow;
 
@@ -45,7 +46,7 @@ public class RegionalCollection implements Serializable {
 	public void createTeam(int teamNumber, String teamName) throws ExistingException {
 
 		if (teams.containsKey(teamNumber)) {
-			throw new ExistingException();
+			throw new ExistingException(teamNumber, ExistingType.TEAM);
 		} else {
 			Team team = new Team(teamNumber, teamName);
 
@@ -70,7 +71,7 @@ public class RegionalCollection implements Serializable {
 	public void createTeam(int teamNumber) throws ExistingException {
 
 		if (teams.containsKey(teamNumber)) {
-			throw new ExistingException();
+			throw new ExistingException(teamNumber, ExistingType.TEAM);
 		} else {
 			Team team = new Team(teamNumber);
 
@@ -81,7 +82,7 @@ public class RegionalCollection implements Serializable {
 	public void createTeam(Team team) throws ExistingException {
 
 		if (teams.containsKey(team.getTeamNumber())) {
-			throw new ExistingException();
+			throw new ExistingException(team.getTeamNumber(), ExistingType.TEAM);
 		} else {
 			teams.put(team.getTeamNumber(), team);
 		}
@@ -114,7 +115,7 @@ public class RegionalCollection implements Serializable {
 			});
 
 		} else {
-			throw new ExistingException();
+			throw new ExistingException(matchID, ExistingType.TEAM_PERFORMANCE);
 		}
 
 	}
@@ -144,7 +145,7 @@ public class RegionalCollection implements Serializable {
 	public void createMatch(int matchID, int[] blueTeams, int[] redTeams) throws ExistingException {
 
 		if (matches.containsKey(matchID)) {
-			throw new ExistingException();
+			throw new ExistingException(matchID, ExistingType.MATCH);
 		} else {
 			Match match = new Match(matchID, blueTeams, redTeams);
 
@@ -155,7 +156,7 @@ public class RegionalCollection implements Serializable {
 	public void createMatch(int matchID, Team[] blueTeams, Team[] redTeams) throws ExistingException {
 
 		if (matches.containsKey(matchID)) {
-			throw new ExistingException();
+			throw new ExistingException(matchID, ExistingType.MATCH);
 		} else {
 			Match match = new Match(matchID, blueTeams, redTeams);
 
@@ -240,7 +241,7 @@ public class RegionalCollection implements Serializable {
 		for (Integer matchID : matches.keySet()) {
 			
 			if (newCollection.matchExists(matchID)) {
-				throw new ExistingException(matchID, Existing.MATCH);
+				throw new ExistingException(matchID, ExistingType.MATCH);
 			}
 			
 		}
