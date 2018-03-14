@@ -10,6 +10,16 @@ import scoutingapp.commons.existing.ExistingType;
 import scoutingapp.commons.team.Team;
 import scoutingapp.views.TeamPerformanceWindow;
 
+/**
+ * 
+ * The class that holds all the matches and teams in one place to ensure that no
+ * copies of the teams are created and desync the program
+ * 
+ * @see scoutingapp.commons.ScoutingApp ScoutingApp
+ * @see scoutingapp.commons.Match Match
+ * @see scoutingapp.commons.team.Team Team
+ * 
+ */
 public class RegionalCollection implements Serializable {
 
 	/**
@@ -19,7 +29,26 @@ public class RegionalCollection implements Serializable {
 
 	public String fileName;
 
+	/**
+	 * The hashmap that contains the teams in the regional collection with their
+	 * team number as their Key
+	 * 
+	 * @param Key
+	 *            is an Integer that refers to the team's team number
+	 * @param Value
+	 *            is the team
+	 */
 	HashMap<Integer, Team> teams;
+
+	/**
+	 * The hashmap that contains the matches in the regional collection with their
+	 * match ID as their Key
+	 * 
+	 * @param Key
+	 *            is an Integer that refers to the match ID
+	 * @param Value
+	 *            is the match
+	 */
 	HashMap<Integer, Match> matches;
 
 	public RegionalCollection() {
@@ -39,10 +68,29 @@ public class RegionalCollection implements Serializable {
 		return Integer.parseInt(time.split(":")[0]) * 60 + Integer.parseInt(time.split(":")[1]);
 	}
 
+	/**
+	 * @return a list of all the teams in a hashmap where the key is the team number
+	 *         as an Integer
+	 */
 	public HashMap<Integer, Team> getTeams() {
 		return teams;
 	}
 
+	/**
+	 * 
+	 * Use this method to create a new team from a team number and an optional team
+	 * name
+	 * 
+	 * @param teamNumber
+	 *            is the team number of the new team
+	 * @param teamName
+	 *            is the team name of the new team which if left empty will be the
+	 *            team's number
+	 * 
+	 * @throws ExistingException
+	 *             if the team number is an already created team in the regional
+	 *             collection
+	 */
 	public void createTeam(int teamNumber, String teamName) throws ExistingException {
 
 		if (teams.containsKey(teamNumber)) {
@@ -55,19 +103,21 @@ public class RegionalCollection implements Serializable {
 
 	}
 
-	public void createTeamPerformanceWindow(int matchID, int teamNumber) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	/**
+	 * 
+	 * Use this method to create a new team from a team number and an optional team
+	 * name
+	 * 
+	 * @param teamNumber
+	 *            is the team number of the new team
+	 * @param teamName
+	 *            is the team name of the new team which if left empty will be the
+	 *            team's number
+	 * 
+	 * @throws ExistingException
+	 *             if the team number is an already created team in the regional
+	 *             collection
+	 */
 	public void createTeam(int teamNumber) throws ExistingException {
 
 		if (teams.containsKey(teamNumber)) {
@@ -79,6 +129,17 @@ public class RegionalCollection implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * Use this method to create a new team from a team created outside of the
+	 * regional collection
+	 * 
+	 * @param team is the new team as a {@link scoutingapp.commons.team.Team Team} class
+	 * 
+	 * @throws ExistingException
+	 *             if the team number is an already created team in the regional
+	 *             collection
+	 */
 	public void createTeam(Team team) throws ExistingException {
 
 		if (teams.containsKey(team.getTeamNumber())) {
@@ -86,6 +147,35 @@ public class RegionalCollection implements Serializable {
 		} else {
 			teams.put(team.getTeamNumber(), team);
 		}
+	}
+
+	/**
+	 * 
+	 * Use this method to create a team performance for an already existing team and
+	 * already existing match in the regional collection.
+	 * 
+	 * @param matchID
+	 *            is the ID for the match in which the team is competiting in. This
+	 *            is not check if it is a valid match as it cannot be called from a
+	 *            location where the match does not exist
+	 * @param teamNumber
+	 *            is the unique team number of the team who is receiving the new
+	 *            team performance. This is not check to be a valid team as it is
+	 *            already ensured to be a valid through where it is being called
+	 */
+	// TODO: Check to make sure that the team and match are both legitimate just for
+	// redundancy
+	public void createTeamPerformanceWindow(int matchID, int teamNumber) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	public void addTeamPerformance(int teamNumber, int matchID, TeamPerformanceWindow window) {
