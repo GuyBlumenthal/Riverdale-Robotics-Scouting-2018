@@ -496,7 +496,20 @@ public class TeamPerformanceWindow extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		};
-		tblSwitch.setModel(mdlSwitch);
+		tblSwitch.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Auto", "Offense", "Time"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Boolean.class, Boolean.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPaneSwitch.setViewportView(tblSwitch);
 
 		JButton btnSaveData = new JButton("Save Data");
@@ -522,7 +535,20 @@ public class TeamPerformanceWindow extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		};
-		tblScale.setModel(mdlScale);
+		tblScale.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"In Auto", "Time"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Boolean.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPaneScale.setViewportView(tblScale);
 
 		JScrollPane scrollPaneVault = new JScrollPane();
@@ -538,7 +564,20 @@ public class TeamPerformanceWindow extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		};
-		tblVault.setModel(mdlVault);
+		tblVault.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"In Auto", "Time"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Boolean.class, Object.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPaneVault.setViewportView(tblVault);
 
 		JLabel label_1 = new JLabel("Power Cubes In Vault");
