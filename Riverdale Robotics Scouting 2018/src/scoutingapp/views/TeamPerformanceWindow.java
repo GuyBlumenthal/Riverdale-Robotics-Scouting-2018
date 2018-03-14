@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -32,7 +32,7 @@ import scoutingapp.commons.existing.ExistingException;
 import scoutingapp.commons.team.TeamPerformance;
 
 @SuppressWarnings("serial")
-public class TeamPerformanceWindow extends JFrame {
+public class TeamPerformanceWindow extends JDialog {
 
 	private JPanel contentPane;
 	public JLabel lblMatchNumber;
@@ -122,6 +122,7 @@ public class TeamPerformanceWindow extends JFrame {
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 427);
 		setResizable(false);
+		setModal(true);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -206,7 +207,7 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneSwitch);
 
 		tblSwitch = new JTable();
-		tblSwitch.setModel(teamPerformance.rawSwitchTable);
+		tblSwitch.setModel(teamPerformance.constructSwitchTableModel());
 		tblSwitch.setEnabled(editable);
 		scrollPaneSwitch.setViewportView(tblSwitch);
 
@@ -221,7 +222,7 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneScale);
 
 		tblScale = new JTable();
-		tblScale.setModel(teamPerformance.rawScaleTable);
+		tblScale.setModel(teamPerformance.constructScaleTableModel());
 		tblScale.setEnabled(editable);
 		scrollPaneScale.setViewportView(tblScale);
 
@@ -262,7 +263,7 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneVault);
 
 		tblVault = new JTable();
-		tblVault.setModel(teamPerformance.rawVaultTable);
+		tblVault.setModel(teamPerformance.constructVaultTableModel());
 		tblVault.setEnabled(editable);
 		scrollPaneVault.setViewportView(tblVault);
 
@@ -278,9 +279,14 @@ public class TeamPerformanceWindow extends JFrame {
 
 		JLabel lblScouterName = new JLabel("Scouter Name:");
 		lblScouterName.setBounds(450, 17, 77, 14);
-
-		lblScouterName.setEnabled(editable);
 		contentPane.add(lblScouterName);
+		
+		txtScouter = new JTextField();
+		txtScouter.setText(teamPerformance.scouterName);
+		txtScouter.setEditable(editable);
+		txtScouter.setBounds(525, 14, 86, 20);
+		contentPane.add(txtScouter);
+		txtScouter.setColumns(10);
 
 		JLabel lblComments = new JLabel("Comments");
 		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -396,6 +402,7 @@ public class TeamPerformanceWindow extends JFrame {
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 627, 495);
 		setResizable(false);
+		setModal(true);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

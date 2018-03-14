@@ -143,7 +143,7 @@ public class Team implements Serializable {
 		if(average > 0){
 			for (TeamPerformance performance : teamPerformances.values()) {
 				if (performance.cubesOnAllianceSwitchTeleop.size() >= average
-						|| performance.cubesOnOpponentSwitchTeleop.size() >= average) {
+						|| performance.cubesOnAllianceSwitchTeleop.size() >= average) {
 					numAboveAverage++;
 				}
 			}
