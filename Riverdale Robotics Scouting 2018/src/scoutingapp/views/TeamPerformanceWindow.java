@@ -478,28 +478,22 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneSwitch);
 
 		tblSwitch = new JTable(data, columns);
-		DefaultTableModel mdlSwitch = new DefaultTableModel(new Object[][] { { Boolean.FALSE, Boolean.FALSE, 0 }, },
-				new String[] { "Auto", "Offense", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, Integer.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		};
-		tblSwitch.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Auto", "Offense", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, Boolean.class, String.class
+		DefaultTableModel mdlSwitch = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Auto", "Offense", "Time"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					Boolean.class, Boolean.class, String.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
 			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+			
+		tblSwitch.setModel(mdlSwitch);
 		scrollPaneSwitch.setViewportView(tblSwitch);
 
 		JButton btnSaveData = new JButton("Save Data");
@@ -517,28 +511,22 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneScale);
 
 		tblScale = new JTable();
-		DefaultTableModel mdlScale = new DefaultTableModel(new Object[][] { { Boolean.FALSE, 0 }, },
-				new String[] { "In Auto", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		};
-		tblScale.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"In Auto", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, String.class
+		DefaultTableModel mdlScale = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"In Auto", "Time"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					Boolean.class, String.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
 			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+			
+		tblScale.setModel(mdlScale);
 		scrollPaneScale.setViewportView(tblScale);
 
 		JScrollPane scrollPaneVault = new JScrollPane();
@@ -546,28 +534,22 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneVault);
 
 		tblVault = new JTable();
-		DefaultTableModel mdlVault = new DefaultTableModel(new Object[][] { { Boolean.FALSE, 0 }, },
-				new String[] { "In Auto", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		};
-		tblVault.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"In Auto", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, Object.class
+		DefaultTableModel mdlVault = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"In Auto", "Time"
+				}
+			) {
+				Class[] columnTypes = new Class[] {
+					Boolean.class, Object.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
 			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+			
+		tblVault.setModel(mdlVault);
 		scrollPaneVault.setViewportView(tblVault);
 
 		JLabel label_1 = new JLabel("Power Cubes In Vault");
