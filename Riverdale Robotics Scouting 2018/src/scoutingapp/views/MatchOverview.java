@@ -420,6 +420,8 @@ public class MatchOverview extends JFrame {
 
 		int[] allianceTeams = new int[k.length];
 
+		int baseline = 0;
+		
 		int A_switch = 0;
 		int A_scale = 0;
 		int A_vault = 0;
@@ -439,6 +441,9 @@ public class MatchOverview extends JFrame {
 
 			if (ScoutingApp.regionalCollection().getTeam(allianceTeams[i]).hasTeamPerformance(matchID)) {
 
+				baseline += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
+						.getTeamPerformance(matchID).crossedBaseLine ? 1 : 0; 
+				
 				A_switch += ScoutingApp.regionalCollection().getTeam(allianceTeams[i])
 						.getTeamPerformance(matchID).cubesOnSwitchAuto.size();
 
@@ -486,6 +491,11 @@ public class MatchOverview extends JFrame {
 			return highlight.toString();
 		}
 
+		highlight.append("Baseline: ");
+		highlight.append(baseline);
+
+		highlight.append("\n");
+		
 		highlight.append("Switch in Auto: ");
 		highlight.append(A_switch);
 
