@@ -487,6 +487,7 @@ public class TeamPerformanceWindow extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		};
+
 		tblSwitch.setModel(mdlSwitch);
 		scrollPaneSwitch.setViewportView(tblSwitch);
 
@@ -505,6 +506,7 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneScale);
 
 		tblScale = new JTable();
+
 		DefaultTableModel mdlScale = new DefaultTableModel(new Object[][] { },
 				new String[] { "In Auto", "Time" }) {
 			Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
@@ -529,6 +531,7 @@ public class TeamPerformanceWindow extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		};
+		
 		tblVault.setModel(mdlVault);
 		scrollPaneVault.setViewportView(tblVault);
 

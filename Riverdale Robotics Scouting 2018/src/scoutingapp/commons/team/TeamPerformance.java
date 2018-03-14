@@ -89,9 +89,9 @@ public class TeamPerformance implements Serializable{
 
 		for (int i = 0; i < rawScaleTable.getRowCount(); i++) {
 			if (((boolean) rawScaleTable.getValueAt(i, 0)) == false) {
-					cubesOnScaleTeleop.add((Integer) rawScaleTable.getValueAt(i, 1));
+					cubesOnScaleTeleop.add(Integer.parseInt(String.valueOf(rawScaleTable.getValueAt(i, 1))));
 			} else {
-					cubesOnScaleAuto.add((Integer) rawScaleTable.getValueAt(i, 1));
+					cubesOnScaleAuto.add(Integer.parseInt(String.valueOf(rawScaleTable.getValueAt(i, 1))));
 			}
 		}
 
@@ -99,9 +99,9 @@ public class TeamPerformance implements Serializable{
 
 		for (int i = 0; i < rawVaultTable.getRowCount(); i++) {
 			if (((boolean) rawVaultTable.getValueAt(i, 0)) == false) {
-				cubesInVaultTeleop.add((Integer) rawVaultTable.getValueAt(i, 1));
+				cubesInVaultTeleop.add(Integer.parseInt(String.valueOf(rawVaultTable.getValueAt(i, 1))));
 			} else {
-				cubesInVaultAuto.add((Integer) rawVaultTable.getValueAt(i, 1));
+				cubesInVaultAuto.add(Integer.parseInt(String.valueOf(rawVaultTable.getValueAt(i, 1))));
 			}
 		}
 
