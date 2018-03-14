@@ -97,16 +97,27 @@ public class MatchOverview extends JFrame {
 		});
 		mnEdit.add(mntmDeleteMatch);
 
-		JMenuItem mntmSetPowerUp = new JMenuItem("Set Power Up Values");
-		mntmSetPowerUp.addActionListener(new ActionListener() {
+		JMenuItem mntmSetBluePower = new JMenuItem("Set Blue Power Up Values");
+		mntmSetBluePower.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				SetPowerUps spu = new SetPowerUps(matchID);
+				SetPowerUps spu = new SetPowerUps(matchID, false);
 				spu.setVisible(true);
 
 			}
 		});
-		mnEdit.add(mntmSetPowerUp);
+		mnEdit.add(mntmSetBluePower);
+
+		JMenuItem mntmSetRedPower = new JMenuItem("Set Red Power Up Values");
+		mntmSetRedPower.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				SetPowerUps spu = new SetPowerUps(matchID, true);
+				spu.setVisible(true);
+
+			}
+		});
+		mnEdit.add(mntmSetRedPower);
 
 		JMenuItem mntmSetMatchPoints = new JMenuItem("Set Match Points");
 		mnEdit.add(mntmSetMatchPoints);
@@ -495,7 +506,7 @@ public class MatchOverview extends JFrame {
 			}
 
 		}
-		
+
 		for (int i = 0; i < 3; i++) {
 
 			if (ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups()[i] != -1) {
