@@ -118,14 +118,14 @@ public class MatchOverview extends JFrame {
 			}
 		});
 		mnEdit.add(mntmSetRedPower);
-		
+
 		JMenuItem mntmSetBluePoints = new JMenuItem("Set Blue Match Points");
 		mntmSetBluePoints.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+
 				SetMatchPoints smp = new SetMatchPoints(matchID, false);
 				smp.setVisible(true);
-				
+
 			}
 		});
 		mnEdit.add(mntmSetBluePoints);
@@ -133,10 +133,10 @@ public class MatchOverview extends JFrame {
 		JMenuItem mntmSetRedPoints = new JMenuItem("Set Red Match Points");
 		mntmSetRedPoints.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				SetMatchPoints smp = new SetMatchPoints(matchID, true);
 				smp.setVisible(true);
-				
+
 			}
 		});
 		mnEdit.add(mntmSetRedPoints);
@@ -153,6 +153,16 @@ public class MatchOverview extends JFrame {
 			}
 		});
 		mnView.add(mntmMissingInfo);
+
+		JMenuItem mntmRefreshWindow = new JMenuItem("Refresh Window");
+		mntmRefreshWindow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				updateMatchOverview();
+
+			}
+		});
+		mnView.add(mntmRefreshWindow);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
