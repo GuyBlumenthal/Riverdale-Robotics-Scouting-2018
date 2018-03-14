@@ -152,6 +152,17 @@ public class MatchHub extends JFrame {
 
 			}
 		});
+		
+		JMenuItem mntmSaveAs = new JMenuItem("Save As");
+		mntmSaveAs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ScoutingApp.regionalCollection().fileName = "";
+				ScoutingApp.saveCollection();
+				
+			}
+		});
+		mnFile.add(mntmSaveAs);
 		mnFile.add(mntmOpen);
 
 		JMenuItem mntmNew = new JMenuItem("New");
