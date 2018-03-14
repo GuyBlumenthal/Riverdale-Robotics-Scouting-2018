@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
 import scoutingapp.commons.existing.ExistingException;
 import scoutingapp.commons.existing.ExistingType;
 import scoutingapp.commons.team.Team;
@@ -12,8 +14,10 @@ import scoutingapp.views.TeamPerformanceWindow;
 
 /**
  * 
- * The class that holds all the matches and teams in one place to ensure that no
- * copies of the teams are created and desync the program
+ * The class that holds all the
+ * {@link scoutingapp.commons.RegionalCollection#matches matches} and
+ * {@link scoutingapp.commons.RegionalCollection#teams teams} in one place to
+ * ensure that no copies of the teams are created and desync the program
  * 
  * @see scoutingapp.commons.ScoutingApp ScoutingApp
  * @see scoutingapp.commons.Match Match
@@ -59,14 +63,6 @@ public class RegionalCollection implements Serializable {
 		matches = new HashMap<Integer, Match>();
 
 	}
-
-//	public String secondsToStandard(int time) {
-//		return Math.floorDiv(time, 60) + ":" + ((time % 60 < 10) ? "0" + time % 60 : time % 60);
-//	}
-//
-//	public int standardToSeconds(String time) {
-//		return Integer.parseInt(time.split(":")[0]) * 60 + Integer.parseInt(time.split(":")[1]);
-//	}
 
 	/**
 	 * @return a list of all the teams in a hashmap where the key is the team number
@@ -134,7 +130,9 @@ public class RegionalCollection implements Serializable {
 	 * Use this method to create a new team from a team created outside of the
 	 * regional collection
 	 * 
-	 * @param team is the new team as a {@link scoutingapp.commons.team.Team Team} class
+	 * @param team
+	 *            is the new team as a {@link scoutingapp.commons.team.Team Team}
+	 *            class
 	 * 
 	 * @throws ExistingException
 	 *             if the team number is an already created team in the regional
@@ -184,7 +182,11 @@ public class RegionalCollection implements Serializable {
 
 	public boolean hasTeamPerformance(int matchID, int teamNumber) {
 
-		return teams.get(teamNumber).hasTeamPerformance(matchID);
+		if (teams.containsKey(teamNumber)) {
+			return teams.get(teamNumber).hasTeamPerformance(matchID);
+		} else {
+			return false;
+		}
 
 	}
 
@@ -338,16 +340,6 @@ public class RegionalCollection implements Serializable {
 
 	public void mergeCollection(RegionalCollection newCollection) throws ExistingException {
 
-		for (Integer teamNumber : teams.keySet()) {
-
-			if (newCollection.matchExists(teamNumber)) {
-
-				throw new ExistingException(teamNumber, ExistingType.TEAM);
-
-			}
-
-		}
-
 		for (Integer matchID : matches.keySet()) {
 
 			if (newCollection.matchExists(matchID)) {
@@ -380,26 +372,119 @@ public class RegionalCollection implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * Use this method only if it is certain that there are no duplicates of any
+	 * team performances!
+	 * 
+	 * @param newCollection
+	 */
 	private void finalIntegrationOfCollection(RegionalCollection newCollection) {
 
-	}
-
-	public String findDuplicates(RegionalCollection newCollection) {
-
-		StringBuilder duplicateTeams = new StringBuilder("Teams: " + "\n");
+		HashMap<Integer, Team> combinedTeams = new HashMap<Integer, Team>();
 
 		for (Integer teamNumber : teams.keySet()) {
 
-			if (newCollection.matchExists(teamNumber)) {
+			Team currTeam = teams.get(teamNumber);
 
-				duplicateTeams.append("Team Number: " + teamNumber);
-				duplicateTeams.append("\n");
+			if (newCollection.teamExists(teamNumber)) {
+
+				// Merge the two teams
+
+				Team newTeam = newCollection.getTeam(teamNumber);
+
+				currTeam.teamPerformances.putAll(newTeam.teamPerformances);
+
+			}
+
+			combinedTeams.put(teamNumber, currTeam);
+
+		}
+
+		for (Integer teamNumber : newCollection.teams.keySet()) {
+
+			if (combinedTeams.containsKey(teamNumber) == false) {
+
+				combinedTeams.put(teamNumber, newCollection.teams.get(teamNumber));
 
 			}
 
 		}
 
-		StringBuilder duplicateMatches = new StringBuilder("Matches: " + "\n");
+		HashMap<Integer, Match> combinedMatches = new HashMap<Integer, Match>();
+
+		int[] emptyPowerups = { -1, -1, -1 };
+
+		for (Integer matchID : matches.keySet()) {
+
+			Match currMatch = matches.get(matchID);
+
+			if (newCollection.matchExists(matchID)) {
+
+				// Merge the two matches
+
+				Match newMatch = newCollection.getMatch(matchID);
+
+				for (int i = 0; i < 3; i++) {
+
+					if (currMatch.bluePowerUps[i] != -1) {
+						break;
+					}
+
+					if (i == 2) {
+						currMatch.bluePowerUps = newMatch.bluePowerUps;
+					}
+
+				}
+
+				for (int i = 0; i < 3; i++) {
+
+					if (currMatch.redPowerUps[i] != -1) {
+						break;
+					}
+
+					if (i == 2) {
+						currMatch.redPowerUps = newMatch.redPowerUps;
+					}
+
+				}
+
+				if (currMatch.blueScore == -1) {
+					currMatch.blueScore = newMatch.blueScore;
+				}
+
+				if (currMatch.redScore == -1) {
+					currMatch.redScore = newMatch.redScore;
+				}
+
+			}
+
+			combinedMatches.put(matchID, currMatch);
+
+		}
+
+		for (Integer matchID : newCollection.matches.keySet()) {
+
+			if (combinedMatches.containsKey(matchID) == false) {
+
+				combinedMatches.put(matchID, newCollection.matches.get(matchID));
+
+			}
+
+		}
+
+		teams = combinedTeams;
+		matches = combinedMatches;
+
+		fileName = "";
+		
+		JOptionPane.showMessageDialog(null,"Merged Succesfuly!", "Merge", JOptionPane.INFORMATION_MESSAGE);
+
+	}
+
+	public String findDuplicates(RegionalCollection newCollection) {
+
+		StringBuilder duplicateMatches = new StringBuilder();
 
 		for (Integer matchID : matches.keySet()) {
 
@@ -433,7 +518,7 @@ public class RegionalCollection implements Serializable {
 
 		}
 
-		return duplicateTeams.toString() + "\n" + duplicateMatches.toString();
+		return duplicateMatches.toString();
 
 	}
 }

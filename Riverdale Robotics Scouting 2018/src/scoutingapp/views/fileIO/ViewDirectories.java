@@ -72,6 +72,7 @@ public class ViewDirectories extends JDialog {
 								dispose();
 							} else if (action == DirectoryAction.MERGE) {
 								ScoutingApp.mergeCollection((String) lstCollections.getSelectedValue());
+								dispose();
 							}
 
 						}

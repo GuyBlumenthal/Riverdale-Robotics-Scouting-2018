@@ -14,6 +14,8 @@ public class SaveFile {
 
 	public void saveFile(RegionalCollection contents, String fileName, String fileExtension) throws IOException {
 		
+		fileName = fileName.replace(" ", "_");
+		
 		FileOutputStream saveFile = new FileOutputStream(fileName + "." + fileExtension);
 
 		ObjectOutputStream save = new ObjectOutputStream(saveFile);

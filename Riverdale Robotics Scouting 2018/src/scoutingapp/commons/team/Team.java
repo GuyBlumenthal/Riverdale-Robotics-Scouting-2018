@@ -21,12 +21,6 @@ public class Team implements Serializable {
 
 	public HashMap<Integer, TeamPerformance> teamPerformances;
 
-	/**
-	 * matches map: given the nth match, a corresponding qualification match number
-	 * can be found
-	 */
-	private HashMap<Integer, Integer> matches;
-
 	public Team(int teamNumber, String teamName) {
 		this.teamNumber = teamNumber;
 		this.teamName = teamName;
@@ -44,7 +38,7 @@ public class Team implements Serializable {
 
 	}
 
-	public int getMatchesPlayed() {
+	public int getNumberOfMatchesPlayed() {
 
 		return teamPerformances.size();
 	}
@@ -53,10 +47,6 @@ public class Team implements Serializable {
 
 		teamPerformances.put(matchID, new TeamPerformance(window));
 
-	}
-
-	public HashMap<Integer, Integer> getMatches() {
-		return matches;
 	}
 
 	public boolean hasTeamPerformance(int matchID) {
