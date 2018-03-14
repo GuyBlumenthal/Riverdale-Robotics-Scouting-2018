@@ -51,16 +51,12 @@ public class MatchOverview extends JFrame {
 	public void updatePowers() {
 		Match k = ScoutingApp.regionalCollection().getMatch(matchID);
 
-		blueBoost.setText((k.getBluePowerups()[0] == -1) ? "0"
-				: Integer.toString(k.getBluePowerups()[0]));
-		forceBlue.setText((k.getBluePowerups()[1] == -1) ? "0"
-				: Integer.toString(k.getBluePowerups()[1]));
+		blueBoost.setText((k.getBluePowerups()[0] == -1) ? "0" : Integer.toString(k.getBluePowerups()[0]));
+		forceBlue.setText((k.getBluePowerups()[1] == -1) ? "0" : Integer.toString(k.getBluePowerups()[1]));
 		blueLev.setSelected(k.getBluePowerups()[2] == 1);
 
-		redBoost.setText((k.getRedPowerups()[0] == -1) ? "0"
-				: Integer.toString(k.getRedPowerups()[0]));
-		redForce.setText((k.getRedPowerups()[1] == -1) ? "0:00"
-				: Integer.toString(k.getRedPowerups()[1]));
+		redBoost.setText((k.getRedPowerups()[0] == -1) ? "0" : Integer.toString(k.getRedPowerups()[0]));
+		redForce.setText((k.getRedPowerups()[1] == -1) ? "0:00" : Integer.toString(k.getRedPowerups()[1]));
 		redLev.setSelected(k.getRedPowerups()[2] == 1);
 
 	}
@@ -79,7 +75,7 @@ public class MatchOverview extends JFrame {
 
 		setResizable(false);
 
-		setBounds(100, 100, 666, 420);
+		setBounds(100, 100, 666, 500);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -176,23 +172,23 @@ public class MatchOverview extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Red Alliance",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(330, 54, 318, 306);
+		panel_1.setBounds(330, 54, 318, 385);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
 		JLabel lblRedTeam1 = new JLabel(
 				ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[0].getTeamName() + " : ");
-		lblRedTeam1.setBounds(10, 170, 68, 14);
+		lblRedTeam1.setBounds(10, 264, 68, 14);
 		panel_1.add(lblRedTeam1);
 
 		JLabel lblRedTeam2 = new JLabel(
 				ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[1].getTeamName() + " : ");
-		lblRedTeam2.setBounds(10, 215, 68, 14);
+		lblRedTeam2.setBounds(10, 309, 68, 14);
 		panel_1.add(lblRedTeam2);
 
 		JLabel lblRedTeam3 = new JLabel(
 				ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[2].getTeamName() + " : ");
-		lblRedTeam3.setBounds(10, 261, 68, 14);
+		lblRedTeam3.setBounds(10, 355, 68, 14);
 		panel_1.add(lblRedTeam3);
 
 		JButton btnRedMatchTeam1 = new JButton("Details");
@@ -202,7 +198,7 @@ public class MatchOverview extends JFrame {
 						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[0].getTeamNumber());
 			}
 		});
-		btnRedMatchTeam1.setBounds(100, 165, 68, 23);
+		btnRedMatchTeam1.setBounds(100, 259, 68, 23);
 		panel_1.add(btnRedMatchTeam1);
 
 		JButton btnRedMatchTeam2 = new JButton("Details");
@@ -212,7 +208,7 @@ public class MatchOverview extends JFrame {
 						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[1].getTeamNumber());
 			}
 		});
-		btnRedMatchTeam2.setBounds(100, 211, 68, 23);
+		btnRedMatchTeam2.setBounds(100, 305, 68, 23);
 		panel_1.add(btnRedMatchTeam2);
 
 		JButton btnRedMatchTeam3 = new JButton("Details");
@@ -222,7 +218,7 @@ public class MatchOverview extends JFrame {
 						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams()[2].getTeamNumber());
 			}
 		});
-		btnRedMatchTeam3.setBounds(100, 257, 68, 23);
+		btnRedMatchTeam3.setBounds(100, 351, 68, 23);
 		panel_1.add(btnRedMatchTeam3);
 
 		JButton btnRedTeamDetail1 = new JButton("Add Performance");
@@ -231,7 +227,7 @@ public class MatchOverview extends JFrame {
 				openTeamDetail(0, true);
 			}
 		});
-		btnRedTeamDetail1.setBounds(178, 165, 130, 23);
+		btnRedTeamDetail1.setBounds(178, 259, 130, 23);
 		panel_1.add(btnRedTeamDetail1);
 
 		JButton btnRedTeamDetail2 = new JButton("Add Performance");
@@ -240,7 +236,7 @@ public class MatchOverview extends JFrame {
 				openTeamDetail(1, true);
 			}
 		});
-		btnRedTeamDetail2.setBounds(178, 211, 130, 23);
+		btnRedTeamDetail2.setBounds(178, 305, 130, 23);
 		panel_1.add(btnRedTeamDetail2);
 
 		JButton btnRedTeamDetail3 = new JButton("Add Performance");
@@ -249,47 +245,47 @@ public class MatchOverview extends JFrame {
 				openTeamDetail(2, true);
 			}
 		});
-		btnRedTeamDetail3.setBounds(178, 257, 130, 23);
+		btnRedTeamDetail3.setBounds(178, 351, 130, 23);
 		panel_1.add(btnRedTeamDetail3);
 		redLev.setEnabled(false);
 
 		redLev.setText("Levitated");
-		redLev.setBounds(215, 115, 97, 23);
+		redLev.setBounds(208, 229, 97, 23);
 		panel_1.add(redLev);
 
-		redForce.setBounds(163, 119, 46, 14);
+		redForce.setBounds(156, 234, 46, 14);
 		panel_1.add(redForce);
 
 		JLabel label_1 = new JLabel("Force:");
-		label_1.setBounds(119, 119, 46, 14);
+		label_1.setBounds(100, 234, 46, 14);
 		panel_1.add(label_1);
 
-		redBoost.setBounds(50, 119, 46, 14);
+		redBoost.setBounds(55, 239, 46, 14);
 		panel_1.add(redBoost);
 
 		JLabel label_5 = new JLabel("Boost:");
-		label_5.setBounds(10, 119, 46, 14);
+		label_5.setBounds(10, 239, 46, 14);
 		panel_1.add(label_5);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Blue Alliance", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 54, 318, 306);
+		panel.setBounds(10, 54, 318, 385);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
 		JLabel lblBlueTeam1 = new JLabel(
 				ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[0].getTeamName() + " : ");
-		lblBlueTeam1.setBounds(10, 167, 68, 14);
+		lblBlueTeam1.setBounds(10, 264, 68, 14);
 		panel.add(lblBlueTeam1);
 
 		JLabel lblBlueTeam2 = new JLabel(
 				ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[1].getTeamName() + " : ");
-		lblBlueTeam2.setBounds(10, 221, 68, 14);
+		lblBlueTeam2.setBounds(10, 309, 68, 14);
 		panel.add(lblBlueTeam2);
 
 		JLabel lblBlueTeam3 = new JLabel(
 				ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[2].getTeamName() + " : ");
-		lblBlueTeam3.setBounds(10, 270, 68, 14);
+		lblBlueTeam3.setBounds(10, 355, 68, 14);
 		panel.add(lblBlueTeam3);
 
 		JButton btnBlueMatchTeam1 = new JButton("Details");
@@ -299,7 +295,7 @@ public class MatchOverview extends JFrame {
 						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[0].getTeamNumber());
 			}
 		});
-		btnBlueMatchTeam1.setBounds(97, 163, 68, 23);
+		btnBlueMatchTeam1.setBounds(100, 259, 68, 23);
 		panel.add(btnBlueMatchTeam1);
 
 		JButton btnBlueMatchTeam2 = new JButton("Details");
@@ -309,7 +305,7 @@ public class MatchOverview extends JFrame {
 						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[1].getTeamNumber());
 			}
 		});
-		btnBlueMatchTeam2.setBounds(97, 217, 68, 23);
+		btnBlueMatchTeam2.setBounds(100, 305, 68, 23);
 		panel.add(btnBlueMatchTeam2);
 
 		JButton btnBlueMatchTeam3 = new JButton("Details");
@@ -319,7 +315,7 @@ public class MatchOverview extends JFrame {
 						.showTeam(ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams()[2].getTeamNumber());
 			}
 		});
-		btnBlueMatchTeam3.setBounds(97, 266, 68, 23);
+		btnBlueMatchTeam3.setBounds(100, 351, 68, 23);
 		panel.add(btnBlueMatchTeam3);
 
 		JButton btnBlueTeamDetail1 = new JButton("Add Performance");
@@ -328,7 +324,7 @@ public class MatchOverview extends JFrame {
 				openTeamDetail(0, false);
 			}
 		});
-		btnBlueTeamDetail1.setBounds(175, 163, 123, 23);
+		btnBlueTeamDetail1.setBounds(178, 259, 130, 23);
 		panel.add(btnBlueTeamDetail1);
 
 		JButton btnBlueTeamDetail2 = new JButton("Add Performance");
@@ -337,7 +333,7 @@ public class MatchOverview extends JFrame {
 				openTeamDetail(1, false);
 			}
 		});
-		btnBlueTeamDetail2.setBounds(175, 217, 123, 23);
+		btnBlueTeamDetail2.setBounds(178, 305, 130, 23);
 		panel.add(btnBlueTeamDetail2);
 
 		JButton btnBlueTeamDetail3 = new JButton("Add Performance");
@@ -346,29 +342,29 @@ public class MatchOverview extends JFrame {
 				openTeamDetail(2, false);
 			}
 		});
-		btnBlueTeamDetail3.setBounds(175, 266, 123, 23);
+		btnBlueTeamDetail3.setBounds(178, 351, 130, 23);
 		panel.add(btnBlueTeamDetail3);
 
 		JLabel label_3 = new JLabel("Boost:");
-		label_3.setBounds(10, 119, 46, 14);
+		label_3.setBounds(10, 239, 46, 14);
 		panel.add(label_3);
 
 		JLabel blueForceTitle = new JLabel("Force:");
-		blueForceTitle.setBounds(119, 119, 46, 14);
+		blueForceTitle.setBounds(100, 234, 46, 14);
 		panel.add(blueForceTitle);
 
-		blueBoost.setBounds(50, 119, 46, 14);
+		blueBoost.setBounds(55, 239, 46, 14);
 		panel.add(blueBoost);
 
-		forceBlue.setBounds(163, 119, 46, 14);
+		forceBlue.setBounds(156, 234, 46, 14);
 		panel.add(forceBlue);
 		blueLev.setEnabled(false);
 
-		blueLev.setBounds(215, 115, 83, 23);
+		blueLev.setBounds(208, 229, 83, 23);
 		panel.add(blueLev);
 
 		JScrollPane blueScrlPane = new JScrollPane();
-		blueScrlPane.setBounds(10, 21, 298, 87);
+		blueScrlPane.setBounds(10, 21, 298, 207);
 		panel.add(blueScrlPane);
 
 		txtaBlueSummary = new JTextArea();
@@ -377,7 +373,7 @@ public class MatchOverview extends JFrame {
 		txtaBlueSummary.setText((String) null);
 
 		JScrollPane redScrlPane = new JScrollPane();
-		redScrlPane.setBounds(10, 21, 298, 87);
+		redScrlPane.setBounds(10, 21, 298, 201);
 		panel_1.add(redScrlPane);
 
 		txtaRedSummary = new JTextArea();
@@ -468,6 +464,27 @@ public class MatchOverview extends JFrame {
 
 		}
 		StringBuilder highlight = new StringBuilder();
+
+		// Check if teams are missing team performances!
+
+		boolean allTeamsReady = true;
+		
+		for (int i = 0; i < k.length; i++) {
+
+			if (k[i].hasTeamPerformance(matchID) == false) {
+
+				allTeamsReady = false;
+				
+				highlight.append("Team " + k[i].getTeamNumber() + " is missing a team performance");
+				highlight.append("\n");
+
+			}
+
+		}
+		
+		if (allTeamsReady == false) {
+			return highlight.toString();
+		}
 
 		highlight.append("Switch in Auto: ");
 		highlight.append(A_switch);
