@@ -73,14 +73,14 @@ public class TeamPerformance implements Serializable{
 		for (int i = 0; i < rawSwitchTable.getRowCount(); i++) {
 			if (((boolean) rawSwitchTable.getValueAt(i, 0)) == false) {
 				if (((boolean) rawSwitchTable.getValueAt(i, 1)) == false) {
-					cubesOnAllianceSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
+					cubesOnAllianceSwitchTeleop.add((Integer) rawSwitchTable.getValueAt(i, 2));
 				} else {
-					cubesOnOpponentSwitchTeleop.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
+					cubesOnOpponentSwitchTeleop.add((Integer) rawSwitchTable.getValueAt(i, 2));
 				}
 
 			} else {
 
-				cubesOnSwitchAuto.add(timeInSeconds((String) rawSwitchTable.getValueAt(i, 2)));
+				cubesOnSwitchAuto.add((Integer) rawSwitchTable.getValueAt(i, 2));
 
 			}
 		}
@@ -89,9 +89,9 @@ public class TeamPerformance implements Serializable{
 
 		for (int i = 0; i < rawScaleTable.getRowCount(); i++) {
 			if (((boolean) rawScaleTable.getValueAt(i, 0)) == false) {
-					cubesOnScaleTeleop.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 1)));
+					cubesOnScaleTeleop.add((Integer) rawScaleTable.getValueAt(i, 1));
 			} else {
-					cubesOnScaleAuto.add(timeInSeconds((String) rawScaleTable.getValueAt(i, 1)));
+					cubesOnScaleAuto.add((Integer) rawScaleTable.getValueAt(i, 1));
 			}
 		}
 
@@ -99,14 +99,14 @@ public class TeamPerformance implements Serializable{
 
 		for (int i = 0; i < rawVaultTable.getRowCount(); i++) {
 			if (((boolean) rawVaultTable.getValueAt(i, 0)) == false) {
-				cubesInVaultTeleop.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
+				cubesInVaultTeleop.add((Integer) rawVaultTable.getValueAt(i, 1));
 			} else {
-				cubesInVaultAuto.add(timeInSeconds((String) rawVaultTable.getValueAt(i, 1)));
+				cubesInVaultAuto.add((Integer) rawVaultTable.getValueAt(i, 1));
 			}
 		}
 
-		if(!teamPerformanceWindow.txtClimb.getText().trim().equals(null)){
-			climb = timeInSeconds(teamPerformanceWindow.txtClimb.getText());
+		if(!teamPerformanceWindow.txtClimb.getText().trim().equals("")){
+			climb = Integer.parseInt(teamPerformanceWindow.txtClimb.getText());
 		}
 		
 		crossedBaseLine = teamPerformanceWindow.chkBaseline.isSelected();
@@ -142,15 +142,6 @@ public class TeamPerformance implements Serializable{
 
 	}
 
-	public static int timeInSeconds(String formattedTime) {
-
-		int minutes = Integer.parseInt(formattedTime.split(":")[0]);
-		int seconds = Integer.parseInt(formattedTime.split(":")[1]);
-
-		return minutes * 60 + seconds;
-
-	}
-
 	public ArrayList<Integer> calcCycleTime(ArrayList<Integer> times, boolean isAuto) {
 
 		Collections.sort(allTimes);
@@ -160,7 +151,7 @@ public class TeamPerformance implements Serializable{
 		
 		int toMaxArrayIndex;
 		
-		if(times.size() >= 1){
+		if(times.size() > 0){
 			
 			if(times.get(times.size() - 1) == allTimes.get(allTimes.size() - 1)){
 				data.add(MAX_TIME - allTimes.get(allTimes.indexOf(times.get(times.size() - 1))));

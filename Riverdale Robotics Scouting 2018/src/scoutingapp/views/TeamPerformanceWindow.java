@@ -50,7 +50,6 @@ public class TeamPerformanceWindow extends JFrame {
 	public JTextField txtScouter;
 
 	TeamPerformance teamPerformance;
-	TeamPerformanceWindow me = this;
 
 	public void saveData() {
 
@@ -111,10 +110,6 @@ public class TeamPerformanceWindow extends JFrame {
 
 	}
 
-	public String secondsToStandard(int time) {
-		return Math.floorDiv(time, 60) + ":" + time % 60;
-	}
-
 	/**
 	 * Create a window from a team performance file
 	 */
@@ -159,7 +154,7 @@ public class TeamPerformanceWindow extends JFrame {
 			JButton btnSaveData = new JButton("Save Data");
 			btnSaveData.setBounds(250, 44, 110, 23);
 			contentPane.add(btnSaveData);
-
+			
 			btnSaveData.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -187,7 +182,7 @@ public class TeamPerformanceWindow extends JFrame {
 
 		txtClimb = new JTextField();
 		txtClimb.setBounds(435, 85, 68, 20);
-		txtClimb.setText(ScoutingApp.regionalCollection().secondsToStandard(teamPerformance.climb));
+		txtClimb.setText(Integer.toString(teamPerformance.climb));
 		txtClimb.setEnabled(editable);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
@@ -200,11 +195,6 @@ public class TeamPerformanceWindow extends JFrame {
 		separator_1.setBounds(109, 114, 394, 2);
 		contentPane.add(separator_1);
 
-		// headers for the table
-		String[] columns = new String[] { "Auto", "Time" };
-		// actual data for the table in a 2d array
-		Object[][] data = new Object[][] { { false, "0:00" } };
-
 		JLabel lblSwitch = new JLabel("Switch");
 		lblSwitch.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSwitch.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -215,7 +205,7 @@ public class TeamPerformanceWindow extends JFrame {
 		scrollPaneSwitch.setBounds(10, 140, 199, 147);
 		contentPane.add(scrollPaneSwitch);
 
-		tblSwitch = new JTable(data, columns);
+		tblSwitch = new JTable();
 		tblSwitch.setModel(teamPerformance.rawSwitchTable);
 		tblSwitch.setEnabled(editable);
 		scrollPaneSwitch.setViewportView(tblSwitch);
@@ -252,7 +242,7 @@ public class TeamPerformanceWindow extends JFrame {
 									TeamPerformanceWindow frame = new TeamPerformanceWindow(teamNumber, matchID,
 											teamPerformance, true);
 									frame.setVisible(true);
-									me.dispose();
+									dispose();
 								} catch (Exception e) {
 									e.printStackTrace();
 								}
@@ -346,21 +336,21 @@ public class TeamPerformanceWindow extends JFrame {
 		btnAddSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mdlSwitch.addRow(new Object[] { false, false, "" });
+				mdlSwitch.addRow(new Object[] { false, false, 0 });
 			}
 		});
 
 		btnAddScale.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mdlScale.addRow(new Object[] { false, "" });
+				mdlScale.addRow(new Object[] { false, 0 });
 			}
 		});
 
 		btnAddVault.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mdlVault.addRow(new Object[] { false, "" });
+				mdlVault.addRow(new Object[] { false, 0 });
 			}
 		});
 
@@ -488,9 +478,9 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneSwitch);
 
 		tblSwitch = new JTable(data, columns);
-		DefaultTableModel mdlSwitch = new DefaultTableModel(new Object[][] { { Boolean.FALSE, Boolean.FALSE, "" }, },
+		DefaultTableModel mdlSwitch = new DefaultTableModel(new Object[][] { { Boolean.FALSE, Boolean.FALSE, 0 }, },
 				new String[] { "Auto", "Offense", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, String.class };
+			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, Integer.class };
 
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -514,9 +504,9 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneScale);
 
 		tblScale = new JTable();
-		DefaultTableModel mdlScale = new DefaultTableModel(new Object[][] { { Boolean.FALSE, "" }, },
+		DefaultTableModel mdlScale = new DefaultTableModel(new Object[][] { { Boolean.FALSE, 0 }, },
 				new String[] { "In Auto", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, String.class };
+			Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
 
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -530,9 +520,9 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneVault);
 
 		tblVault = new JTable();
-		DefaultTableModel mdlVault = new DefaultTableModel(new Object[][] { { Boolean.FALSE, null }, },
+		DefaultTableModel mdlVault = new DefaultTableModel(new Object[][] { { Boolean.FALSE, 0 }, },
 				new String[] { "In Auto", "Time" }) {
-			Class[] columnTypes = new Class[] { Boolean.class, Object.class };
+			Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
 
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -616,21 +606,21 @@ public class TeamPerformanceWindow extends JFrame {
 		btnAddSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mdlSwitch.addRow(new Object[] { false, false, "" });
+				mdlSwitch.addRow(new Object[] { false, false, 0 });
 			}
 		});
 
 		btnAddScale.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mdlScale.addRow(new Object[] { false, "" });
+				mdlScale.addRow(new Object[] { false, 0 });
 			}
 		});
 
 		btnAddVault.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				mdlVault.addRow(new Object[] { false, "" });
+				mdlVault.addRow(new Object[] { false, 0 });
 			}
 		});
 

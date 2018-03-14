@@ -89,8 +89,8 @@ public class SetPowerUps extends JDialog {
 			powers = ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups();
 		}
 
-		txtBoost.setText((powers[0] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(powers[0]));
-		txtForce.setText((powers[1] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(powers[1]));
+		txtBoost.setText((powers[0] == -1) ? "" : Integer.toString(powers[0]));
+		txtForce.setText((powers[1] == -1) ? "" : Integer.toString(powers[1]));
 		chckbxLevitated.setSelected(powers[2] == 1);
 
 		cmbBoost.setBounds(87, 56, 46, 20);
@@ -117,9 +117,9 @@ public class SetPowerUps extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						int[] powerUps = {
 								(txtBoost.getText().equals("")) ? -1
-										: ScoutingApp.regionalCollection().standardToSeconds(txtBoost.getText()),
+										: Integer.parseInt(txtBoost.getText()),
 								(txtForce.getText().equals("")) ? -1
-										: ScoutingApp.regionalCollection().standardToSeconds(txtForce.getText()),
+										: Integer.parseInt(txtForce.getText()),
 								(chckbxLevitated.isSelected() ? 1 : 0) };
 
 						ScoutingApp.setPowerUps(matchID, powerUps, isRed);

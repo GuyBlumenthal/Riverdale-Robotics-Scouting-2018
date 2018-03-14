@@ -34,8 +34,8 @@ public class MatchOverview extends JFrame {
 
 	private int matchID;
 
-	JLabel blueBoost = new JLabel("0:00"), redBoost = new JLabel("0:00"), forceBlue = new JLabel("0:00"),
-			redForce = new JLabel("0:00");
+	JLabel blueBoost = new JLabel("0"), redBoost = new JLabel("0"), forceBlue = new JLabel("0"),
+			redForce = new JLabel("0");
 	JCheckBox blueLev = new JCheckBox("Levitated"), redLev = new JCheckBox();
 
 	MatchOverview me = this;
@@ -51,16 +51,16 @@ public class MatchOverview extends JFrame {
 	public void updatePowers() {
 		Match k = ScoutingApp.regionalCollection().getMatch(matchID);
 
-		blueBoost.setText((k.getBluePowerups()[0] == -1) ? "0:00"
-				: ScoutingApp.regionalCollection().secondsToStandard(k.getBluePowerups()[0]));
-		forceBlue.setText((k.getBluePowerups()[1] == -1) ? "0:00"
-				: ScoutingApp.regionalCollection().secondsToStandard(k.getBluePowerups()[1]));
+		blueBoost.setText((k.getBluePowerups()[0] == -1) ? "0"
+				: Integer.toString(k.getBluePowerups()[0]));
+		forceBlue.setText((k.getBluePowerups()[1] == -1) ? "0"
+				: Integer.toString(k.getBluePowerups()[1]));
 		blueLev.setSelected(k.getBluePowerups()[2] == 1);
 
-		redBoost.setText((k.getRedPowerups()[0] == -1) ? "0:00"
-				: ScoutingApp.regionalCollection().secondsToStandard(k.getRedPowerups()[0]));
+		redBoost.setText((k.getRedPowerups()[0] == -1) ? "0"
+				: Integer.toString(k.getRedPowerups()[0]));
 		redForce.setText((k.getRedPowerups()[1] == -1) ? "0:00"
-				: ScoutingApp.regionalCollection().secondsToStandard(k.getRedPowerups()[1]));
+				: Integer.toString(k.getRedPowerups()[1]));
 		redLev.setSelected(k.getRedPowerups()[2] == 1);
 
 	}

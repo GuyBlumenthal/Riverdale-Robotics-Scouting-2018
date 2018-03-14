@@ -73,9 +73,9 @@ public class SetMatchPoints extends JDialog {
 		int[] bluePowers = ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups();
 		int[] redPowers = ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerups();
 		txtForceBlue.setText(
-				(bluePowers[1] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(bluePowers[1]));
+				(bluePowers[1] == -1) ? "" : Integer.toString(bluePowers[1]));
 		txtForceRed
-				.setText((redPowers[1] == -1) ? "" : ScoutingApp.regionalCollection().secondsToStandard(redPowers[1]));
+				.setText((redPowers[1] == -1) ? "" : Integer.toString(redPowers[1]));
 
 		{
 			JPanel buttonPane = new JPanel();
