@@ -54,11 +54,11 @@ public class TeamDetail extends JFrame {
 		JMenu mnView = new JMenu("View");
 		menuBar.add(mnView);
 
-		JMenuItem mntmShowTeamHub = new JMenuItem("Show Team Hub ...");
-		mnView.add(mntmShowTeamHub);
+		//JMenuItem mntmShowTeamHub = new JMenuItem("Show Team Hub ...");
+		//mnView.add(mntmShowTeamHub);
 
-		JMenuItem mntmShowMatchHub = new JMenuItem("Show Match Hub ...");
-		mnView.add(mntmShowMatchHub);
+		//JMenuItem mntmShowMatchHub = new JMenuItem("Show Match Hub ...");
+		//mnView.add(mntmShowMatchHub);
 
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mnView.add(mntmExit);
@@ -167,7 +167,7 @@ public class TeamDetail extends JFrame {
 //			}
 //		}
 		
-		mntmShowTeamHub.addActionListener(new ActionListener() {
+		/*mntmShowTeamHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
@@ -182,9 +182,9 @@ public class TeamDetail extends JFrame {
 					}
 				});
 			}
-		});
+		});*/
 		
-		mntmShowMatchHub.addActionListener(new ActionListener() {
+		/*mntmShowMatchHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
@@ -199,7 +199,7 @@ public class TeamDetail extends JFrame {
 					}
 				});
 			}
-		});
+		});*/
 		
 		mntmExit.addMouseListener(new MouseAdapter() {
 			@Override
