@@ -130,6 +130,16 @@ public class RegionalCollection implements Serializable {
 
 	}
 
+	public void setScore(int matchID, int score, boolean isRed) {
+
+		if (isRed) {
+			getMatch(matchID).redScore = score;
+		} else {
+			getMatch(matchID).blueScore = score;
+		}
+
+	}
+
 	public void removeTeamPerformance(int teamNumber, int matchID) {
 
 		teams.get(teamNumber).removeTeamPerformance(matchID);
@@ -236,8 +246,8 @@ public class RegionalCollection implements Serializable {
 
 	}
 
-	public void mergeCollection (RegionalCollection newCollection) throws ExistingException {
-		
+	public void mergeCollection(RegionalCollection newCollection) throws ExistingException {
+
 		for (Integer teamNumber : teams.keySet()) {
 
 			if (newCollection.matchExists(teamNumber)) {
@@ -247,7 +257,7 @@ public class RegionalCollection implements Serializable {
 			}
 
 		}
-		
+
 		for (Integer matchID : matches.keySet()) {
 
 			if (newCollection.matchExists(matchID)) {
@@ -275,15 +285,15 @@ public class RegionalCollection implements Serializable {
 			}
 
 		}
-		
+
 		finalIntegrationOfCollection(newCollection);
-		
+
 	}
-	
-	private void finalIntegrationOfCollection (RegionalCollection newCollection) {
-		
+
+	private void finalIntegrationOfCollection(RegionalCollection newCollection) {
+
 	}
-	
+
 	public String findDuplicates(RegionalCollection newCollection) {
 
 		StringBuilder duplicateTeams = new StringBuilder("Teams: " + "\n");

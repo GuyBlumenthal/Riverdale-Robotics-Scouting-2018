@@ -347,6 +347,12 @@ public class ScoutingApp {
 		regionalCollection().setPowerUps(matchID, powerUps, isRed);
 		
 	}
+	
+	public static void setScore (int matchID, int score, boolean isRed) {
+		
+		regionalCollection().setScore(matchID, score, isRed);
+		
+	}
 
 	public static void openCollection(String fileName) {
 
