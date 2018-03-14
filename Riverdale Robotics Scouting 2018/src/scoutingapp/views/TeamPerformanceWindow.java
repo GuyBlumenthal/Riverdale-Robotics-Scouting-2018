@@ -182,7 +182,7 @@ public class TeamPerformanceWindow extends JFrame {
 
 		txtClimb = new JTextField();
 		txtClimb.setBounds(435, 85, 68, 20);
-		txtClimb.setText(Integer.toString(teamPerformance.climb));
+		txtClimb.setText(teamPerformance.climb > 0 ? Integer.toString(teamPerformance.climb) : "");
 		txtClimb.setEnabled(editable);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
@@ -194,15 +194,15 @@ public class TeamPerformanceWindow extends JFrame {
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(109, 114, 394, 2);
 		contentPane.add(separator_1);
-
+		
 		JLabel lblSwitch = new JLabel("Switch");
 		lblSwitch.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSwitch.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSwitch.setBounds(86, 116, 47, 24);
+		lblSwitch.setBounds(29, 140, 47, 24);
 		contentPane.add(lblSwitch);
 
 		JScrollPane scrollPaneSwitch = new JScrollPane();
-		scrollPaneSwitch.setBounds(10, 140, 199, 147);
+		scrollPaneSwitch.setBounds(10, 175, 199, 147);
 		contentPane.add(scrollPaneSwitch);
 
 		tblSwitch = new JTable();
@@ -213,11 +213,11 @@ public class TeamPerformanceWindow extends JFrame {
 		JLabel label = new JLabel("Scale");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label.setBounds(294, 116, 47, 24);
+		label.setBounds(230, 140, 47, 24);
 		contentPane.add(label);
 
 		JScrollPane scrollPaneScale = new JScrollPane();
-		scrollPaneScale.setBounds(231, 140, 179, 147);
+		scrollPaneScale.setBounds(230, 175, 179, 147);
 		contentPane.add(scrollPaneScale);
 
 		tblScale = new JTable();
@@ -258,7 +258,7 @@ public class TeamPerformanceWindow extends JFrame {
 		}
 
 		JScrollPane scrollPaneVault = new JScrollPane();
-		scrollPaneVault.setBounds(431, 140, 163, 147);
+		scrollPaneVault.setBounds(438, 175, 163, 147);
 		contentPane.add(scrollPaneVault);
 
 		tblVault = new JTable();
@@ -269,12 +269,12 @@ public class TeamPerformanceWindow extends JFrame {
 		JLabel label_1 = new JLabel("Power Cubes In Vault");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_1.setBounds(447, 116, 129, 24);
+		label_1.setBounds(445, 114, 129, 24);
 		contentPane.add(label_1);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(231, 140, 147, 147);
-		contentPane.add(scrollPane);
+//		JScrollPane scrollPane = new JScrollPane();
+//		scrollPane.setBounds(231, 140, 147, 147);
+//		contentPane.add(scrollPane);
 
 		JLabel lblScouterName = new JLabel("Scouter Name:");
 		lblScouterName.setBounds(450, 17, 77, 14);
@@ -308,26 +308,32 @@ public class TeamPerformanceWindow extends JFrame {
 		JButton btnAddSwitch = new JButton("Add");
 		btnAddSwitch.setBounds(86, 142, 57, 22);
 		contentPane.add(btnAddSwitch);
-
+		btnAddSwitch.setEnabled(editable);
+		
 		JButton btnAddScale = new JButton("Add");
 		btnAddScale.setBounds(287, 142, 57, 22);
 		contentPane.add(btnAddScale);
+		btnAddScale.setEnabled(editable);
 
 		JButton btnAddVault = new JButton("Add");
 		btnAddVault.setBounds(446, 142, 57, 22);
 		contentPane.add(btnAddVault);
+		btnAddVault.setEnabled(editable);
 
 		JButton btnDeleteSwitch = new JButton("Del");
 		btnDeleteSwitch.setBounds(152, 142, 57, 22);
 		contentPane.add(btnDeleteSwitch);
-
+		btnDeleteSwitch.setEnabled(editable);
+		
 		JButton btnDeleteScale = new JButton("Del");
 		btnDeleteScale.setBounds(354, 142, 57, 22);
 		contentPane.add(btnDeleteScale);
+		btnDeleteScale.setEnabled(editable);
 
 		JButton btnDeleteVault = new JButton("Del");
 		btnDeleteVault.setBounds(517, 142, 57, 22);
 		contentPane.add(btnDeleteVault);
+		btnDeleteVault.setEnabled(editable);
 		
 		DefaultTableModel mdlSwitch = (DefaultTableModel) tblSwitch.getModel();
 		DefaultTableModel mdlScale = (DefaultTableModel) tblScale.getModel();
@@ -462,11 +468,6 @@ public class TeamPerformanceWindow extends JFrame {
 		separator_1.setBounds(109, 114, 394, 2);
 		contentPane.add(separator_1);
 
-		// headers for the table
-		String[] columns = new String[] { "Auto", "Time" };
-		// actual data for the table in a 2d array
-		Object[][] data = new Object[][] { { false, "0:00" } };
-
 		JLabel lblSwitch = new JLabel("Switch");
 		lblSwitch.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSwitch.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -477,8 +478,8 @@ public class TeamPerformanceWindow extends JFrame {
 		scrollPaneSwitch.setBounds(10, 175, 199, 147);
 		contentPane.add(scrollPaneSwitch);
 
-		tblSwitch = new JTable(data, columns);
-		DefaultTableModel mdlSwitch = new DefaultTableModel(new Object[][] { { Boolean.FALSE, Boolean.FALSE, 0 }, },
+		tblSwitch = new JTable();
+		DefaultTableModel mdlSwitch = new DefaultTableModel(new Object[][] {},
 				new String[] { "Auto", "Offense", "Time" }) {
 			Class[] columnTypes = new Class[] { Boolean.class, Boolean.class, Integer.class };
 
@@ -486,20 +487,7 @@ public class TeamPerformanceWindow extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		};
-		tblSwitch.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Auto", "Offense", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, Boolean.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		tblSwitch.setModel(mdlSwitch);
 		scrollPaneSwitch.setViewportView(tblSwitch);
 
 		JButton btnSaveData = new JButton("Save Data");
@@ -517,7 +505,7 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneScale);
 
 		tblScale = new JTable();
-		DefaultTableModel mdlScale = new DefaultTableModel(new Object[][] { { Boolean.FALSE, 0 }, },
+		DefaultTableModel mdlScale = new DefaultTableModel(new Object[][] { },
 				new String[] { "In Auto", "Time" }) {
 			Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
 
@@ -525,20 +513,7 @@ public class TeamPerformanceWindow extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		};
-		tblScale.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"In Auto", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		tblScale.setModel(mdlScale);
 		scrollPaneScale.setViewportView(tblScale);
 
 		JScrollPane scrollPaneVault = new JScrollPane();
@@ -546,7 +521,7 @@ public class TeamPerformanceWindow extends JFrame {
 		contentPane.add(scrollPaneVault);
 
 		tblVault = new JTable();
-		DefaultTableModel mdlVault = new DefaultTableModel(new Object[][] { { Boolean.FALSE, 0 }, },
+		DefaultTableModel mdlVault = new DefaultTableModel(new Object[][] { },
 				new String[] { "In Auto", "Time" }) {
 			Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
 
@@ -554,20 +529,7 @@ public class TeamPerformanceWindow extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		};
-		tblVault.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"In Auto", "Time"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Boolean.class, Object.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		tblVault.setModel(mdlVault);
 		scrollPaneVault.setViewportView(tblVault);
 
 		JLabel label_1 = new JLabel("Power Cubes In Vault");
