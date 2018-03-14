@@ -11,7 +11,7 @@ public class Match implements Serializable {
 	 */
 	private static final long serialVersionUID = -1229491223808886225L;
 
-	int redScore, blueScore, matchID;
+	int redScore = -1, blueScore = -1, matchID;
 
 	int[] redPowerUps;
 	int[] bluePowerUps;

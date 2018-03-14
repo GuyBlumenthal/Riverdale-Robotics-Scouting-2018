@@ -87,6 +87,19 @@ public class MatchHub extends JFrame {
 				arrayValues[i][j + 4] = ScoutingApp.regionalCollection().getMatch(matchIDList[i]).getRedTeams()[j]
 						.getTeamNumber();
 			}
+			
+			int blueScore = ScoutingApp.regionalCollection().getMatch(matchIDList[i]).getBlueScore();
+			int redScore = ScoutingApp.regionalCollection().getMatch(matchIDList[i]).getRedScore();
+			
+			if (blueScore > redScore) {
+				arrayValues[i][7] = "Blue Alliance";
+			} else if (redScore > blueScore) {
+				arrayValues[i][7] = "Red Alliance";
+			} else if (redScore == -1 || blueScore == -1) {
+				arrayValues[i][7] = "Indeterminate";
+			} else {
+				arrayValues[i][7] = "Tie";
+			}
 
 		}
 

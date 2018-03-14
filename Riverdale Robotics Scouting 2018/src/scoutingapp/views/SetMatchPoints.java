@@ -60,6 +60,8 @@ public class SetMatchPoints extends JDialog {
 
 							ScoutingApp.setScore(matchID, score, isRed);
 							ScoutingApp.updateMatchView(matchID);
+							
+							ScoutingApp.updateMatchHubTable();
 
 							dispose();
 
