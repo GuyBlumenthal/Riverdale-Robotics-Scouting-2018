@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javax.swing.UIManager;
 
 import scoutingapp.commons.existing.ExistingException;
+import scoutingapp.commons.fileIO.DirectoryAction;
 import scoutingapp.commons.fileIO.ReadFile;
 import scoutingapp.commons.fileIO.SaveFile;
 import scoutingapp.commons.team.Team;
@@ -18,7 +19,6 @@ import scoutingapp.views.TeamDetail;
 import scoutingapp.views.TeamHub;
 import scoutingapp.views.TeamPerformanceWindow;
 import scoutingapp.views.fileIO.CollectionName;
-import scoutingapp.views.fileIO.DirectoryAction;
 import scoutingapp.views.fileIO.SaveConfirm;
 import scoutingapp.views.fileIO.ViewDirectories;
 

@@ -1,4 +1,4 @@
-package scoutingapp.views.fileIO;
+package scoutingapp.commons.fileIO;
 
 public enum DirectoryAction {
 

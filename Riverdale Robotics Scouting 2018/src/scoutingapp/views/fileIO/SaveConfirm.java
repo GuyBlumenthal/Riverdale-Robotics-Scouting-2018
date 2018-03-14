@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import scoutingapp.commons.ScoutingApp;
+import scoutingapp.commons.fileIO.DirectoryAction;
 
 public class SaveConfirm extends JDialog {
 

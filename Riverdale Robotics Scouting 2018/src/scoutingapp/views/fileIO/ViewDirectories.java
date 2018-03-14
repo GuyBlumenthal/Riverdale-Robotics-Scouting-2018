@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 import scoutingapp.commons.ScoutingApp;
+import scoutingapp.commons.fileIO.DirectoryAction;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
