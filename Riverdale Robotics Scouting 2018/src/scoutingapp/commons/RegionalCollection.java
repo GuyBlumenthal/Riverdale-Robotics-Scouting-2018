@@ -2,7 +2,9 @@ package scoutingapp.commons;
 
 import java.awt.EventQueue;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -303,19 +305,47 @@ public class RegionalCollection implements Serializable {
 		if (teams.size() == 0) {
 			return new int[0];
 		}
-
-		Object[] teamObjects = teams.keySet().toArray();
-		int[] teamList = new int[teamObjects.length];
-
-		for (int i = 0; i < teamList.length; i++) {
-			teamList[i] = (int) teamObjects[i];
+		
+		int[] teamList = new int[this.teams.size()];
+		double[] scores = getTeamScores();
+		ArrayList<Team> teamsTemp = new ArrayList<Team>(this.teams.size());
+		
+		for(Integer matchID : this.teams.keySet()){
+			teamsTemp.add(this.teams.get(matchID));
 		}
-
-		Arrays.sort(teamList);
-
+		
+		for(int i = 0; i < scores.length; i++){
+			for(int j = 0; j < teamsTemp.size(); j++){
+				if(teamsTemp.get(j).calcRankingScore(teamsTemp.get(j)) == scores[i]){
+					teamList[i] = teamsTemp.get(j).getTeamNumber();
+					teamsTemp.remove(j);
+					break;
+				}
+			}
+		}
+		
 		return teamList;
-
 	}
+	
+	public double[] getTeamScores(){
+		double[] scores = new double[this.teams.size()];
+		int x = 0;
+		for(Team teamPlaying : this.teams.values()){
+			scores[x] = teamPlaying.calcRankingScore(teamPlaying);
+			x++;	
+		}
+		
+		Arrays.sort(scores);
+		
+		return scores;
+	}
+	/**
+	 * @param
+	 * 		the integer represents the given team number
+	 * 		and the double it the team's ranking score
+	 * @return
+	 */
+	
 
 	public int[] getMatchIDList() {
 		if (matches.size() == 0) {

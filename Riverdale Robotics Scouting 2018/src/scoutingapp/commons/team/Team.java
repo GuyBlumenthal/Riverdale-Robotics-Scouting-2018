@@ -18,7 +18,7 @@ public class Team implements Serializable {
 
 	private int teamNumber;
 	private String teamName;
-
+	
 	public HashMap<Integer, TeamPerformance> teamPerformances;
 
 	public Team(int teamNumber, String teamName) {
@@ -37,6 +37,7 @@ public class Team implements Serializable {
 		teamPerformances = new HashMap<Integer, TeamPerformance>();
 
 	}
+	
 
 	public int getNumberOfMatchesPlayed() {
 
@@ -238,6 +239,61 @@ public class Team implements Serializable {
 		return sum / (total > 0 ? total : 1);
 	}
 
+	public double calcRankingScore(Team team){
+		int rankingPoints = 0;
+		int totalMatches = teamPerformances.size();
+		boolean whichAlliance = false;
+		
+		for(Integer matchID : teamPerformances.keySet()){
+			Team[] alliance;
+			int[] allianceScore;
+			
+			int blueScore = ScoutingApp.regionalCollection().getMatch(matchID).getBlueScore();
+			int redScore = ScoutingApp.regionalCollection().getMatch(matchID).getRedScore();
+			Team[] blueTeams = ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams();			
+			Team[] redTeams = ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams();
+			int[] bluePowerUps = ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups();
+			int[] redPowerUps = ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerups();
+			
+			//finding which alliance the team is on
+			for(int i = 0; i < blueTeams.length; i++){
+				if(blueTeams[i].equals(team)){	
+					whichAlliance = true;	
+					break;	
+				}
+			}
+			
+			//calculating ranking points from winning the match
+			if((blueScore > redScore && whichAlliance) || (redScore > blueScore && !whichAlliance)){
+				rankingPoints += 2;
+			}
+			
+			alliance = (whichAlliance) ? blueTeams : redTeams;
+			allianceScore = (whichAlliance) ? bluePowerUps : redPowerUps;
+			
+			//calculating ranking points from climbing and crossing the baseline
+			int nClimbs = 0;
+			int nCrossedBaseline = 0;
+			for(int i = 0; i < alliance.length; i++){
+				if(alliance[i].teamPerformances.get(matchID).climb > 0){
+					nClimbs++;
+				}
+				if(alliance[i].teamPerformances.get(matchID).crossedBaseLine){
+					nCrossedBaseline++;
+				}
+			}
+			
+			if(nClimbs == 3 || (nClimbs == 2 && allianceScore[2] > 0)){
+				rankingPoints++;
+			}
+			
+			if(nCrossedBaseline == 3){
+				rankingPoints++;
+			}
+		}
+		
+		return rankingPoints / (totalMatches > 0 ? totalMatches : 1);
+	}
 	
 	public ArrayList<Integer> getData(int scenario, TeamPerformance performance) {
 		switch (scenario) {

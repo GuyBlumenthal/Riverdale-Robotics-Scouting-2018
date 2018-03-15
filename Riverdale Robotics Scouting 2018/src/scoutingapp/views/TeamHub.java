@@ -195,9 +195,10 @@ public class TeamHub extends JFrame {
 
 		arrayValues = new Object[ScoutingApp.regionalCollection().getTeamList().length][4];
 		int[] teamList = ScoutingApp.regionalCollection().getTeamList();
-
+		double[] teamScores = ScoutingApp.regionalCollection().getTeamScores();
+		
 		for (int i = 0; i < arrayValues.length; i++) {
-			arrayValues[i][0] = i + 1;
+			arrayValues[i][0] = teamScores[i];
 			arrayValues[i][1] = teamList[i];
 			arrayValues[i][2] = ScoutingApp.regionalCollection().getTeam(teamList[i]).getTeamName();
 			arrayValues[i][3] = ScoutingApp.regionalCollection().getTeam(teamList[i]).calcAutoCubesAverage();
