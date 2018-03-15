@@ -405,44 +405,6 @@ public class TeamPerformanceWindow extends JDialog {
 		setResizable(false);
 		setModal(true);
 
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-
-		JMenu mnView = new JMenu("View");
-		menuBar.add(mnView);
-
-		JMenuItem mntmTeams = new JMenuItem("Teams");
-		mntmTeams.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							ScoutingApp.showTeamHub();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			}
-		});
-		mnView.add(mntmTeams);
-
-		JMenuItem mntmMatches = new JMenuItem("Matches");
-		mntmMatches.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							ScoutingApp.showMatchHub();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			}
-		});
-		mnView.add(mntmMatches);
-
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
