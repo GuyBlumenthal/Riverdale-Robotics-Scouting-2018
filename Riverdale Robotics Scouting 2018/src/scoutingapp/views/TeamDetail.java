@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 
 public class TeamDetail extends JFrame {
 	/**
@@ -46,32 +47,41 @@ public class TeamDetail extends JFrame {
 		currentTeam = ScoutingApp.regionalCollection().getTeam(team);
 		setResizable(false);
 
-		setSize(new Dimension(1024, 600));
+		setSize(new Dimension(635, 489));
 		setTitle("Scouting - Team Detail");
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
 		JMenu mnView = new JMenu("View");
 		menuBar.add(mnView);
-
-		//JMenuItem mntmShowTeamHub = new JMenuItem("Show Team Hub ...");
-		//mnView.add(mntmShowTeamHub);
-
-		//JMenuItem mntmShowMatchHub = new JMenuItem("Show Match Hub ...");
-		//mnView.add(mntmShowMatchHub);
-
-		JMenuItem mntmExit = new JMenuItem("Exit");
-		mnView.add(mntmExit);
+		
+		JMenuItem mntmPitScouting = new JMenuItem("Pit Scouting");
+		mntmPitScouting.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (currentTeam.pitScouting.equals("") == false) {
+					
+					PitScouting pit = new PitScouting (currentTeam.getTeamNumber(), false);
+					
+				} else {
+					
+					PitScouting pit = new PitScouting (currentTeam.getTeamNumber(), true);
+					
+				}
+				
+			}
+		});
+		mnView.add(mntmPitScouting);
 		getContentPane().setLayout(null);
 
 		JLabel lblTeamNumber = new JLabel(Integer.toString(team) + " - " + currentTeam.getTeamName());
-		lblTeamNumber.setFont(new Font("Courier New", Font.PLAIN, 15));
-		lblTeamNumber.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTeamNumber.setBounds(47, 11, 346, 51);
+		lblTeamNumber.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTeamNumber.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTeamNumber.setBounds(28, 11, 270, 51);
 		getContentPane().add(lblTeamNumber);
 
 		JScrollPane scrollPaneMatches = new JScrollPane();
-		scrollPaneMatches.setBounds(47, 73, 903, 176);
+		scrollPaneMatches.setBounds(10, 73, 604, 176);
 		getContentPane().add(scrollPaneMatches);
 
 		tblMatches = new JTable();
@@ -98,13 +108,13 @@ public class TeamDetail extends JFrame {
 		scrollPaneMatches.setViewportView(tblMatches);
 
 		JLabel lblOverview = new JLabel("Overview");
-		lblOverview.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOverview.setFont(new Font("Courier New", Font.PLAIN, 15));
-		lblOverview.setBounds(10, 313, 140, 31);
+		lblOverview.setHorizontalAlignment(SwingConstants.LEFT);
+		lblOverview.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblOverview.setBounds(28, 260, 140, 31);
 		getContentPane().add(lblOverview);
 
 		JScrollPane scrollPaneOverview = new JScrollPane();
-		scrollPaneOverview.setBounds(47, 353, 903, 125);
+		scrollPaneOverview.setBounds(10, 302, 604, 125);
 		getContentPane().add(scrollPaneOverview);
 
 		tblOverview = new JTable();
@@ -147,66 +157,14 @@ public class TeamDetail extends JFrame {
 						currentTeam.calcBooleanConsistency(false),
 						null }
 				},
-				new String[] { "Robot Abilities", "Auto Average", "Auto Consistency", "Auto Average Time",
-						"Teleop Average", "Teleop Consistency", "Teleop Average Time" }));
+				new String[] { "Robot Abilities", "Auto Average", "Consistency", "Average Time",
+						"Teleop Average", "Consistency", "Average Time" }));
 
 		
 		tblOverview.getTableHeader().setReorderingAllowed(false);
 		
 		scrollPaneOverview.setViewportView(tblOverview);
 		tblOverview.getTableHeader().setReorderingAllowed(false);
-		
-//		for (TeamPerformance performance : currentTeam.teamPerformances.values()) {
-//			for(int i = 0; i <= 6; i++){	
-//				ArrayList<Integer> data = currentTeam.getData(i, performance);
-//				System.out.println(i);
-//				System.out.println(data.size());
-//				for(int j = 0; j < data.size(); j++){
-//					System.out.println(data.get(j));
-//				}
-//			}
-//		}
-		
-		/*mntmShowTeamHub.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							TeamHub frame = new TeamHub();
-							frame.setVisible(true);
-							dispose();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			}
-		});*/
-		
-		/*mntmShowMatchHub.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							MatchHub frame = new MatchHub();
-							frame.setVisible(true);
-							dispose();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			}
-		});*/
-		
-		mntmExit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				dispose();
-			}
-		});
 		
 	}
 
@@ -228,7 +186,7 @@ public class TeamDetail extends JFrame {
 
 		
 		DefaultTableModel tableModel = new DefaultTableModel(arrayValues,
-				new String[] { "Match Number", "Comments", "Scouter"}) {
+				new String[] { "Match", "Scouter", "Comments"}) {
 			private static final long serialVersionUID = -6261637160294735163L;
 
 			public boolean isCellEditable(int row, int column) {
@@ -237,6 +195,16 @@ public class TeamDetail extends JFrame {
 
 		};
 		
-		tblMatches.setModel(tableModel);
+		tblMatches.setModel(new DefaultTableModel(
+			arrayValues,
+			new String[] {
+				"Match", "Scouter", "Comments"
+			}
+		));
+		tblMatches.getColumnModel().getColumn(0).setMinWidth(75);
+		tblMatches.getColumnModel().getColumn(0).setMaxWidth(75);
+		tblMatches.getColumnModel().getColumn(1).setPreferredWidth(150);
+		tblMatches.getColumnModel().getColumn(1).setMinWidth(150);
+		tblMatches.getColumnModel().getColumn(1).setMaxWidth(150);
 	}
 }

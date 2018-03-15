@@ -20,12 +20,16 @@ public class Team implements Serializable {
 	private String teamName;
 	
 	public HashMap<Integer, TeamPerformance> teamPerformances;
+	
+	public String pitScouting;
 
 	public Team(int teamNumber, String teamName) {
 		this.teamNumber = teamNumber;
 		this.teamName = teamName;
 
 		teamPerformances = new HashMap<Integer, TeamPerformance>();
+		
+		pitScouting = "";
 
 	}
 
@@ -35,6 +39,8 @@ public class Team implements Serializable {
 		this.teamName = Integer.toString(teamNumber);
 
 		teamPerformances = new HashMap<Integer, TeamPerformance>();
+		
+		pitScouting = "";
 
 	}
 	
