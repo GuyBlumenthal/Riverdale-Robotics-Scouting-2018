@@ -49,10 +49,10 @@ public class ScoutingApp {
 			e.printStackTrace();
 		}
 
-		createTestEnvironment();
-
 		matchHub = new MatchHub();
 		teamHub = new TeamHub();
+		
+		setSaved();
 
 		try {
 			matchHub.setVisible(true);
