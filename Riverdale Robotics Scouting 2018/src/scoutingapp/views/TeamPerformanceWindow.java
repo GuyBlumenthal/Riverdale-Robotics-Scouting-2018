@@ -280,13 +280,6 @@ public class TeamPerformanceWindow extends JDialog {
 		contentPane.add(txtScouter);
 		txtScouter.setColumns(10);
 
-		JLabel lblComments = new JLabel("Comments");
-		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblComments.setBounds(10, 333, 95, 24);
-		lblComments.setText(teamPerformance.comments);
-		lblComments.setEnabled(editable);
-		contentPane.add(lblComments);
-
 		txtaComments = new JTextArea();
 		txtaComments.setLineWrap(true);
 		txtaComments.setBounds(10, 358, 591, 66);
@@ -294,11 +287,6 @@ public class TeamPerformanceWindow extends JDialog {
 		txtaComments.setEnabled(editable);
 		txtaComments.setColumns(10);
 		contentPane.add(txtaComments);
-
-		lblComments = new JLabel("Comments");
-		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblComments.setBounds(10, 333, 95, 24);
-		contentPane.add(lblComments);
 
 		chkParked = new JCheckBox("Parked");
 		chkParked.setBounds(436, 84, 97, 23);
