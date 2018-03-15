@@ -229,7 +229,7 @@ public class TeamPerformance implements Serializable {
 
 		DefaultTableModel vaultTable;
 
-		if ((getRawData(1).size() + getRawData(3).size()) == 0) {
+		if ((getRawData(2).size() + getRawData(4).size()) == 0) {
 			vaultTable = new DefaultTableModel(new Object[][] {}, new String[] { "In Auto", "Time" }) {
 				Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
 
