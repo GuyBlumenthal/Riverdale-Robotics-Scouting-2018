@@ -345,13 +345,25 @@ public class ScoutingApp {
 	public static void setPowerUps(int matchID, int[] powerUps, boolean isRed) {
 
 		regionalCollection().setPowerUps(matchID, powerUps, isRed);
-		
+
 	}
-	
-	public static void setScore (int matchID, int score, boolean isRed) {
-		
+
+	public static void setScore(int matchID, int score, boolean isRed) {
+
 		regionalCollection().setScore(matchID, score, isRed);
-		
+
+	}
+
+	public static void setPitScouting(int teamNumber, String pitScouting) {
+
+		regionalCollection().teams.get(teamNumber).pitScouting = pitScouting;
+
+	}
+
+	public static String getPitScouting(int teamNumber) {
+
+		return regionalCollection().teams.get(teamNumber).pitScouting;
+
 	}
 
 	public static void openCollection(String fileName) {

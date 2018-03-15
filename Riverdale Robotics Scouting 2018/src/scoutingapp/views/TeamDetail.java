@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 
 public class TeamDetail extends JFrame {
 	/**
@@ -46,22 +47,31 @@ public class TeamDetail extends JFrame {
 		currentTeam = ScoutingApp.regionalCollection().getTeam(team);
 		setResizable(false);
 
-		setSize(new Dimension(781, 489));
+		setSize(new Dimension(635, 489));
 		setTitle("Scouting - Team Detail");
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
 		JMenu mnView = new JMenu("View");
 		menuBar.add(mnView);
-
-		//JMenuItem mntmShowTeamHub = new JMenuItem("Show Team Hub ...");
-		//mnView.add(mntmShowTeamHub);
-
-		//JMenuItem mntmShowMatchHub = new JMenuItem("Show Match Hub ...");
-		//mnView.add(mntmShowMatchHub);
-
-		JMenuItem mntmExit = new JMenuItem("Exit");
-		mnView.add(mntmExit);
+		
+		JMenuItem mntmPitScouting = new JMenuItem("Pit Scouting");
+		mntmPitScouting.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (currentTeam.pitScouting.equals("") == false) {
+					
+					PitScouting pit = new PitScouting (currentTeam.getTeamNumber(), false);
+					
+				} else {
+					
+					PitScouting pit = new PitScouting (currentTeam.getTeamNumber(), true);
+					
+				}
+				
+			}
+		});
+		mnView.add(mntmPitScouting);
 		getContentPane().setLayout(null);
 
 		JLabel lblTeamNumber = new JLabel(Integer.toString(team) + " - " + currentTeam.getTeamName());
@@ -71,7 +81,7 @@ public class TeamDetail extends JFrame {
 		getContentPane().add(lblTeamNumber);
 
 		JScrollPane scrollPaneMatches = new JScrollPane();
-		scrollPaneMatches.setBounds(10, 73, 752, 176);
+		scrollPaneMatches.setBounds(10, 73, 604, 176);
 		getContentPane().add(scrollPaneMatches);
 
 		tblMatches = new JTable();
@@ -104,7 +114,7 @@ public class TeamDetail extends JFrame {
 		getContentPane().add(lblOverview);
 
 		JScrollPane scrollPaneOverview = new JScrollPane();
-		scrollPaneOverview.setBounds(10, 302, 752, 125);
+		scrollPaneOverview.setBounds(10, 302, 604, 125);
 		getContentPane().add(scrollPaneOverview);
 
 		tblOverview = new JTable();
@@ -155,58 +165,6 @@ public class TeamDetail extends JFrame {
 		
 		scrollPaneOverview.setViewportView(tblOverview);
 		tblOverview.getTableHeader().setReorderingAllowed(false);
-		
-//		for (TeamPerformance performance : currentTeam.teamPerformances.values()) {
-//			for(int i = 0; i <= 6; i++){	
-//				ArrayList<Integer> data = currentTeam.getData(i, performance);
-//				System.out.println(i);
-//				System.out.println(data.size());
-//				for(int j = 0; j < data.size(); j++){
-//					System.out.println(data.get(j));
-//				}
-//			}
-//		}
-		
-		/*mntmShowTeamHub.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							TeamHub frame = new TeamHub();
-							frame.setVisible(true);
-							dispose();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			}
-		});*/
-		
-		/*mntmShowMatchHub.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							MatchHub frame = new MatchHub();
-							frame.setVisible(true);
-							dispose();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			}
-		});*/
-		
-		mntmExit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				dispose();
-			}
-		});
 		
 	}
 
