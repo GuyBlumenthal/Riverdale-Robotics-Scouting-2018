@@ -296,6 +296,7 @@ public class TeamPerformanceWindow extends JDialog {
 		contentPane.add(lblComments);
 
 		txtaComments = new JTextArea();
+		txtaComments.setLineWrap(true);
 		txtaComments.setBounds(10, 358, 591, 66);
 		txtaComments.setText(teamPerformance.comments);
 		txtaComments.setEnabled(editable);
@@ -592,6 +593,7 @@ public class TeamPerformanceWindow extends JDialog {
 		contentPane.add(btnDeleteVault);
 
 		txtaComments = new JTextArea();
+		txtaComments.setLineWrap(true);
 		txtaComments.setBounds(10, 358, 591, 66);
 		contentPane.add(txtaComments);
 		txtaComments.setColumns(10);
