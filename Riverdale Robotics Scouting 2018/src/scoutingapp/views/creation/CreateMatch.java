@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -48,6 +49,8 @@ public class CreateMatch {
 		for (int i = 0; i < temp.length; i++) {
 			teams.add(Integer.parseInt(String.valueOf(temp[i])));
 		}
+		
+		Collections.sort(teams);
 
 		frame = new JDialog();
 		frame.setBounds(100, 100, 450, 366);
