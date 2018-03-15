@@ -3,6 +3,7 @@ package scoutingapp.views;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -50,6 +51,7 @@ public class TeamPerformanceWindow extends JDialog {
 	public JTextField txtScouter;
 
 	TeamPerformance teamPerformance;
+	private JMenuBar menuBar;
 
 	public void saveData() {
 
@@ -117,24 +119,12 @@ public class TeamPerformanceWindow extends JDialog {
 
 		this.teamNumber = teamNumber;
 		this.matchID = matchID;
-		this.teamPerformance = teamPerformance;
 
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 675, 427);
+		setBounds(100, 100, 627, 495);
 		setResizable(false);
 		setModal(true);
 
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-
-		JMenu mnView = new JMenu("View");
-		menuBar.add(mnView);
-
-		JMenuItem mntmTeams = new JMenuItem("Teams");
-		mnView.add(mntmTeams);
-
-		JMenuItem mntmMatches = new JMenuItem("Matches");
-		mnView.add(mntmMatches);
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
@@ -142,7 +132,7 @@ public class TeamPerformanceWindow extends JDialog {
 
 		JLabel lblMatchDetail = new JLabel("Match Detail");
 		lblMatchDetail.setFont(new Font("Trebuchet MS", Font.PLAIN, 16));
-		lblMatchDetail.setBounds(255, 2, 97, 36);
+		lblMatchDetail.setBounds(263, 11, 97, 36);
 		contentPane.add(lblMatchDetail);
 
 		JLabel lblTeam = new JLabel("Team " + teamNumber);
@@ -151,11 +141,20 @@ public class TeamPerformanceWindow extends JDialog {
 		lblTeam.setBounds(134, 42, 95, 24);
 		contentPane.add(lblTeam);
 
+		lblMatchNumber = new JLabel("Match " + matchID);
+		lblMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblMatchNumber.setBounds(395, 42, 95, 24);
+		contentPane.add(lblMatchNumber);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(109, 77, 394, 2);
+		contentPane.add(separator);
+
 		if (editable) {
 			JButton btnSaveData = new JButton("Save Data");
 			btnSaveData.setBounds(250, 44, 110, 23);
 			contentPane.add(btnSaveData);
-			
+
 			btnSaveData.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -166,36 +165,27 @@ public class TeamPerformanceWindow extends JDialog {
 			});
 		}
 
-		lblMatchNumber = new JLabel("Match " + matchID);
-		lblMatchNumber.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMatchNumber.setBounds(420, 42, 95, 24);
-		contentPane.add(lblMatchNumber);
-
-		JSeparator separator = new JSeparator();
-		separator.setBounds(109, 77, 394, 2);
-		contentPane.add(separator);
-
 		chkBaseline = new JCheckBox("(Auto) Crossed Baseline");
-		chkBaseline.setBounds(138, 84, 154, 23);
+		chkBaseline.setBounds(97, 84, 154, 23);
 		chkBaseline.setSelected(teamPerformance.crossedBaseLine);
 		chkBaseline.setEnabled(editable);
 		contentPane.add(chkBaseline);
 
 		txtClimb = new JTextField();
-		txtClimb.setBounds(435, 85, 68, 20);
+		txtClimb.setBounds(349, 87, 68, 20);
 		txtClimb.setText(teamPerformance.climb > 0 ? Integer.toString(teamPerformance.climb) : "");
 		txtClimb.setEnabled(editable);
 		contentPane.add(txtClimb);
 		txtClimb.setColumns(10);
 
 		JLabel lblStartClimbTime = new JLabel("Start Climb Time");
-		lblStartClimbTime.setBounds(343, 88, 82, 14);
+		lblStartClimbTime.setBounds(257, 90, 82, 14);
 		contentPane.add(lblStartClimbTime);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(109, 114, 394, 2);
 		contentPane.add(separator_1);
-		
+
 		JLabel lblSwitch = new JLabel("Switch");
 		lblSwitch.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSwitch.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -228,6 +218,8 @@ public class TeamPerformanceWindow extends JDialog {
 
 		if (!editable) {
 
+			menuBar = new JMenuBar();
+			setJMenuBar(menuBar);
 			JMenu mnEdit = new JMenu("Edit");
 			menuBar.add(mnEdit);
 
@@ -273,14 +265,14 @@ public class TeamPerformanceWindow extends JDialog {
 		label_1.setBounds(445, 114, 129, 24);
 		contentPane.add(label_1);
 
-//		JScrollPane scrollPane = new JScrollPane();
-//		scrollPane.setBounds(231, 140, 147, 147);
-//		contentPane.add(scrollPane);
+		// JScrollPane scrollPane = new JScrollPane();
+		// scrollPane.setBounds(231, 140, 147, 147);
+		// contentPane.add(scrollPane);
 
 		JLabel lblScouterName = new JLabel("Scouter Name:");
 		lblScouterName.setBounds(450, 17, 77, 14);
 		contentPane.add(lblScouterName);
-		
+
 		txtScouter = new JTextField();
 		txtScouter.setText(teamPerformance.scouterName);
 		txtScouter.setEditable(editable);
@@ -307,16 +299,16 @@ public class TeamPerformanceWindow extends JDialog {
 		lblComments.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblComments.setBounds(10, 333, 95, 24);
 		contentPane.add(lblComments);
-		
+
 		chkParked = new JCheckBox("Parked");
 		chkParked.setBounds(436, 84, 97, 23);
 		contentPane.add(chkParked);
-		
+
 		JButton btnAddSwitch = new JButton("Add");
 		btnAddSwitch.setBounds(86, 142, 57, 22);
 		contentPane.add(btnAddSwitch);
 		btnAddSwitch.setEnabled(editable);
-		
+
 		JButton btnAddScale = new JButton("Add");
 		btnAddScale.setBounds(287, 142, 57, 22);
 		contentPane.add(btnAddScale);
@@ -331,7 +323,7 @@ public class TeamPerformanceWindow extends JDialog {
 		btnDeleteSwitch.setBounds(152, 142, 57, 22);
 		contentPane.add(btnDeleteSwitch);
 		btnDeleteSwitch.setEnabled(editable);
-		
+
 		JButton btnDeleteScale = new JButton("Del");
 		btnDeleteScale.setBounds(354, 142, 57, 22);
 		contentPane.add(btnDeleteScale);
@@ -341,11 +333,11 @@ public class TeamPerformanceWindow extends JDialog {
 		btnDeleteVault.setBounds(517, 142, 57, 22);
 		contentPane.add(btnDeleteVault);
 		btnDeleteVault.setEnabled(editable);
-		
+
 		DefaultTableModel mdlSwitch = (DefaultTableModel) tblSwitch.getModel();
 		DefaultTableModel mdlScale = (DefaultTableModel) tblScale.getModel();
 		DefaultTableModel mdlVault = (DefaultTableModel) tblVault.getModel();
-		
+
 		btnAddSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -477,8 +469,7 @@ public class TeamPerformanceWindow extends JDialog {
 
 		tblScale = new JTable();
 
-		DefaultTableModel mdlScale = new DefaultTableModel(new Object[][] { },
-				new String[] { "In Auto", "Time" }) {
+		DefaultTableModel mdlScale = new DefaultTableModel(new Object[][] {}, new String[] { "In Auto", "Time" }) {
 			Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
 
 			public Class getColumnClass(int columnIndex) {
@@ -493,15 +484,14 @@ public class TeamPerformanceWindow extends JDialog {
 		contentPane.add(scrollPaneVault);
 
 		tblVault = new JTable();
-		DefaultTableModel mdlVault = new DefaultTableModel(new Object[][] { },
-				new String[] { "In Auto", "Time" }) {
+		DefaultTableModel mdlVault = new DefaultTableModel(new Object[][] {}, new String[] { "In Auto", "Time" }) {
 			Class[] columnTypes = new Class[] { Boolean.class, Integer.class };
 
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		};
-		
+
 		tblVault.setModel(mdlVault);
 		scrollPaneVault.setViewportView(tblVault);
 
@@ -573,7 +563,7 @@ public class TeamPerformanceWindow extends JDialog {
 		JLabel lblScouterName = new JLabel("Scouter Name:");
 		lblScouterName.setBounds(450, 17, 77, 14);
 		contentPane.add(lblScouterName);
-		
+
 		chkParked = new JCheckBox("Parked");
 		chkParked.setBounds(436, 84, 97, 23);
 		contentPane.add(chkParked);
