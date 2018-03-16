@@ -98,6 +98,10 @@ public class SetPowerUps extends JDialog {
 
 		cmbForce.setBounds(87, 132, 46, 20);
 		pnlPowerUps.add(cmbForce);
+		
+		
+		cmbBoost.setSelectedItem((isRed) ? ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerUpCubes()[0] : ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerUpCubes()[0]);
+		cmbForce.setSelectedItem((isRed) ? ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerUpCubes()[1] : ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerUpCubes()[1]);
 
 		JLabel lblCubes = new JLabel("Cubes:");
 		lblCubes.setBounds(10, 59, 46, 14);
@@ -121,8 +125,13 @@ public class SetPowerUps extends JDialog {
 								(txtForce.getText().equals("")) ? -1
 										: Integer.parseInt(txtForce.getText()),
 								(chckbxLevitated.isSelected() ? 1 : 0) };
+						
+						int[] powerUpCubes = {
+								Integer.parseInt(String.valueOf(cmbBoost.getSelectedItem())),
+								Integer.parseInt(String.valueOf(cmbForce.getSelectedItem()))
+						};
 
-						ScoutingApp.setPowerUps(matchID, powerUps, isRed);
+						ScoutingApp.setPowerUps(matchID, powerUps, powerUpCubes, isRed);
 						ScoutingApp.updateMatchView(matchID);
 
 						dispose();

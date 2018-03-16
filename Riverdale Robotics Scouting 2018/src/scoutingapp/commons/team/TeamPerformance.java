@@ -76,16 +76,16 @@ public class TeamPerformance implements Serializable {
 		TableModel rawSwitchTable = teamPerformanceWindow.tblSwitch.getModel();
 
 		for (int i = 0; i < rawSwitchTable.getRowCount(); i++) {
-			if (((boolean) rawSwitchTable.getValueAt(i, 0)) == false) {
-				if (((boolean) rawSwitchTable.getValueAt(i, 1)) == false) {
-					cubesOnAllianceSwitchTeleop.add((Integer) rawSwitchTable.getValueAt(i, 2));
+			if ((Boolean.valueOf(String.valueOf(rawSwitchTable.getValueAt(i, 0)))) == false) {
+				if (Boolean.valueOf(String.valueOf(rawSwitchTable.getValueAt(i, 1))) == false) {
+					cubesOnAllianceSwitchTeleop.add(Integer.parseInt(String.valueOf(rawSwitchTable.getValueAt(i, 2))));
 				} else {
-					cubesOnOpponentSwitchTeleop.add((Integer) rawSwitchTable.getValueAt(i, 2));
+					cubesOnOpponentSwitchTeleop.add(Integer.parseInt(String.valueOf(rawSwitchTable.getValueAt(i, 2))));
 				}
 
 			} else {
 
-				cubesOnSwitchAuto.add((Integer) rawSwitchTable.getValueAt(i, 2));
+				cubesOnSwitchAuto.add(Integer.parseInt(String.valueOf(rawSwitchTable.getValueAt(i, 2))));
 
 			}
 		}
@@ -93,7 +93,7 @@ public class TeamPerformance implements Serializable {
 		TableModel rawScaleTable = teamPerformanceWindow.tblScale.getModel();
 
 		for (int i = 0; i < rawScaleTable.getRowCount(); i++) {
-			if (((boolean) rawScaleTable.getValueAt(i, 0)) == false) {
+			if ((Boolean.valueOf(String.valueOf(rawScaleTable.getValueAt(i, 0)))) == false) {
 				cubesOnScaleTeleop.add(Integer.parseInt(String.valueOf(rawScaleTable.getValueAt(i, 1))));
 			} else {
 				cubesOnScaleAuto.add(Integer.parseInt(String.valueOf(rawScaleTable.getValueAt(i, 1))));
@@ -103,7 +103,7 @@ public class TeamPerformance implements Serializable {
 		TableModel rawVaultTable = teamPerformanceWindow.tblVault.getModel();
 
 		for (int i = 0; i < rawVaultTable.getRowCount(); i++) {
-			if (((boolean) rawVaultTable.getValueAt(i, 0)) == false) {
+			if ((Boolean.valueOf(String.valueOf(rawVaultTable.getValueAt(i, 0)))) == false) {
 				cubesInVaultTeleop.add(Integer.parseInt(String.valueOf(rawVaultTable.getValueAt(i, 1))));
 			} else {
 				cubesInVaultAuto.add(Integer.parseInt(String.valueOf(rawVaultTable.getValueAt(i, 1))));
@@ -263,7 +263,7 @@ public class TeamPerformance implements Serializable {
 			for (int i = row; i < max; i++) {
 
 				times[i][0] = false;
-				times[i][1] = getRawData(4).get(i - row);
+				times[i][1] = getRawData(4).get(max - i - 1);
 
 				row++;
 
@@ -299,7 +299,7 @@ public class TeamPerformance implements Serializable {
 			allTimes.clear();
 			allTimes.addAll(getRawData(1));
 			allTimes.addAll(getRawData(3));
-
+			
 			Object[][] times = new Object[allTimes.size()][2];
 
 			int row = 0;
@@ -320,7 +320,7 @@ public class TeamPerformance implements Serializable {
 			for (int i = row; i < max; i++) {
 
 				times[i][0] = false;
-				times[i][1] = getRawData(3).get(i - row);
+				times[i][1] = getRawData(3).get(max - i - 1);
 
 				row++;
 

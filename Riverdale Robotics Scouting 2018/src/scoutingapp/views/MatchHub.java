@@ -27,6 +27,9 @@ import scoutingapp.commons.team.Team;
 import scoutingapp.views.creation.CreateMatch;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class MatchHub extends JFrame {
 
@@ -73,6 +76,8 @@ public class MatchHub extends JFrame {
 		Object[][] arrayValues = new Object[ScoutingApp.regionalCollection().getMatchIDList().length][8];
 
 		int[] matchIDList = ScoutingApp.regionalCollection().getMatchIDList();
+		
+		Arrays.sort(matchIDList);
 
 		for (int i = 0; i < arrayValues.length; i++) {
 

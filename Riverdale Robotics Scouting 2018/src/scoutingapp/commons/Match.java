@@ -15,6 +15,25 @@ public class Match implements Serializable {
 
 	int[] redPowerUps;
 	int[] bluePowerUps;
+	
+	int[] redPowerUpCubes = {0, 0};
+	public int[] getRedPowerUpCubes() {
+		return redPowerUpCubes;
+	}
+
+	public void setRedPowerUpCubes(int[] redPowerUpCubes) {
+		this.redPowerUpCubes = redPowerUpCubes;
+	}
+
+	public int[] getBluePowerUpCubes() {
+		return bluePowerUpCubes;
+	}
+
+	public void setBluePowerUpCubes(int[] bluePowerUpCubes) {
+		this.bluePowerUpCubes = bluePowerUpCubes;
+	}
+
+	int[] bluePowerUpCubes = {0, 0};
 
 	int[] blueTeams;
 	int[] redTeams;
@@ -30,10 +49,10 @@ public class Match implements Serializable {
 		int[] bluePowerUps = new int[3];
 
 		for (int i = 0; i < 3; i++) {
-
+			
 			redPowerUps[i] = -1;
 			bluePowerUps[i] = -1;
-
+			
 		}
 
 		this.redPowerUps = redPowerUps;
@@ -90,7 +109,7 @@ public class Match implements Serializable {
 		return redPowerUps;
 	}
 	
-	public int getBlueScore () {
+	public int getBlueScore () {	
 		return this.blueScore;
 	}
 	

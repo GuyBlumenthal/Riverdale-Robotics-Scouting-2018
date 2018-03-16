@@ -465,6 +465,7 @@ public class TeamPerformanceWindow extends JDialog {
 			}
 		};
 		tblScale.setModel(mdlScale);
+		
 		scrollPaneScale.setViewportView(tblScale);
 
 		JScrollPane scrollPaneVault = new JScrollPane();

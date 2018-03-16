@@ -214,12 +214,14 @@ public class RegionalCollection implements Serializable {
 
 	}
 
-	public void setPowerUps(int matchID, int[] powerUps, boolean isRed) {
+	public void setPowerUps(int matchID, int[] powerUps, int[] powerUpCubes, boolean isRed) {
 
 		if (isRed) {
 			getMatch(matchID).redPowerUps = powerUps;
+			getMatch(matchID).redPowerUpCubes = powerUpCubes;
 		} else {
 			getMatch(matchID).bluePowerUps = powerUps;
+			getMatch(matchID).bluePowerUpCubes = powerUpCubes;
 		}
 
 	}

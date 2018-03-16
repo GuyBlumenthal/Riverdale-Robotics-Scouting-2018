@@ -254,12 +254,46 @@ public class Team implements Serializable {
 			Team[] alliance;
 			int[] allianceScore;
 			
-			int blueScore = ScoutingApp.regionalCollection().getMatch(matchID).getBlueScore();
-			int redScore = ScoutingApp.regionalCollection().getMatch(matchID).getRedScore();
-			Team[] blueTeams = ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams();			
-			Team[] redTeams = ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams();
-			int[] bluePowerUps = ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups();
-			int[] redPowerUps = ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerups();
+			//ScoutingApp.regionalCollection().getMatch(matchID).getBlueScore();
+			
+			int blueScore;
+			int redScore;
+			Team[] redTeams;
+			Team[] blueTeams;
+			int[] bluePowerUps;
+			int[] redPowerUps;
+			
+			try {
+				blueScore = ScoutingApp.regionalCollection().getMatch(matchID).getBlueScore();
+				redScore = ScoutingApp.regionalCollection().getMatch(matchID).getRedScore();
+			
+				blueTeams = ScoutingApp.regionalCollection().getMatch(matchID).getBlueTeams();	
+			
+				redTeams = ScoutingApp.regionalCollection().getMatch(matchID).getRedTeams();
+			
+				bluePowerUps = ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerups();
+			
+				redPowerUps = ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerups();
+			
+			} catch (Exception e) {
+				blueScore = -1;
+				redScore = -1;
+				blueTeams = new Team[0];
+				redTeams = new Team[0];
+				bluePowerUps = new int[3];
+				
+				bluePowerUps[0] = 0;
+				bluePowerUps[1] = 0;
+				bluePowerUps[2] = 0;
+				
+				redPowerUps = new int[3];
+				
+				redPowerUps[0] = 0;
+				redPowerUps[1] = 0;
+				redPowerUps[2] = 0;
+				
+				
+			}
 			
 			//finding which alliance the team is on
 			for(int i = 0; i < blueTeams.length; i++){
@@ -280,13 +314,18 @@ public class Team implements Serializable {
 			//calculating ranking points from climbing and crossing the baseline
 			int nClimbs = 0;
 			int nCrossedBaseline = 0;
-			for(int i = 0; i < alliance.length; i++){
-				if(alliance[i].teamPerformances.get(matchID).climb > 0){
-					nClimbs++;
+			
+			try {
+				for(int i = 0; i < alliance.length; i++){
+					if(alliance[i].teamPerformances.get(matchID).climb > 0){
+						nClimbs++;
+					}
+					if(alliance[i].teamPerformances.get(matchID).crossedBaseLine){
+						nCrossedBaseline++;
+					}
 				}
-				if(alliance[i].teamPerformances.get(matchID).crossedBaseLine){
-					nCrossedBaseline++;
-				}
+			} catch (Exception e) {
+				//e.printStackTrace();
 			}
 			
 			if(nClimbs == 3 || (nClimbs == 2 && allianceScore[2] > 0)){

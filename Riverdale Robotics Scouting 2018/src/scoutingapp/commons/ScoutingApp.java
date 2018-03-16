@@ -342,9 +342,9 @@ public class ScoutingApp {
 
 	}
 
-	public static void setPowerUps(int matchID, int[] powerUps, boolean isRed) {
+	public static void setPowerUps(int matchID, int[] powerUps, int[] powerUpCubes, boolean isRed) {
 
-		regionalCollection().setPowerUps(matchID, powerUps, isRed);
+		regionalCollection().setPowerUps(matchID, powerUps, powerUpCubes, isRed);
 
 	}
 

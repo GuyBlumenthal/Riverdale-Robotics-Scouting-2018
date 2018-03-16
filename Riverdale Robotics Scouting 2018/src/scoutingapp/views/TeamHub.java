@@ -43,7 +43,7 @@ public class TeamHub extends JFrame {
 		setTitle("Scouting - Team Hub");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 595, 444);
+		setBounds(100, 100, 712, 444);
 		contentPane = new JPanel();
 		contentPane.setSize(new Dimension(1024, 600));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -51,7 +51,7 @@ public class TeamHub extends JFrame {
 		getContentPane().setLayout(null);
 
 		JScrollPane scrollPaneTeams = new JScrollPane();
-		scrollPaneTeams.setBounds(22, 22, 543, 354);
+		scrollPaneTeams.setBounds(22, 22, 659, 354);
 		getContentPane().add(scrollPaneTeams);
 
 		tblTeams = new JTable();
