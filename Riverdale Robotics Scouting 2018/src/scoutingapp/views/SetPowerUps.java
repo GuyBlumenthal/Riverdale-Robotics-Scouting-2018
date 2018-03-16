@@ -99,10 +99,14 @@ public class SetPowerUps extends JDialog {
 		cmbForce.setBounds(87, 132, 46, 20);
 		pnlPowerUps.add(cmbForce);
 		
+		try {
+			cmbBoost.setSelectedItem((isRed) ? ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerUpCubes()[0] : ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerUpCubes()[0]);
+			cmbForce.setSelectedItem((isRed) ? ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerUpCubes()[1] : ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerUpCubes()[1]);
+		} catch (Exception e) {
+			cmbBoost.setSelectedItem(1);
+			cmbForce.setSelectedItem(1);
+		}
 		
-		cmbBoost.setSelectedItem((isRed) ? ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerUpCubes()[0] : ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerUpCubes()[0]);
-		cmbForce.setSelectedItem((isRed) ? ScoutingApp.regionalCollection().getMatch(matchID).getRedPowerUpCubes()[1] : ScoutingApp.regionalCollection().getMatch(matchID).getBluePowerUpCubes()[1]);
-
 		JLabel lblCubes = new JLabel("Cubes:");
 		lblCubes.setBounds(10, 59, 46, 14);
 		pnlPowerUps.add(lblCubes);
